@@ -1,0 +1,50 @@
+.app {
+  text-align: center;
+  padding: 20px;
+}
+
+.room-list {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap; /* 줄바꿈 가능하게 설정 */
+}
+
+.room-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  width: 200px;
+  text-align: center;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.room-card h2 {
+  margin-bottom: 10px;
+}
+
+.room-card p {
+  margin: 5px 0;
+}
+
+.room-card button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.room-card button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Media Query: 화면 너비가 600px 이하일 때 */
+@media (max-width: 600px) {
+  .room-card {
+    width: 100%; /* 카드가 화면 너비를 채우도록 설정 */
+    margin-bottom: 10px;
+  }
+}
