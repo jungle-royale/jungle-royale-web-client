@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css'
-import RoomCard from './components/RoomCard'
-import Header from './components/Header'
+import Home from "./pages/Home";
 import SocialKakao from './pages/SocialKakao'
 import { useState } from "react";
 
@@ -32,30 +31,7 @@ function App() {
   return (
       <Router>
       <Routes>
-        {/* 기본 페이지 */}
-        <Route
-          path="/" 
-          element={
-            <div>
-              <Header />
-              <div className="room-page">
-                <h1>게임 방 목록</h1>
-                <div className="room-list">
-                  {rooms.map((room) => (
-                    <RoomCard
-                      key={room.id}
-                      roomName={room.name}
-                      currentPlayers={room.currentPlayers}
-                      maxPlayers={room.maxPlayers}
-                      isPlaying={room.isPlaying}
-                      onJoin={() => handleJoinRoom(room.name)}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-            } />
-        {/* SocialKakao로 전환되는 페이지 */}
+        <Route path="/" element={<Home rooms={rooms} onJoinRoom={handleJoinRoom} />} />
         <Route path="/social-kakao" element={<SocialKakao isLogin={isLogin} setIsLogin={setIsLogin}/>} />
       </Routes>
     </Router>   
