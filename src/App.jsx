@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+//import { useState, useEffect } from "react";
+import useLoginStatus from "./hooks/useLoginStatus";
 import './App.css';
-import { Routes, Route } from "react-router-dom"; // BrowserRouter 제거
+import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -9,7 +10,7 @@ import RoomList from "./pages/RoomList";
 
 function App() {
   // 로그인 상태 초기화
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useLoginStatus();
 
   const rooms = [
     { id: 1, name: "Room 1", currentPlayers: 20, maxPlayers: 50, isPlaying: true },
@@ -24,12 +25,11 @@ function App() {
 
   ];
   
-
-  useEffect(() => {
-    // 로컬 스토리지에서 로그인 상태 확인
-    const loginStatus = localStorage.getItem("isLogin");
-    setIsLogin(loginStatus === "true");
-  }, []);
+  // useEffect(() => {
+  //   // 로컬 스토리지에서 로그인 상태 확인
+  //   const loginStatus = localStorage.getItem("isLogin");
+  //   setIsLogin(loginStatus === "true");
+  // }, []);
 
   return (
     <>

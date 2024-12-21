@@ -8,7 +8,9 @@ const Login = () => {
   const redirect_uri = "http://localhost:5173/login"; // 리다이렉트 URL 설정
   const navigate = useNavigate();
 
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
+  //const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
+  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code&prompt=consent`;  //동의 화면 무조건 뜨게하기기
+
 
   const sendCodeToServer = async (authCode) => {
     try {
