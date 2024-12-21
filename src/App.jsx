@@ -1,15 +1,16 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import './App.css'
+import { useState, useEffect } from "react";
+import './App.css';
+import { Routes, Route } from "react-router-dom"; // BrowserRouter 제거
+import Header from "./components/Header";
 import Home from "./pages/Home";
-import SocialKakao from './pages/SocialKakao'
-import { useState } from "react";
+import Login from "./pages/Login";
+import RoomCreater from "./pages/RoomCreater";
+import RoomList from "./pages/RoomList";
 
-
-//1. "/" : Home 화면
-//2. "/social-kakao" : 카카오 간편 로그인
 function App() {
-  const [ isLogin, setIsLogin ] = useState(false);
-  // 방 정보 배열-임시list
+  // 로그인 상태 초기화
+  const [isLogin, setIsLogin] = useState(false);
+
   const rooms = [
     { id: 1, name: "Room 1", currentPlayers: 20, maxPlayers: 50, isPlaying: true },
     { id: 2, name: "Room 2", currentPlayers: 10, maxPlayers: 50, isPlaying: false },
@@ -22,19 +23,25 @@ function App() {
     { id: 9, name: "Room 9", currentPlayers: 35, maxPlayers: 50, isPlaying: false },
 
   ];
+  
 
-  // 입장하기 버튼 클릭 핸들러
-  const handleJoinRoom = (roomName) => {
-    alert(`${roomName}에 입장했습니다!`);
-  };
+  useEffect(() => {
+    // 로컬 스토리지에서 로그인 상태 확인
+    const loginStatus = localStorage.getItem("isLogin");
+    setIsLogin(loginStatus === "true");
+  }, []);
 
   return (
-      <Router>
+    <>
+      {/* Header에 isLogin과 setIsLogin 전달 */}
+      <Header isLogin={isLogin} setIsLogin={setIsLogin} />
       <Routes>
-        <Route path="/" element={<Home rooms={rooms} onJoinRoom={handleJoinRoom} />} />
-        <Route path="/social-kakao" element={<SocialKakao isLogin={isLogin} setIsLogin={setIsLogin}/>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/rooms" element={<RoomList rooms={rooms} onJoinRoom={(roomName) => console.log(roomName)} />} />
+        <Route path="/roomcreater" element={<RoomCreater />} />
       </Routes>
-    </Router>   
+    </>
   );
 }
 
