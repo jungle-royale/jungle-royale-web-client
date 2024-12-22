@@ -1,4 +1,3 @@
-//import { useState, useEffect } from "react";
 import useLoginStatus from "./hooks/useLoginStatus";
 import './App.css';
 import { Routes, Route } from "react-router-dom";
@@ -24,12 +23,6 @@ function App() {
     { id: 9, name: "Room 9", currentPlayers: 35, maxPlayers: 50, isPlaying: false },
 
   ];
-  
-  // useEffect(() => {
-  //   // 로컬 스토리지에서 로그인 상태 확인
-  //   const loginStatus = localStorage.getItem("isLogin");
-  //   setIsLogin(loginStatus === "true");
-  // }, []);
 
   return (
     <>

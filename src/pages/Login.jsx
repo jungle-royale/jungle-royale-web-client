@@ -26,9 +26,7 @@ const Login = () => {
       localStorage.setItem("isLogin", "true");
       localStorage.setItem("jwt_token", response.data.jwt_token); // 인증 토큰 저장
       localStorage.setItem("refresh_token", response.data.refresh_token); // 리프레시 토큰 저장
-
-
-      
+      //setIsLogin(true); // 상태 즉시 반영
 
       // 홈 화면으로 리다이렉트
       navigate("/");
@@ -46,14 +44,19 @@ const Login = () => {
     }
   }, []);
 
-  const handleLogin = () => {
+  const handleLoginKakao = () => {
     window.location.href = kakaoURL;
   };
 
+  //비회원 로그인 시
+  // const handleLogin = () =>{};
+
   return (
     <div>
-      <h1>카카오 로그인 화면</h1>
-      <Button text="카카오 로그인" onClick={handleLogin} />
+      <h1>로그인 화면</h1>
+      <Button text="카카오 로그인" onClick={handleLoginKakao} />
+      {/* <Button text="비회원 로그인" onClick={handleLogin} /> */}
+
     </div>
   );
 };
