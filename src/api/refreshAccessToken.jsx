@@ -1,4 +1,4 @@
-//useTokenRefresh에서 실행될 함수수
+//useTokenRefresh에서 실행될 함수
 import axios from "axios";
 
 const refreshAccessToken = async () => {

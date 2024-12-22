@@ -12,7 +12,7 @@ import useTokenRefresh from "./hooks/useTokenRefresh"; // Token 갱신 Hook 추�
 function App() {
   // 로그인 상태 초기화
   const [isLogin, setIsLogin] = useLoginStatus();
-  useTokenRefresh(); // 자동 토큰 갱신 로직 추가
+  useTokenRefresh(); // 자동 토큰 갱신 로직
 
   const rooms = [
     { id: 1, name: "Room 1", currentPlayers: 20, maxPlayers: 50, isPlaying: true },
