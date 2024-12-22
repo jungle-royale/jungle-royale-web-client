@@ -11,11 +11,6 @@ function useAuthHandlers(setIsLogin) {
 
   const handleLogout = () => {
     //서버 없이 로그아웃
-    // 로컬 스토리지에서 데이터 제거
-    localStorage.removeItem("isLogin");
-    localStorage.removeItem("jwt_token");
-    localStorage.removeItem("refresh_token");
-
     // 로그인 상태 업데이트
     setIsLogin(false);
     alert("로그아웃되었습니다.");
@@ -28,11 +23,7 @@ function useAuthHandlers(setIsLogin) {
     //   });
   
     //   if (response.data.success) {
-    //     // 성공적인 로그아웃 처리
-    //     localStorage.removeItem("isLogin");
-    //     localStorage.removeItem("jwt_token");
-    //     localStorage.removeItem("refresh_token");
-  
+    //     // 성공적인 로그아웃 처리  
     //     setIsLogin(false);
     //     alert("로그아웃되었습니다.");
     //     navigate("/");

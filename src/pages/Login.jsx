@@ -2,11 +2,15 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
+import useLoginStatus from "../hooks/useLoginStatus";
+
 
 const Login = () => {
   const Rest_api_key = 'e8304b2a6b5aeb5020ef6abeb405115b';
   const redirect_uri = "http://localhost:5173/login"; // 리다이렉트 URL 설정
   const navigate = useNavigate();
+  const [, setIsLogin] = useLoginStatus();
+
 
   //const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code&prompt=consent`;  //동의 화면 무조건 뜨게하기기
@@ -23,10 +27,10 @@ const Login = () => {
       console.log("Server Response:", response.data);
 
       // 로그인 상태 저장
-      localStorage.setItem("isLogin", "true");
+      //localStorage.setItem("isLogin", "true");
       localStorage.setItem("jwt_token", response.data.jwt_token); // 인증 토큰 저장
       localStorage.setItem("refresh_token", response.data.refresh_token); // 리프레시 토큰 저장
-      //setIsLogin(true); // 상태 즉시 반영
+      setIsLogin(true); // 상태 즉시 반영
 
       // 홈 화면으로 리다이렉트
       navigate("/");
