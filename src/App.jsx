@@ -6,10 +6,13 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import RoomCreater from "./pages/RoomCreater";
 import RoomList from "./pages/RoomList";
+import useTokenRefresh from "./hooks/useTokenRefresh"; // Token 갱신 Hook 추가
+
 
 function App() {
   // 로그인 상태 초기화
   const [isLogin, setIsLogin] = useLoginStatus();
+  useTokenRefresh(); // 자동 토큰 갱신 로직 추가
 
   const rooms = [
     { id: 1, name: "Room 1", currentPlayers: 20, maxPlayers: 50, isPlaying: true },

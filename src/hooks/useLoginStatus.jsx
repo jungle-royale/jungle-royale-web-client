@@ -1,3 +1,4 @@
+// useLoginStatus.jsx
 import { useState, useEffect } from "react";
 
 function useLoginStatus() {
@@ -6,9 +7,14 @@ function useLoginStatus() {
   useEffect(() => {
     const loginStatus = localStorage.getItem("isLogin");
     setIsLogin(loginStatus === "true");
-  }, []);
+  }, []); 
 
-  return [isLogin, setIsLogin];
+  const updateLoginStatus = (status) => {
+    localStorage.setItem("isLogin", status.toString());
+    setIsLogin(status);
+  };
+
+  return [isLogin, updateLoginStatus];
 }
 
 export default useLoginStatus;

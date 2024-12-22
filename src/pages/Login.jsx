@@ -20,16 +20,18 @@ const Login = () => {
     try {
       console.log("Attempting to send code:", authCode);
       const response = await axios.post(
-        "http://192.168.1.241:8080/api/auth/kakao/callback",
+        "http://192.168.1.241:8080/api/auth/kakao/login",
         { code: authCode },
         { headers: { "Content-Type": "application/json" } }
       );
       console.log("Server Response:", response.data);
 
       // 로그인 상태 저장
-      //localStorage.setItem("isLogin", "true");
-      localStorage.setItem("jwt_token", response.data.jwt_token); // 인증 토큰 저장
-      localStorage.setItem("refresh_token", response.data.refresh_token); // 리프레시 토큰 저장
+      localStorage.setItem("isLogin", "true")
+      localStorage.setItem("access_token", response.data.accessToken); // 인증 토큰 저장
+      localStorage.setItem("refresh_token", response.data.refreshToken); // 리프레시 토큰 저장
+      localStorage.setItem("expires_in", response.data.expiresIn)
+      localStorage.setItem("isGuest", response.data.isGuest)
       setIsLogin(true); // 상태 즉시 반영
 
       // 홈 화면으로 리다이렉트
