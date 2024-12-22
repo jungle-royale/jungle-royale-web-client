@@ -29,16 +29,16 @@ const Login = () => {
       // 로그인 상태 저장
       localStorage.setItem("isLogin", "true")
       localStorage.setItem("jwt_token", response.data.jwtToken)
-      localStorage.setItem("access_token", response.data.accessToken); // 인증 토큰 저장
-      localStorage.setItem("refresh_token", response.data.refreshToken); // 리프레시 토큰 저장
-      localStorage.setItem("expires_in", response.data.expiresIn)
+      // localStorage.setItem("access_token", response.data.accessToken); // 인증 토큰 저장
+      // localStorage.setItem("refresh_token", response.data.refreshToken); // 리프레시 토큰 저장
+      //localStorage.setItem("expires_in", response.data.expiresIn)
       localStorage.setItem("isGuest", response.data.isGuest)
 
-      const jwt = localStorage.getItem("jwt_token")
-      const payload = JSON.parse(atob(jwt.split(".")[1]));
-      const expirationTime = payload.exp * 1000; // 밀리초로 변환
-      console.log("Expiration Time:", new Date(expirationTime).toLocaleString());
-
+      //만료 시간 나오는 지지
+      // const jwt = localStorage.getItem("jwt_token")
+      // const payload = JSON.parse(atob(jwt.split(".")[1]));
+      // const expirationTime = payload.exp * 1000; // 밀리초로 변환
+      // console.log("Expiration Time:", new Date(expirationTime).toLocaleString());
       setIsLogin(true); // 상태 즉시 반영
 
       // 홈 화면으로 리다이렉트

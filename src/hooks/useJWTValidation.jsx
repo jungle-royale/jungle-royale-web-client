@@ -1,4 +1,4 @@
-//클라에서 jwt 검증 필요 시시
+//클라에서 jwt 검증 필요 시
 
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
