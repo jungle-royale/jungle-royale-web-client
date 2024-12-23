@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useLoginContext } from "../contexts/LoginContext";
 
-
-function useAuthHandlers(setIsLogin) {
+function useAuthHandlers() {
+  const { setIsLogin } = useLoginContext();
   const navigate = useNavigate();
 
   const handleLogin = () => {
@@ -11,13 +12,6 @@ function useAuthHandlers(setIsLogin) {
 
   const handleLogout = async () => {
     try {
-      // const response = await axios.post("http://192.168.1.241:8080/api/auth/logout"
-      //   , {}, {
-      //   authorization_access: `Bearer ${localStorage.getItem("access_token")}` ,
-      //   authorization_refresh: `Bearer ${localStorage.getItem("refresh_token")}` ,
-      //   "Content-Type": "application/json",
-      // });
-
       const response = await axios.post(
         "http://192.168.1.241:8080/api/auth/logout",
         {}, {
@@ -34,8 +28,9 @@ function useAuthHandlers(setIsLogin) {
         localStorage.removeItem("access_token");
         localStorage.removeItem("expires_in");
         localStorage.removeItem("refresh_token");
+        localStorage.removeItem("jwt_token");
         localStorage.removeItem("isLogin");
-        localStorage.removeItem("isGuest");
+        localStorage.removeItem("role");
         setIsLogin(false);
         alert("로그아웃되었습니다.");
         navigate("/");

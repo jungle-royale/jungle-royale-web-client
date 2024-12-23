@@ -1,10 +1,11 @@
-import PropTypes from "prop-types";
-//import axios from "axios";  //서버 로그아웃 구현 시 잠금 해제
 import Button from "./Button";
+import { useLoginContext } from "../contexts/LoginContext";
 import useAuthHandlers from "../hooks/useAuthHandlers";
 
-const Header = ({ isLogin, setIsLogin }) => {
-  const {handleLogin, handleLogout} = useAuthHandlers(setIsLogin);
+const Header = () => {
+  const { isLogin } = useLoginContext();
+  const { handleLogin, handleLogout } = useAuthHandlers();
+
   return (
     <header>
       <h1>Jungle Royal</h1>
@@ -15,11 +16,6 @@ const Header = ({ isLogin, setIsLogin }) => {
       )}
     </header>
   );
-};
-
-Header.propTypes = {
-  isLogin: PropTypes.bool.isRequired,
-  setIsLogin: PropTypes.func.isRequired,
 };
 
 export default Header;

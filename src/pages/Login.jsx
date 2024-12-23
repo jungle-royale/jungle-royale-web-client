@@ -2,14 +2,13 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
-import useLoginStatus from "../hooks/useLoginStatus";
-
+import { useLoginContext } from "../contexts/LoginContext";
 
 const Login = () => {
   const Rest_api_key = 'e8304b2a6b5aeb5020ef6abeb405115b';
   const redirect_uri = "http://localhost:5173/login"; // 리다이렉트 URL 설정
   const navigate = useNavigate();
-  const [, setIsLogin] = useLoginStatus();
+  const { setIsLogin } = useLoginContext();
 
 
   //const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
@@ -29,16 +28,11 @@ const Login = () => {
       // 로그인 상태 저장
       localStorage.setItem("isLogin", "true")
       localStorage.setItem("jwt_token", response.data.jwtToken)
-      // localStorage.setItem("access_token", response.data.accessToken); // 인증 토큰 저장
-      // localStorage.setItem("refresh_token", response.data.refreshToken); // 리프레시 토큰 저장
-      //localStorage.setItem("expires_in", response.data.expiresIn)
-      localStorage.setItem("isGuest", response.data.isGuest)
+      localStorage.setItem("access_token", response.data.accessToken); // 인증 토큰 저장
+      localStorage.setItem("refresh_token", response.data.refreshToken); // 리프레시 토큰 저장
+      localStorage.setItem("expires_in", response.data.expiresIn)
+      localStorage.setItem("role", response.data.role)
 
-      //만료 시간 나오는 지지
-      // const jwt = localStorage.getItem("jwt_token")
-      // const payload = JSON.parse(atob(jwt.split(".")[1]));
-      // const expirationTime = payload.exp * 1000; // 밀리초로 변환
-      // console.log("Expiration Time:", new Date(expirationTime).toLocaleString());
       setIsLogin(true); // 상태 즉시 반영
 
       // 홈 화면으로 리다이렉트
