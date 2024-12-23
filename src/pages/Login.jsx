@@ -1,4 +1,5 @@
-import axios from "axios";
+//import axios from "axios";
+import { loginWithKakao } from "../api";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
@@ -17,28 +18,12 @@ const Login = () => {
 
   const sendCodeToServer = async (authCode) => {
     try {
-      console.log("Attempting to send code:", authCode);
-      const response = await axios.post(
-        "http://192.168.1.241:8080/api/auth/kakao/login",
-        { code: authCode },
-        { headers: { "Content-Type": "application/json" } }
-      );
-      console.log("Server Response:", response.data);
-
-      // 로그인 상태 저장
-      localStorage.setItem("isLogin", "true")
-      localStorage.setItem("jwt_token", response.data.jwtToken)
-      localStorage.setItem("access_token", response.data.accessToken); // 인증 토큰 저장
-      localStorage.setItem("refresh_token", response.data.refreshToken); // 리프레시 토큰 저장
-      localStorage.setItem("expires_in", response.data.expiresIn)
-      localStorage.setItem("role", response.data.role)
-
-      setIsLogin(true); // 상태 즉시 반영
-
-      // 홈 화면으로 리다이렉트
-      navigate("/");
+      const response = await loginWithKakao(authCode); // 반환된 데이터 처리
+      setIsLogin(true); // 로그인 상태 업데이트
+      console.log("Login 성공:", response);
+      navigate("/"); // 홈으로 이동
     } catch (error) {
-      console.error("Error sending code to server:", error.response || error.message);
+      console.error("Login 처리 중 오류 발생:", error.message);
     }
   };
 
