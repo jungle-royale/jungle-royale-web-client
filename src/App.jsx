@@ -1,4 +1,5 @@
 import { LoginProvider } from "./contexts/LoginContext";
+import { RoomsProvider } from "./contexts/RoomsContext";
 import './App.css';
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
@@ -24,13 +25,15 @@ function App() {
 
   return (
     <LoginProvider>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/rooms" element={<RoomList rooms={rooms} onJoinRoom={(roomName) => console.log(roomName)} />} />
-        <Route path="/roomcreater" element={<RoomCreater />} />
-      </Routes>
+      <RoomsProvider>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/rooms" element={<RoomList rooms={rooms} onJoinRoom={(roomName) => console.log(roomName)} />} />
+          <Route path="/roomcreater" element={<RoomCreater />} />
+        </Routes>
+      </RoomsProvider>
     </LoginProvider>
   );
 }

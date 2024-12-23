@@ -1,13 +1,15 @@
-import PropTypes from 'prop-types';
 import RoomCard from '../components/RoomCard';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
+import { useRooms } from "../contexts/RoomsContext";
 
-const RoomList = ({ rooms, onJoinRoom }) => {
+
+const RoomList = () => {
+  const {rooms} = useRooms();
   const navigate = useNavigate();
+
   return (
     <div>
-      {/* <Header /> */}
       <div>
         <Button text="Room Creater" onClick={() => navigate("/roomcreater")}/>
       </div>
@@ -21,27 +23,13 @@ const RoomList = ({ rooms, onJoinRoom }) => {
               currentPlayers={room.currentPlayers}
               maxPlayers={room.maxPlayers}
               isPlaying={room.isPlaying}
-              onJoin={() => onJoinRoom(room.name)}
+              onJoin={() => console.log(`${room.name}에 입장합니다.`)}
             />
           ))}
         </div>
       </div>
     </div>
   );
-};
-
-// PropTypes 정의
-RoomList.propTypes = {
-  rooms: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      currentPlayers: PropTypes.number.isRequired,
-      maxPlayers: PropTypes.number.isRequired,
-      isPlaying: PropTypes.bool.isRequired,
-    })
-  ).isRequired, // rooms는 필수이며 객체 배열
-  onJoinRoom: PropTypes.func.isRequired, // onJoinRoom은 필수이며 함수
 };
 
 export default RoomList;

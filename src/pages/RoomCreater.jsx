@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { useNavigate } from "react-router-dom"; // 화면 이동을 위한 Hook 추가
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Input from "../components/Input";
-import { createRoom } from "../api"; // API 요청 분리
+import { useRooms } from "../contexts/RoomsContext";
+import { createRoom } from "../api";
 
 const RoomCreater = () => {
   const [roomName, setRoomName] = useState('');
@@ -11,7 +12,8 @@ const RoomCreater = () => {
   const [maxGameTime, setMaxGameTime] = useState('');
   const [isSecret, setIsSecret] = useState(false);
   const [map, setMap] = useState('');
-  const navigate = useNavigate(); // 화면 전환 Hook
+  const { addRoom } = useRooms(); // RoomsContext에서 addRoom 가져오기
+  const navigate = useNavigate();
 
   const handleCreateRoom = async () => {
     const roomDetails = {
@@ -21,19 +23,23 @@ const RoomCreater = () => {
       maxGameTime: parseInt(maxGameTime, 10),
       secret: isSecret,
       map,
-      currentPlayers: "1",
-      status: "WAITING"
+      currentPlayers: 1,
+      status: "WAITING",
     };
 
     try {
-      const response = await createRoom(roomDetails);
+      const response = await createRoom(roomDetails); // API 요청
 
-      if (response.status === 201 || response.data.success) {
-        alert("방이 생성되었습니다!");
-        navigate("/rooms"); // RoomList로 이동
-      } else {
-        alert("방 생성에 실패했습니다. 다시 시도해주세요.");
-      }
+      addRoom({
+        id: response.data.id, // 서버에서 반환된 ID 사용
+        name: roomDetails.title,
+        currentPlayers: roomDetails.currentPlayers,
+        maxPlayers: roomDetails.maxPlayers,
+        isPlaying: false,
+      });
+
+      alert("방이 생성되었습니다!");
+      navigate("/rooms"); // RoomList로 이동
     } catch (error) {
       console.error("방 생성 중 오류:", error);
       alert("방 생성 중 문제가 발생했습니다. 다시 시도해주세요.");
