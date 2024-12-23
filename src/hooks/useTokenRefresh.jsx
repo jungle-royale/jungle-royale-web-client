@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import refreshAccessToken from "../api";
+import {refreshAccessToken} from "../api";
 
 const useTokenRefresh = () => {
   useEffect(() => {

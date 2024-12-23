@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const BASE_URL = "http://192.168.1.241:8080/api";
+const BASE_URL = "http://192.168.1.241:8080/api";   //5G
+//const BASE_URL = "http://172.16.156.158:8080/api";    //olleh
+
 
 const apiClient = axios.create({
   baseURL: BASE_URL,
@@ -31,8 +33,7 @@ export const refreshAccessToken = async () => {
 
 export const loginWithKakao = async (authCode) => {
   try {
-    const response = await axios.post(
-      "http://192.168.1.241:8080/api/auth/kakao/login",
+    const response = await apiClient.post("/auth/kakao/login",
       { code: authCode },
       { headers: { "Content-Type": "application/json" } }
     );
