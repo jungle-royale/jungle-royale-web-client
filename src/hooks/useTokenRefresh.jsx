@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import refreshAccessToken from "../api/refreshAccessToken"; // 위에 작성한 함수
+import {refreshAccessToken} from "../api";
 
 const useTokenRefresh = () => {
   useEffect(() => {
