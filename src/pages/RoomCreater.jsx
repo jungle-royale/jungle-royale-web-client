@@ -1,27 +1,43 @@
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom"; // 화면 이동을 위한 Hook 추가
 import Button from "../components/Button";
 import Input from "../components/Input";
+import { createRoom } from "../api"; // API 요청 분리
 
 const RoomCreater = () => {
   const [roomName, setRoomName] = useState('');
   const [maxPlayers, setMaxPlayers] = useState('');
   const [minPlayers, setMinPlayers] = useState('');
-  const [gameDuration, setGameDuration] = useState('');
-  const [isPublic, setIsPublic] = useState(false);
+  const [maxGameTime, setMaxGameTime] = useState('');
+  const [isSecret, setIsSecret] = useState(false);
   const [map, setMap] = useState('');
+  const navigate = useNavigate(); // 화면 전환 Hook
 
-  const handleCreateRoom = () => {
+  const handleCreateRoom = async () => {
     const roomDetails = {
-      roomName,
+      title: roomName,
       maxPlayers: parseInt(maxPlayers, 10),
       minPlayers: parseInt(minPlayers, 10),
-      gameDuration: parseInt(gameDuration, 10),
-      isPublic,
+      maxGameTime: parseInt(maxGameTime, 10),
+      secret: isSecret,
       map,
+      currentPlayers: "1",
+      status: "WAITING"
     };
 
-    console.log('Room Created:', roomDetails);
-    alert('방이 생성되었습니다!');
+    try {
+      const response = await createRoom(roomDetails);
+
+      if (response.status === 201 || response.data.success) {
+        alert("방이 생성되었습니다!");
+        navigate("/rooms"); // RoomList로 이동
+      } else {
+        alert("방 생성에 실패했습니다. 다시 시도해주세요.");
+      }
+    } catch (error) {
+      console.error("방 생성 중 오류:", error);
+      alert("방 생성 중 문제가 발생했습니다. 다시 시도해주세요.");
+    }
   };
 
   return (
@@ -51,8 +67,8 @@ const RoomCreater = () => {
       <Input
         label="게임 소요 시간 (분)"
         type="number"
-        value={gameDuration}
-        onChange={(e) => setGameDuration(e.target.value)}
+        value={maxGameTime}
+        onChange={(e) => setMaxGameTime(e.target.value)}
         placeholder="게임 소요 시간을 입력하세요"
       />
       <div style={{ marginBottom: '10px' }}>
@@ -77,8 +93,8 @@ const RoomCreater = () => {
         <label style={{ display: 'block', marginBottom: '5px' }}>공개 여부</label>
         <input
           type="checkbox"
-          checked={isPublic}
-          onChange={(e) => setIsPublic(e.target.checked)}
+          checked={isSecret}
+          onChange={(e) => setIsSecret(e.target.checked)}
           style={{
             width: 'auto',
             margin: '10px',

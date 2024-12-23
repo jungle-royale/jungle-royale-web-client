@@ -68,3 +68,12 @@ export const logout = async () => {
     console.error("로그아웃 중 오류 발생:", error.message);
   }
 };
+
+export const createRoom = async (roomDetails) => {
+  return apiClient.post("/rooms/create", roomDetails, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
+      "Content-Type": "application/json",
+    },
+  });
+};

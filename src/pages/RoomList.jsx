@@ -1,10 +1,16 @@
 import PropTypes from 'prop-types';
 import RoomCard from '../components/RoomCard';
+import Button from '../components/Button';
+import { useNavigate } from 'react-router-dom';
 
 const RoomList = ({ rooms, onJoinRoom }) => {
+  const navigate = useNavigate();
   return (
     <div>
       {/* <Header /> */}
+      <div>
+        <Button text="Room Creater" onClick={() => navigate("/roomcreater")}/>
+      </div>
       <div className="room-page">
         <h1>게임 방 목록</h1>
         <div className="room-list">
