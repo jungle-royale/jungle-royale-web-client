@@ -11,9 +11,9 @@ header {
   background-color: #ffffff; /* 헤더 배경색 */
   border-bottom: 1px solid #ccc; /* 헤더 하단 구분선 */
   z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 삼천 그림자 효과 */
   box-sizing: border-box; /* 패딩 포함 크기 계산 */
   overflow: hidden; /* 스크롤 제거 및 잘림 방지 */
+
 }
 
 header .logo {

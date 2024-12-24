@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Input from "../components/Input";
@@ -11,11 +11,18 @@ const RoomCreater = () => {
   const [minPlayers, setMinPlayers] = useState('');
   const [maxGameTime, setMaxGameTime] = useState('');
   const [isSecret, setIsSecret] = useState(false);
+  const isLoadingRef = useRef(false);
   const [map, setMap] = useState('');
   const { addRoom } = useRooms(); // RoomsContext에서 addRoom 가져오기
   const navigate = useNavigate();
 
   const handleCreateRoom = async () => {
+    if (isLoadingRef.current) {
+      return; // 이미 요청 중이면 추가 클릭을 무시
+    }
+  
+    isLoadingRef.current = true; // 로딩 상태 시작
+
     const roomDetails = {
       title: roomName,
       maxPlayers: parseInt(maxPlayers, 10),
@@ -43,6 +50,8 @@ const RoomCreater = () => {
     } catch (error) {
       console.error("방 생성 중 오류:", error);
       alert("방 생성 중 문제가 발생했습니다. 다시 시도해주세요.");
+    } finally{
+      isLoadingRef.current = false;
     }
   };
 
@@ -107,7 +116,11 @@ const RoomCreater = () => {
           }}
         />
       </div>
-      <Button text="방 생성" onClick={handleCreateRoom} />
+      <Button
+        text={isLoadingRef.current ? "생성 중..." : "방 생성"}
+        onClick={handleCreateRoom}
+        disabled={isLoadingRef.current} // 로딩 중일 때 버튼 비활성화
+      />
     </div>
   );
 };
