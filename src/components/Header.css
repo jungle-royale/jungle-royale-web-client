@@ -1,10 +1,19 @@
 header {
+  position: fixed; /* 헤더를 화면 상단에 고정 */
+  top: 0; /* 상단 위치를 0으로 설정 */
+  left: 0; /* 화면 왼쪽에 붙음 */
+  width: 100%; /* 화면 전체 너비를 차지 */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 40px;
-  height: 100px; /* 헤더의 높이 */
-  border-bottom: 1px solid #ccc;
+  padding: 0 20px; /* 헤더 전체 여백 줄임 */
+  height: 100px; /* 헤더 높이 */
+  background-color: #ffffff; /* 헤더 배경색 */
+  border-bottom: 1px solid #ccc; /* 헤더 하단 구분선 */
+  z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 삼천 그림자 효과 */
+  box-sizing: border-box; /* 패딩 포함 크기 계산 */
+  overflow: hidden; /* 스크롤 제거 및 잘림 방지 */
 }
 
 header .logo {
@@ -19,7 +28,9 @@ header .logo img {
 
 header nav {
   display: flex;
-  gap: 30px; /* 네비게이션 메뉴 간 간격 */
+  gap: 20px; /* 네비게이션 메뉴 간 간격 */
+  margin-left: auto; /* 오른쪽으로 배치 */
+  flex-wrap: nowrap; /* 줄바꿈 방지 */
 }
 
 header nav a {
@@ -27,28 +38,15 @@ header nav a {
   color: #333;
   text-decoration: none;
   font-weight: 500;
+  white-space: nowrap; /* 줄바꿈 방지 */
 }
 
 header nav a:hover {
-  text-decoration: underline; /* 마우스 올렸을 때 강조 */
+  text-decoration: underline; /* 마우스 올림 시 강조 */
 }
 
-header .user-controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
 
-header .user-controls button {
-  padding: 8px 16px;
-  font-size: 0.9rem;
-  color: white;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-header .user-controls button:hover {
-  background-color: #0056b3;
+/* 페이지 내용이 헤더 아래로 시작되도록 여백 추가 */
+body {
+  margin-top: 100px; /* 헤더 높이만큼 여백 추가 */
 }
