@@ -45,6 +45,16 @@ header nav a:hover {
   text-decoration: underline; /* 마우스 올림 시 강조 */
 }
 
+.nav-links {
+  display: flex;
+  gap: 16px; /* 각 링크 사이에 16px 간격 추가 */
+}
+
+.login-link,
+.logout-link {
+  cursor: pointer;
+}
+
 
 /* 페이지 내용이 헤더 아래로 시작되도록 여백 추가 */
 body {
