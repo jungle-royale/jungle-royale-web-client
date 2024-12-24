@@ -5,7 +5,7 @@ import { useRooms } from "../contexts/RoomsContext";
 
 
 const RoomList = () => {
-  const {rooms} = useRooms();
+  const { rooms } = useRooms();
   const navigate = useNavigate();
 
   return (
@@ -19,11 +19,11 @@ const RoomList = () => {
           {rooms.map((room) => (
             <RoomCard
               key={room.id}
-              roomName={room.name}
+              roomName={room.title}
               currentPlayers={room.currentPlayers}
               maxPlayers={room.maxPlayers}
-              isPlaying={room.isPlaying}
-              onJoin={() => console.log(`${room.name}에 입장합니다.`)}
+              isPlaying={room.status}
+              onJoin={() => console.log(`${room.title}에 입장합니다.`)}
             />
           ))}
         </div>

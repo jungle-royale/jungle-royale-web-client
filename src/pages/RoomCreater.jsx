@@ -32,10 +32,10 @@ const RoomCreater = () => {
 
       addRoom({
         id: response.data.id, // 서버에서 반환된 ID 사용
-        name: roomDetails.title,
-        currentPlayers: roomDetails.currentPlayers,
-        maxPlayers: roomDetails.maxPlayers,
-        isPlaying: false,
+        title: response.data.title,
+        currentPlayers: response.data.currentPlayers,
+        maxPlayers: response.data.maxPlayers,
+        status: response.data.status,
       });
 
       alert("방이 생성되었습니다!");

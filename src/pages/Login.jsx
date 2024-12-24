@@ -21,6 +21,7 @@ const Login = () => {
       const response = await loginWithKakao(authCode); // 반환된 데이터 처리
       setIsLogin(true); // 로그인 상태 업데이트
       console.log("Login 성공:", response);
+      alert("Login 성공");
       navigate("/"); // 홈으로 이동
     } catch (error) {
       console.error("Login 처리 중 오류 발생:", error.message);

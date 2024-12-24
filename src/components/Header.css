@@ -1,0 +1,54 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  height: 100px; /* 헤더의 높이 */
+  border-bottom: 1px solid #ccc;
+}
+
+header .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* 로고와 텍스트 간 간격 */
+}
+
+header .logo img {
+  height: 80px; /* 로고 이미지 크기 */
+}
+
+header nav {
+  display: flex;
+  gap: 30px; /* 네비게이션 메뉴 간 간격 */
+}
+
+header nav a {
+  font-size: 1rem;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+header nav a:hover {
+  text-decoration: underline; /* 마우스 올렸을 때 강조 */
+}
+
+header .user-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header .user-controls button {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+header .user-controls button:hover {
+  background-color: #0056b3;
+}
