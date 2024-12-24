@@ -29,13 +29,14 @@ const RoomCreater = () => {
       minPlayers: parseInt(minPlayers, 10),
       maxGameTime: parseInt(maxGameTime, 10),
       secret: isSecret,
-      map,
-      currentPlayers: 1,
-      status: "WAITING",
+      map
+      //currentPlayers: 1,
+      //status: "WAITING",
     };
 
     try {
       const response = await createRoom(roomDetails); // API 요청
+      console.log("create:", response);
 
       addRoom({
         id: response.data.id, // 서버에서 반환된 ID 사용

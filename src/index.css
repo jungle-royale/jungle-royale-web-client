@@ -24,7 +24,7 @@ a:hover {
 
 body {
   margin: 0;
-  display: block; /* 플렉스 정렬 해제 */
+  display: block; /* 플렉스 정렬 사용 */
   width: 100%; /* 화면 전체 너비 사용 */
   height: 100vh; /* 화면 높이 전체 사용 */
   min-width: 1440px; /* 원하는 최소 가로 크기 설정 */
