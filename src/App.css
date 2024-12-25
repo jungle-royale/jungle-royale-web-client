@@ -7,7 +7,6 @@
   margin: 0 auto; /* 페이지를 중앙 정렬 */
 }
 
-
 .room-list {
   display: flex;
   gap: 20px;

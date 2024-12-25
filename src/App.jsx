@@ -8,7 +8,7 @@ import Login from "./pages/Login";
 import RoomCreater from "./pages/RoomCreater";
 import RoomList from "./pages/RoomList";
 import MyPage from "./pages/MyPage"
-import useTokenRefresh from "./hooks/useTokenRefresh"; // Token 갱신 Hook 추가
+import useTokenRefresh from "./hooks/useTokenRefresh";
 
 function App() {
   useTokenRefresh(); // 자동 토큰 갱신 로직

@@ -28,7 +28,6 @@ body {
   width: 100%; /* 화면 전체 너비 사용 */
   height: 100vh; /* 화면 높이 전체 사용 */
   min-width: 1440px; /* 원하는 최소 가로 크기 설정 */
-  overflow-x: hidden; /* 수평 스크롤 방지 */
 }
 
 

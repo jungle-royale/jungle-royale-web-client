@@ -30,8 +30,6 @@ const RoomCreater = () => {
       maxGameTime: parseInt(maxGameTime, 10),
       secret: isSecret,
       map
-      //currentPlayers: 1,
-      //status: "WAITING",
     };
 
     try {

@@ -3,7 +3,7 @@ import axios from "axios";
 const BASE_URL = "http://192.168.1.241:8080/api";   //5G
 //const BASE_URL = "http://172.16.156.158:8080/api";    //olleh
 
-//api 생성성
+//api 생성
 const apiClient = axios.create({
   baseURL: BASE_URL,
   headers: { "Content-Type": "application/json" },
@@ -52,6 +52,23 @@ export const loginWithKakao = async (authCode) => {
   }
 };
 
+//비회원 로그인 구현 함수
+export const loginGuest = async (authCode) => {
+  try {
+    const response = await apiClient.post("/auth/guest/login",
+      { code: authCode },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    localStorage.setItem("isLogin", "true");
+    localStorage.setItem("jwt_token", response.data.jwtToken);
+    localStorage.setItem("role", response.data.role);
+    return response.data;
+  } catch (error) {
+    console.error("Login 실패:", error.message);
+    throw error;
+  }
+};
+
 //로그아웃 구현 함수
 export const logout = async () => {
   try {
@@ -82,7 +99,7 @@ export const createRoom = async (roomDetails) => {
   });
 };
 
-//방 list 생성 함수
+//방 list 생성 함수(list + player 객체)
 export const fetchRooms = async () => {
   return apiClient.get("/rooms/list", {
     headers: {

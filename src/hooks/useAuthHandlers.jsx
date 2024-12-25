@@ -1,3 +1,4 @@
+//로그아웃 처리리
 import { useNavigate } from "react-router-dom";
 import { useLoginContext } from "../contexts/LoginContext";
 import { logout } from "../api";

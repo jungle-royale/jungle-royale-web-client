@@ -1,21 +1,13 @@
 import { useLoginContext } from "../contexts/LoginContext";
 import useAuthHandlers from "../hooks/useAuthHandlers";
-import { useNavigate } from "react-router-dom";
 import "./Header.css";
+import useNavigateToMypage from "../hooks/useNavigateToMypage";
 
 const Header = () => {
   const { isLogin } = useLoginContext();
   const { handleLogin, handleLogout } = useAuthHandlers();
-  const navigate = useNavigate();
+  const navigateToMypage  = useNavigateToMypage();
 
-  const handleMypageClick = () => {
-    if (isLogin) {
-      navigate("/mypage");
-    } else {
-      alert("로그인 후 이용해주세요");
-      navigate("/login");
-    }
-  };
 
   return (
     <header>
@@ -31,12 +23,12 @@ const Header = () => {
           {isLogin ? (
             <>
               <a onClick={handleLogout} className="logout-link">로그아웃</a>
-              <a onClick={handleMypageClick}>마이페이지</a>
+              <a onClick={navigateToMypage}>마이페이지</a>
             </>
             ) : (
             <>
               <a onClick={handleLogin} className="login-link">로그인</a>
-              <a onClick={handleMypageClick}>마이페이지</a>
+              <a onClick={navigateToMypage}>마이페이지</a>
             </>
           )}
         </div>    
