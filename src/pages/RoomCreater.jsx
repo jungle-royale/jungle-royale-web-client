@@ -16,26 +16,29 @@ const RoomCreater = () => {
   const { addRoom } = useRooms(); // RoomsContext에서 addRoom 가져오기
   const navigate = useNavigate();
 
+
   const handleCreateRoom = async () => {
     if (isLoadingRef.current) {
-      return; // 이미 요청 중이면 추가 클릭을 무시
+      console.warn("중복 요청 방지: 이미 요청 중입니다.");
+      return; // 중복 요청 방지
     }
   
     isLoadingRef.current = true; // 로딩 상태 시작
-
+  
     const roomDetails = {
       title: roomName,
       maxPlayers: parseInt(maxPlayers, 10),
       minPlayers: parseInt(minPlayers, 10),
       maxGameTime: parseInt(maxGameTime, 10),
       secret: isSecret,
-      map
+      map,
     };
-
+  
     try {
+      console.log("방 생성 요청 데이터:", roomDetails); // 요청 데이터 확인
       const response = await createRoom(roomDetails); // API 요청
-      console.log("create:", response);
-
+      console.log("create 성공:", response);
+  
       addRoom({
         id: response.data.id, // 서버에서 반환된 ID 사용
         title: response.data.title,
@@ -43,14 +46,14 @@ const RoomCreater = () => {
         maxPlayers: response.data.maxPlayers,
         status: response.data.status,
       });
-
-      alert("방이 생성되었습니다!");
+  
+      alert("방이 성공적으로 생성되었습니다!");
       navigate("/rooms"); // RoomList로 이동
     } catch (error) {
-      console.error("방 생성 중 오류:", error);
+      console.error("방 생성 중 오류 발생:", error.response?.data || error.message);
       alert("방 생성 중 문제가 발생했습니다. 다시 시도해주세요.");
-    } finally{
-      isLoadingRef.current = false;
+    } finally {
+      isLoadingRef.current = false; // 로딩 상태 복구
     }
   };
 

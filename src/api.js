@@ -9,7 +9,7 @@ const apiClient = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-//토큰 재발급 요청 함수
+//토큰 재발급 요청 api
 export const refreshAccessToken = async () => {
   try {
     console.log("Access token 갱신 요청 시작"); // 요청 시작 확인
@@ -32,7 +32,7 @@ export const refreshAccessToken = async () => {
   }
 };
 
-//카카오 로그인 구현 함수
+//카카오 로그인 구현 api
 export const loginWithKakao = async (authCode) => {
   try {
     const response = await apiClient.post("/auth/kakao/login",
@@ -52,7 +52,7 @@ export const loginWithKakao = async (authCode) => {
   }
 };
 
-//비회원 로그인 구현 함수
+//비회원 로그인 구현 api
 export const loginGuest = async (authCode) => {
   try {
     const response = await apiClient.post("/auth/guest/login",
@@ -69,7 +69,7 @@ export const loginGuest = async (authCode) => {
   }
 };
 
-//로그아웃 구현 함수
+//로그아웃 구현 api
 export const logout = async () => {
   try {
     const response = await apiClient.post("/auth/logout", {}, {
@@ -89,7 +89,7 @@ export const logout = async () => {
   }
 };
 
-//방 생성 함수
+//방 생성 api
 export const createRoom = async (roomDetails) => {
   return apiClient.post("/rooms/create", roomDetails, {
     headers: {
@@ -99,7 +99,7 @@ export const createRoom = async (roomDetails) => {
   });
 };
 
-//방 list 생성 함수(list + player 객체)
+//방 list 생성 api(list + player 객체)
 export const fetchRooms = async () => {
   return apiClient.get("/rooms/list", {
     headers: {
@@ -107,4 +107,11 @@ export const fetchRooms = async () => {
       "Content-Type": "application/json",
     },
   });
+};
+
+//방 입장 가능 여부 확인 api
+export const checkRoomAvailability = async (roomId) => {
+  console.log(roomId);
+  const response = await apiClient.post(`/rooms/${roomId}/check`);
+  return response.data; // 예: { isAvailable: true, message: "방 입장 가능" }
 };

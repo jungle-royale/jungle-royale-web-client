@@ -11,7 +11,7 @@ const RoomCard = ({ roomName, currentPlayers, maxPlayers, isPlaying, onJoin }) =
       <p>
         상태: {
           isPlaying === "WAITING" ? "대기 중" : 
-          isPlaying === "IN_PROGRESS" ? "게임 중" : "완료됨"
+          isPlaying === "RUNNING" ? "게임 중" : "완료됨"
         }
       </p>
       <p>

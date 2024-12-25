@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRooms } from "../contexts/RoomsContext";
-import { fetchRooms } from "../api";
+import { fetchRooms, checkRoomAvailability } from "../api";
 import RoomCard from "../components/RoomCard";
 import Button from "../components/Button";
 
@@ -23,7 +23,7 @@ const RoomList = () => {
     };
 
     loadRooms();
-  }, [setRooms]);
+  }, []);
 
   return (
     <div>
@@ -43,7 +43,22 @@ const RoomList = () => {
               currentPlayers={room.currentPlayers}
               maxPlayers={room.maxPlayers}
               isPlaying={room.status}
-              onJoin={() => console.log(`${room.title}에 입장합니다.`)}
+              onJoin={async () => {
+                try {
+                  // 서버에 방 입장 가능 여부 요청
+                  const message = await checkRoomAvailability(room.id);
+            
+                  if (message === "GAME_JOIN_AVAILABLE") {
+                    console.log(`${room.title}에 입장합니다.`);
+                    // 실제 방 입장 로직 추가
+                  } else {
+                    alert(`입장 불가: ${message}`); // 서버에서 반환된 메시지 출력
+                  }
+                } catch (error) {
+                  console.error("입장 가능 여부 확인 중 오류 발생:", error);
+                  alert("입장 가능 여부를 확인할 수 없습니다. 잠시 후 다시 시도해주세요.");
+                }
+              }}
             />
           ))}
         </div>
