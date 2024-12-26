@@ -1,6 +1,10 @@
+
 .app {
   text-align: center;
   padding: 20px;
+  width: 100%; /* 페이지 가로 크기를 100%로 설정 */
+  max-width: 1440px; /* 필요에 따라 최대 크기 제한 */
+  margin: 0 auto; /* 페이지를 중앙 정렬 */
 }
 
 .room-list {
@@ -43,8 +47,11 @@
 
 /* Media Query: 화면 너비가 600px 이하일 때 */
 @media (max-width: 600px) {
-  .room-card {
-    width: 100%; /* 카드가 화면 너비를 채우도록 설정 */
-    margin-bottom: 10px;
+  .app {
+    width: 100%; /* 모바일에서도 가로폭이 꽉 차도록 설정 */
+    padding: 0 10px; /* 여백 추가 */
   }
 }
+
+
+

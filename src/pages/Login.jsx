@@ -1,5 +1,4 @@
-//import axios from "axios";
-import { loginWithKakao } from "../api";
+import { loginWithKakao, loginGuest } from "../api";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
@@ -12,15 +11,16 @@ const Login = () => {
   const { setIsLogin } = useLoginContext();
 
 
-  //const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code&prompt=consent`;  //동의 화면 무조건 뜨게하기기
+  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
+
 
 
   const sendCodeToServer = async (authCode) => {
     try {
       const response = await loginWithKakao(authCode); // 반환된 데이터 처리
       setIsLogin(true); // 로그인 상태 업데이트
-      console.log("Login 성공:", response);
+      console.log("카카오 Login 성공:", response);
+      alert("카카오 로그인 성공");
       navigate("/"); // 홈으로 이동
     } catch (error) {
       console.error("Login 처리 중 오류 발생:", error.message);
@@ -41,13 +41,24 @@ const Login = () => {
   };
 
   //비회원 로그인 시
-  // const handleLogin = () =>{};
+  const handleLoginGuest = async () => {
+    try {
+      const response = await loginGuest(); // 서버와 통신하여 토큰 수신
+      setIsLogin(true); // 로그인 상태 업데이트
+      console.log("비회원 Login 성공:", response);
+      alert("비회원으로 로그인되었습니다.");
+      navigate("/"); // 홈 화면으로 이동
+    } catch (error) {
+      console.error("비회원 로그인 처리 중 오류 발생:", error.message);
+      alert("비회원 로그인 중 문제가 발생했습니다. 다시 시도해주세요.");
+    }
+  };
 
   return (
     <div>
       <h1>로그인 화면</h1>
       <Button text="카카오 로그인" onClick={handleLoginKakao} />
-      {/* <Button text="비회원 로그인" onClick={handleLogin} /> */}
+      <Button text="비회원 로그인" onClick={handleLoginGuest} />
 
     </div>
   );

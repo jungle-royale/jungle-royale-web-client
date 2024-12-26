@@ -3,12 +3,13 @@ import axios from "axios";
 const BASE_URL = "http://192.168.1.241:8080/api";   //5G
 //const BASE_URL = "http://172.16.156.158:8080/api";    //olleh
 
-
+//api 생성
 const apiClient = axios.create({
   baseURL: BASE_URL,
   headers: { "Content-Type": "application/json" },
 });
 
+//토큰 재발급 요청 api
 export const refreshAccessToken = async () => {
   try {
     console.log("Access token 갱신 요청 시작"); // 요청 시작 확인
@@ -31,6 +32,7 @@ export const refreshAccessToken = async () => {
   }
 };
 
+//카카오 로그인 구현 api
 export const loginWithKakao = async (authCode) => {
   try {
     const response = await apiClient.post("/auth/kakao/login",
@@ -50,6 +52,24 @@ export const loginWithKakao = async (authCode) => {
   }
 };
 
+//비회원 로그인 구현 api
+export const loginGuest = async (authCode) => {
+  try {
+    const response = await apiClient.post("/auth/guest/login",
+      { code: authCode },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    localStorage.setItem("isLogin", "true");
+    localStorage.setItem("jwt_token", response.data.jwtToken);
+    localStorage.setItem("role", response.data.role);
+    return response.data;
+  } catch (error) {
+    console.error("Login 실패:", error.message);
+    throw error;
+  }
+};
+
+//로그아웃 구현 api
 export const logout = async () => {
   try {
     const response = await apiClient.post("/auth/logout", {}, {
@@ -67,4 +87,31 @@ export const logout = async () => {
   } catch (error) {
     console.error("로그아웃 중 오류 발생:", error.message);
   }
+};
+
+//방 생성 api
+export const createRoom = async (roomDetails) => {
+  return apiClient.post("/rooms/create", roomDetails, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+//방 list 생성 api(list + player 객체)
+export const fetchRooms = async () => {
+  return apiClient.get("/rooms/list", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+//방 입장 가능 여부 확인 api
+export const checkRoomAvailability = async (roomId) => {
+  console.log(roomId);
+  const response = await apiClient.post(`/rooms/${roomId}/check`);
+  return response.data; // 예: { isAvailable: true, message: "방 입장 가능" }
 };

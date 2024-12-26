@@ -1,41 +1,70 @@
-import PropTypes from 'prop-types';
-import RoomCard from '../components/RoomCard';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRooms } from "../contexts/RoomsContext";
+import { fetchRooms, checkRoomAvailability } from "../api";
+import RoomCard from "../components/RoomCard";
+import Button from "../components/Button";
 
-const RoomList = ({ rooms, onJoinRoom }) => {
+const RoomList = () => {
+  const { rooms, setRooms } = useRooms();
+  const [userName, setUserName] = useState(""); // 유저 이름 상태 추가
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadRooms = async () => {
+      try {
+        const response = await fetchRooms(); // API 호출
+        console.log("list: ", response);
+        setRooms(response.data.gameRooms); // 상태 업데이트
+        setUserName(response.data.userInfo.username); // 유저 이름 상태 업데이트
+      } catch (error) {
+        console.error("방 목록을 불러오는 중 오류 발생:", error);
+      }
+    };
+
+    loadRooms();
+  }, []);
+
   return (
     <div>
-      {/* <Header /> */}
+      <div>
+        <Button text="Room Creater" onClick={() => navigate("/roomcreater")} />
+      </div>
+      <div className="user-info">
+        <p>안녕하세요, {userName}님!</p>
+      </div>
       <div className="room-page">
         <h1>게임 방 목록</h1>
         <div className="room-list">
           {rooms.map((room) => (
             <RoomCard
               key={room.id}
-              roomName={room.name}
+              roomName={room.title}
               currentPlayers={room.currentPlayers}
               maxPlayers={room.maxPlayers}
-              isPlaying={room.isPlaying}
-              onJoin={() => onJoinRoom(room.name)}
+              isPlaying={room.status}
+              onJoin={async () => {
+                try {
+                  // 서버에 방 입장 가능 여부 요청
+                  const message = await checkRoomAvailability(room.id);
+            
+                  if (message === "GAME_JOIN_AVAILABLE") {
+                    console.log(`${room.title}에 입장합니다.`);
+                    // 실제 방 입장 로직 추가
+                  } else {
+                    alert(`입장 불가: ${message}`); // 서버에서 반환된 메시지 출력
+                  }
+                } catch (error) {
+                  console.error("입장 가능 여부 확인 중 오류 발생:", error);
+                  alert("입장 가능 여부를 확인할 수 없습니다. 잠시 후 다시 시도해주세요.");
+                }
+              }}
             />
           ))}
         </div>
       </div>
     </div>
   );
-};
-
-// PropTypes 정의
-RoomList.propTypes = {
-  rooms: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      currentPlayers: PropTypes.number.isRequired,
-      maxPlayers: PropTypes.number.isRequired,
-      isPlaying: PropTypes.bool.isRequired,
-    })
-  ).isRequired, // rooms는 필수이며 객체 배열
-  onJoinRoom: PropTypes.func.isRequired, // onJoinRoom은 필수이며 함수
 };
 
 export default RoomList;

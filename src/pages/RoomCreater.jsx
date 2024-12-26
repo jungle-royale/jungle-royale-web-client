@@ -1,27 +1,60 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Input from "../components/Input";
+import { useRooms } from "../contexts/RoomsContext";
+import { createRoom } from "../api";
 
 const RoomCreater = () => {
   const [roomName, setRoomName] = useState('');
   const [maxPlayers, setMaxPlayers] = useState('');
   const [minPlayers, setMinPlayers] = useState('');
-  const [gameDuration, setGameDuration] = useState('');
-  const [isPublic, setIsPublic] = useState(false);
+  const [maxGameTime, setMaxGameTime] = useState('');
+  const [isSecret, setIsSecret] = useState(false);
+  const isLoadingRef = useRef(false);
   const [map, setMap] = useState('');
+  const { addRoom } = useRooms(); // RoomsContext에서 addRoom 가져오기
+  const navigate = useNavigate();
 
-  const handleCreateRoom = () => {
+
+  const handleCreateRoom = async () => {
+    if (isLoadingRef.current) {
+      console.warn("중복 요청 방지: 이미 요청 중입니다.");
+      return; // 중복 요청 방지
+    }
+  
+    isLoadingRef.current = true; // 로딩 상태 시작
+  
     const roomDetails = {
-      roomName,
+      title: roomName,
       maxPlayers: parseInt(maxPlayers, 10),
       minPlayers: parseInt(minPlayers, 10),
-      gameDuration: parseInt(gameDuration, 10),
-      isPublic,
+      maxGameTime: parseInt(maxGameTime, 10),
+      secret: isSecret,
       map,
     };
-
-    console.log('Room Created:', roomDetails);
-    alert('방이 생성되었습니다!');
+  
+    try {
+      console.log("방 생성 요청 데이터:", roomDetails); // 요청 데이터 확인
+      const response = await createRoom(roomDetails); // API 요청
+      console.log("create 성공:", response);
+  
+      addRoom({
+        id: response.data.id, // 서버에서 반환된 ID 사용
+        title: response.data.title,
+        currentPlayers: response.data.currentPlayers,
+        maxPlayers: response.data.maxPlayers,
+        status: response.data.status,
+      });
+  
+      alert("방이 성공적으로 생성되었습니다!");
+      navigate("/rooms"); // RoomList로 이동
+    } catch (error) {
+      console.error("방 생성 중 오류 발생:", error.response?.data || error.message);
+      alert("방 생성 중 문제가 발생했습니다. 다시 시도해주세요.");
+    } finally {
+      isLoadingRef.current = false; // 로딩 상태 복구
+    }
   };
 
   return (
@@ -51,8 +84,8 @@ const RoomCreater = () => {
       <Input
         label="게임 소요 시간 (분)"
         type="number"
-        value={gameDuration}
-        onChange={(e) => setGameDuration(e.target.value)}
+        value={maxGameTime}
+        onChange={(e) => setMaxGameTime(e.target.value)}
         placeholder="게임 소요 시간을 입력하세요"
       />
       <div style={{ marginBottom: '10px' }}>
@@ -77,15 +110,19 @@ const RoomCreater = () => {
         <label style={{ display: 'block', marginBottom: '5px' }}>공개 여부</label>
         <input
           type="checkbox"
-          checked={isPublic}
-          onChange={(e) => setIsPublic(e.target.checked)}
+          checked={isSecret}
+          onChange={(e) => setIsSecret(e.target.checked)}
           style={{
             width: 'auto',
             margin: '10px',
           }}
         />
       </div>
-      <Button text="방 생성" onClick={handleCreateRoom} />
+      <Button
+        text={isLoadingRef.current ? "생성 중..." : "방 생성"}
+        onClick={handleCreateRoom}
+        disabled={isLoadingRef.current} // 로딩 중일 때 버튼 비활성화
+      />
     </div>
   );
 };
