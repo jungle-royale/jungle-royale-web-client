@@ -7,13 +7,12 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 0 20px; /* 헤더 전체 여백 줄임 */
-  height: 100px; /* 헤더 높이 */
+  height: 70px; /* 헤더 높이 */
   background-color: #ffffff; /* 헤더 배경색 */
   border-bottom: 1px solid #ccc; /* 헤더 하단 구분선 */
   z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
   box-sizing: border-box; /* 패딩 포함 크기 계산 */
   overflow: hidden; /* 스크롤 제거 및 잘림 방지 */
-
 }
 
 header .logo {
@@ -34,7 +33,7 @@ header nav {
 }
 
 header nav a {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #333;
   text-decoration: none;
   font-weight: 500;
@@ -43,6 +42,7 @@ header nav a {
 
 header nav a:hover {
   text-decoration: underline; /* 마우스 올림 시 강조 */
+  color: #535bf2; /* 링크 위로 커서 올릴 시 색상 적용 */
   cursor: pointer;  
 }
 
@@ -51,13 +51,6 @@ header nav a:hover {
   gap: 16px; /* 각 링크 사이에 16px 간격 추가 */
 }
 
-/* .login-link,
-.logout-link {
-  cursor: pointer;
-} */
-
-
-/* 페이지 내용이 헤더 아래로 시작되도록 여백 추가 */
 body {
-  margin-top: 100px; /* 헤더 높이만큼 여백 추가 */
+  margin-top: 70px; /* 헤더 높이만큼 여백 추가 */
 }
