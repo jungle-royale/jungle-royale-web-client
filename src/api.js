@@ -41,6 +41,7 @@ export const loginWithKakao = async (authCode) => {
       { code: authCode },
     );
     localStorage.setItem("isLogin", "true");
+    localStorage.setItem("userRole", response.data.role);
     localStorage.setItem("jwt_token", response.data.jwtToken);
     localStorage.setItem("access_token", response.data.accessToken);
     localStorage.setItem("refresh_token", response.data.refreshToken);

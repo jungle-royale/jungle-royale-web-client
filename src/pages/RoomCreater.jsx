@@ -140,7 +140,7 @@ const RoomCreater = () => {
           }}
         >
           <option value="" disabled>맵을 선택하세요</option>
-          <option value="desert">사막</option>
+          <option value="snow">눈</option>
           <option value="forest">숲</option>
           <option value="city">도시</option>
         </select>

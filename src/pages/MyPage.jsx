@@ -1,8 +1,5 @@
-import useForMember from "../hooks/useNavigateToMypage";
 
 const MyPage = () => {
-  useForMember(); // 회원 전용 접근 제한 적용
-
   return (
     <div>
       <h1>마이페이지</h1>

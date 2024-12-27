@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchRooms, checkRoomAvailability } from "../api";
 import { useRooms } from "../contexts/RoomsContext";
 import { useClickLock } from "../contexts/ClickLockContext"; // 중복 클릭 방지
+import useSafeNavigation from "../hooks/useSafeNavigation";
 
 import RoomCard from "../components/RoomCard";
 import './RoomList.css';
@@ -13,6 +14,8 @@ const RoomList = () => {
   const [userName, setUserName] = useState(""); // 유저 이름 상태 추가
   const navigate = useNavigate();
   const { isLocked, lock, unlock } = useClickLock(); // 중복 클릭 방지 훅 사용
+  const { navigateSafely } = useSafeNavigation();
+
 
 
   useEffect(() => {
@@ -75,7 +78,7 @@ const RoomList = () => {
                   src="/assets/plus_circle.png"
                   className="room-creater"
                   alt="Room Creater"
-                  onClick={() => navigate("/roomcreater")}
+                  onClick={(e) => navigateSafely(e, "/roomcreater")}
                 />
               </div>
         </div>

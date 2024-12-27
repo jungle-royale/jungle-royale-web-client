@@ -43,7 +43,7 @@
 /* 첫 번째 버튼 */
 .button-room-list:first-of-type {
   height: 100px; /* 버튼의 고정 높이 */
-  top: 75%; /* 화면 상단에서 40% 위치 */
+  bottom: 50px;
 }
 
 /* 두 번째 버튼 */
@@ -51,4 +51,14 @@
   height: 50px; /* 버튼의 고정 높이 */
   bottom: 0; /* 두 번째 버튼을 컨테이너 맨 아래로 배치 */
   top: auto; /* 상단 배치 속성 제거 */
+}
+
+
+/* 미디어 쿼리: 작은 화면에서 버튼 크기 조정 */
+@media (max-width: 600px) {
+  .button-room-list {
+    width: 30vw; /* 작은 화면에서는 버튼 너비를 화면 너비의 30%로 설정 */
+    height: 12vh; /* 버튼 높이를 화면 높이의 12%로 설정 */
+    font-size: 0.9rem; /* 글씨 크기 축소 */
+  }
 }
