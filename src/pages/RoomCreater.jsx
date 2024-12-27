@@ -140,37 +140,35 @@ const RoomCreater = () => {
                 border: '1px solid #ccc',
                 borderRadius: '4px',
               }}
-              >
-              <option value="" disabled>맵을 선택하세요</option>
-              <option value="snow">눈</option>
-              <option value="forest">숲</option>
-              <option value="city">도시</option>
-            </select>
-          </div>
-          <div style={{ marginBottom: '10px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>비공개 여부</label>
-            <input
-              type="checkbox"
-              checked={isSecret}
-              onChange={(e) => setIsSecret(e.target.checked)}
-              style={{
-                width: 'auto',
-                margin: '10px',
-              }}
-              />
-          </div>
-            
-          <button className="button-room-list" onClick={() => {
-              if (!isLocked) {
-                lock();
-                handleCreateRoom();
-              }
-            }} disabled={isLocked}>
-            {isLocked ? "생성 중..." : "방 생성"}
-          </button>
+            >
+            <option value="" disabled>맵을 선택하세요</option>
+            <option value="snow">눈</option>
+            <option value="forest">숲</option>
+            <option value="city">도시</option>
+          </select>
         </div>
+        <div style={{ marginBottom: '10px' }}>
+          <label style={{ display: 'block', marginBottom: '5px' }}>비공개 여부</label>
+          <input
+            type="checkbox"
+            checked={isSecret}
+            onChange={(e) => setIsSecret(e.target.checked)}
+            style={{
+              width: 'auto',
+              margin: '10px',
+            }}
+          />
+        </div>
+        <button onClick={() => {
+            if (!isLocked) {
+              lock();
+              handleCreateRoom();
+            }
+          }} disabled={isLocked}>
+          {isLocked ? "생성 중..." : "방 생성"}
+        </button>
       </div>
-    
+    </div>
   );
 };
 
