@@ -1,9 +1,11 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { createRoom } from "../api";
+import { useRooms } from "../contexts/RoomsContext";
+import { useClickLock } from '../contexts/ClickLockContext';
 import Button from "../components/Button";
 import Input from "../components/Input";
-import { useRooms } from "../contexts/RoomsContext";
-import { createRoom } from "../api";
+
 
 const RoomCreater = () => {
   const [roomName, setRoomName] = useState('');
@@ -11,10 +13,12 @@ const RoomCreater = () => {
   const [minPlayers, setMinPlayers] = useState('');
   const [maxGameTime, setMaxGameTime] = useState('');
   const [isSecret, setIsSecret] = useState(false);
-  const isLoadingRef = useRef(false);
   const [map, setMap] = useState('');
   const { addRoom } = useRooms(); // RoomsContext에서 addRoom 가져오기
+  const { isLocked, lock, unlock } = useClickLock();
+
   const navigate = useNavigate();
+
 
     // 랜덤 제목 목록
     const randomTitles = [
@@ -26,10 +30,7 @@ const RoomCreater = () => {
     ];
 
   const handleCreateRoom = async () => {
-    if (isLoadingRef.current) {
-      console.warn("중복 요청 방지: 이미 요청 중입니다.");
-      return; // 중복 요청 방지
-    }
+    if (isLocked) return; // 중복 클릭 방지
 
     // 랜덤 제목 선택
     const defaultRoomName =
@@ -56,9 +57,7 @@ const RoomCreater = () => {
       alert("맵을 선택해주세요.");
       return;
     }
-    
-    isLoadingRef.current = true; // 로딩 상태 시작
-  
+      
     const roomDetails = {
       title: roomName || defaultRoomName, // 입력값 없으면 랜덤 제목 사용
       maxPlayers: parseInt(maxPlayers, 10),
@@ -86,7 +85,7 @@ const RoomCreater = () => {
       console.error("방 생성 중 오류 발생:", error.response?.data || error.message);
       alert("방 생성 중 문제가 발생했습니다. 다시 시도해주세요.");
     } finally {
-      isLoadingRef.current = false; // 로딩 상태 복구
+      unlock();
     }
   };
 
@@ -158,9 +157,9 @@ const RoomCreater = () => {
         />
       </div>
       <Button
-        text={isLoadingRef.current ? "생성 중..." : "방 생성"}
+        text={lock() ? "생성 중..." : "방 생성"}
         onClick={handleCreateRoom}
-        disabled={isLoadingRef.current} // 로딩 중일 때 버튼 비활성화
+        disabled={lock()} // 로딩 중일 때 버튼 비활성화
       />
     </div>
   );

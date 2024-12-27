@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRooms } from "../contexts/RoomsContext";
 import { fetchRooms, checkRoomAvailability } from "../api";
+import { useRooms } from "../contexts/RoomsContext";
 import RoomCard from "../components/RoomCard";
 import Button from "../components/Button";
 import './RoomList.css';

@@ -38,12 +38,12 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 html {
   overflow-y: scroll;
 }
 body {
   overflow: visible; /* 스크롤바를 추가로 생성하지 않음 */
-
 }
 
 
@@ -54,6 +54,6 @@ body {
   }
 
   button {
-    background-color: #f9f9f9; /* 버튼 배경색 - 라이트 모드에서 명확한 색상으로 조정 */
-  }
+    background-color: #f9f9f9;  /* 버튼 배경색 - 라이트 모드에서 명확한 색상으로 조정 */
+  } 
 }
