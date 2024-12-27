@@ -7,7 +7,7 @@ const useNavigateToMypage = () => {
 
   return () => {
     const role = localStorage.getItem("role");
-    if (!isLogin || role === "guest") {
+    if (!isLogin || role === "GUEST") {
       alert("회원만 접근할 수 있는 페이지입니다.");
       navigate("/login");
     } else {

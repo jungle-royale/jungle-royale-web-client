@@ -6,11 +6,14 @@ const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="app">
-      {/* 대문 사진 */}
-      <div className="main-bg"></div>
-      <div>
-        <Button text="Room List" onClick={() => navigate("/rooms")} />
+    <div>
+      <div className="image"></div>
+      <div className="button-room-list">
+      <Button
+        text="Room List"
+        type="button-room-list"
+        onClick={() => navigate("/rooms")}
+      />
       </div>
     </div>
   );

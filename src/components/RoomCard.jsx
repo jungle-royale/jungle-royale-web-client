@@ -3,7 +3,7 @@
 import PropTypes from "prop-types"
 
 const RoomCard = ({ roomName, currentPlayers, maxPlayers, isPlaying, onJoin }) => {
-  const isJoinable = isPlaying === "WAITING";
+  const isJoinable = (isPlaying === "WAITING") && (currentPlayers < maxPlayers);
 
   return (
     <div className="room-card">
