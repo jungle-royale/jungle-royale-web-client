@@ -4,6 +4,7 @@ import { createRoom } from "../api";
 import { useRooms } from "../contexts/RoomsContext";
 import { useClickLock } from '../contexts/ClickLockContext';
 import Input from "../components/Input";
+import "./RoomCreater.css"
 
 
 const RoomCreater = () => {
@@ -91,82 +92,85 @@ const RoomCreater = () => {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px' }}>
+    <div className='room-creater-container'>
       <h1>방 만들기</h1>
-      <Input
-        label="방 이름"
-        type="text"
-        value={roomName}
-        onChange={(e) => setRoomName(e.target.value)}
-        placeholder="방 이름을 입력하세요(미입력시 랜덤)"
-      />
-      <Input
-        label="최소 인원"
-        type="number"
-        value={minPlayers}
-        onChange={(e) => setMinPlayers(e.target.value)}
-        placeholder="최소 인원을 입력하세요"
-        min="2"
-        max="100"
-      />
-      <Input
-        label="최대 인원"
-        type="number"
-        value={maxPlayers}
-        onChange={(e) => setMaxPlayers(e.target.value)}
-        placeholder="최대 인원을 입력하세요"
-        min="2"
-        max="100"
-      />
-      <Input
-        label="게임 소요 시간 (분)"
-        type="number"
-        value={maxGameTime}
-        onChange={(e) => setMaxGameTime(e.target.value)}
-        placeholder="게임 소요 시간을 입력하세요"
-        min="1"
-        max="10"
-      />
-      <div style={{ marginBottom: '10px' }}>
-        <label style={{ display: 'block', marginBottom: '5px' }}>맵 선택</label>
-        <select
-          value={map}
-          onChange={(e) => setMap(e.target.value)}
-          style={{
-            width: '100%',
-            padding: '10px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-          }}
-        >
-          <option value="" disabled>맵을 선택하세요</option>
-          <option value="snow">눈</option>
-          <option value="forest">숲</option>
-          <option value="city">도시</option>
-        </select>
+        <div className='room-input'>
+          <Input
+            label="방 이름"
+            type="text"
+            value={roomName}
+            onChange={(e) => setRoomName(e.target.value)}
+            placeholder="방 이름을 입력하세요(미입력시 랜덤)"
+          />
+          <Input
+            label="최소 인원"
+            type="number"
+            value={minPlayers}
+            onChange={(e) => setMinPlayers(e.target.value)}
+            placeholder="최소 인원을 입력하세요"
+            min="2"
+            max="100"
+          />
+          <Input
+            label="최대 인원"
+            type="number"
+            value={maxPlayers}
+            onChange={(e) => setMaxPlayers(e.target.value)}
+            placeholder="최대 인원을 입력하세요"
+            min="2"
+            max="100"
+          />
+          <Input
+            label="게임 소요 시간 (분)"
+            type="number"
+            value={maxGameTime}
+            onChange={(e) => setMaxGameTime(e.target.value)}
+            placeholder="게임 소요 시간을 입력하세요"
+            min="1"
+            max="10"
+          />
+          <div style={{ marginBottom: '10px' }}>
+            <label style={{ display: 'block', marginBottom: '5px' }}>맵 선택</label>
+            <select
+              value={map}
+              onChange={(e) => setMap(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '10px',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+              }}
+              >
+              <option value="" disabled>맵을 선택하세요</option>
+              <option value="snow">눈</option>
+              <option value="forest">숲</option>
+              <option value="city">도시</option>
+            </select>
+          </div>
+          <div style={{ marginBottom: '10px' }}>
+            <label style={{ display: 'block', marginBottom: '5px' }}>비공개 여부</label>
+            <input
+              type="checkbox"
+              checked={isSecret}
+              onChange={(e) => setIsSecret(e.target.checked)}
+              style={{
+                width: 'auto',
+                margin: '10px',
+              }}
+              />
+          </div>
+            
+          <button className="button-room-list" onClick={() => {
+              if (!isLocked) {
+                lock();
+                handleCreateRoom();
+              }
+            }} disabled={isLocked}>
+            {isLocked ? "생성 중..." : "방 생성"}
+          </button>
+        </div>
       </div>
-      <div style={{ marginBottom: '10px' }}>
-        <label style={{ display: 'block', marginBottom: '5px' }}>비공개 여부</label>
-        <input
-          type="checkbox"
-          checked={isSecret}
-          onChange={(e) => setIsSecret(e.target.checked)}
-          style={{
-            width: 'auto',
-            margin: '10px',
-          }}
-        />
-      </div>
-      
-      <button className="button-room-list" onClick={() => {
-          if (!isLocked) {
-            lock();
-            handleCreateRoom();
-          }
-        }} disabled={isLocked}>
-        {isLocked ? "생성 중..." : "방 생성"}
-      </button>
-    </div>
+    
   );
 };
 

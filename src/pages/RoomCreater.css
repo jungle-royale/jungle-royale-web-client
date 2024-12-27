@@ -1,0 +1,44 @@
+.room-creater-container {
+  width: 100%;
+  max-width: 900px; /* Modal의 max-width보다 약간 작게 설정 */
+  height: auto; /* 높이는 내용에 따라 자동 조정 */
+  background-color: #ffffff; /* 배경색 */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* Modal의 padding과 동일하게 설정 */
+  border-radius: 8px; /* Modal의 border-radius와 동일 */
+  box-sizing: border-box; /* 패딩 포함 크기 계산 */
+  overflow: hidden; /* 내용이 영역 밖으로 나가지 않도록 */
+}
+
+.room-input {
+  width: 100%; /* 부모 컨테이너에 맞게 설정 */
+  max-width: 800px; /* 내부 콘텐츠의 최대 너비 설정 */
+  display: flex;
+  flex-direction: column; /* 세로 정렬 */
+  gap: 20px; /* 입력 필드 간 간격 */
+  justify-content: flex-start; /* 위쪽부터 정렬 */
+  align-items: center; /* 가운데 정렬 */
+  background-color: #f7f7f7; /* 약간의 대비를 위한 배경색 */
+  padding: 30px; /* 여백 조정 */
+  border-radius: 8px; /* 모서리 둥글게 */
+  box-shadow: inset 0px 2px 6px rgba(0, 0, 0, 0.1); /* 내부 그림자 추가 */
+}
+
+.room-creater-container button {
+  width: 100%;
+  max-width: 300px; /* 버튼 최대 크기 제한 */
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.room-creater-container button:hover {
+  background-color: #0056b3;
+}
