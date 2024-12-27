@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchRooms, checkRoomAvailability } from "../api";
 import { useRooms } from "../contexts/RoomsContext";
+import { useClickLock } from "../contexts/ClickLockContext"; // 중복 클릭 방지
+
 import RoomCard from "../components/RoomCard";
 import Button from "../components/Button";
 import './RoomList.css';
@@ -11,9 +13,11 @@ const RoomList = () => {
   const { rooms, setRooms } = useRooms();
   const [userName, setUserName] = useState(""); // 유저 이름 상태 추가
   const navigate = useNavigate();
+  const { isLocked, lock, unlock } = useClickLock(); // 중복 클릭 방지 훅 사용
+
 
   useEffect(() => {
-    const loadRooms = async () => {
+    const loadRooms = async () => {        
       try {
         const response = await fetchRooms(); // API 호출
         console.log("list: ", response);
@@ -46,6 +50,8 @@ const RoomList = () => {
               maxPlayers={room.maxPlayers}
               isPlaying={room.status}
               onJoin={async () => {
+                if(isLocked) return;
+                lock();
                 try {
                   // 서버에 방 입장 가능 여부 요청
                   const message = await checkRoomAvailability(room.id);
@@ -63,6 +69,8 @@ const RoomList = () => {
                   console.error("입장 가능 여부 확인 중 오류 발생:", error);
                   alert("입장 가능 여부를 확인할 수 없습니다. 잠시 후 다시 시도해주세요.");
                   window.location.reload(); // 페이지 새로고침
+                } finally {
+                  unlock();
                 }
               }}
             />

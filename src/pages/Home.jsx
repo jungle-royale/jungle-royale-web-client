@@ -44,24 +44,19 @@ const Home = () => {
 
   return (
     <div>
-      <div className="image"></div>
-      <div className="button-room-list">
-      <Button
-        text={isLogin ? "GAME START" : "LOGIN"}
-        type="button-room-list"
-        onClick={handleButtonClick}
-      />
-      <>
-      { isLogin ? 
-          <Button text={"닉네임"} onClick={handleLoginGuest} />
-          : <Button text={"비회원 로그인"} onClick={handleLoginGuest} />
-
-      }
-      </>
-
-      
+      <div className="image"></div> 
+        <Button
+          text={isLogin ? "GAME START" : "LOGIN"}
+          type="button-room-list"
+          onClick={handleButtonClick}
+        />
+        <Button
+          text={isLogin ? "닉네임" : "비회원 로그인"}
+          type="button-room-list"
+          onClick={isLogin ? handleButtonClick : handleLoginGuest }
+        />
       </div>
-    </div>
+  
   );
 };
 

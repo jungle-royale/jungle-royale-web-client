@@ -11,17 +11,30 @@ export const LoginProvider = ({ children }) => {
     return loginStatus === "true" || false;
   });
 
-  // 상태와 localStorage 동기화
+  const [userRole, setUserRole] = useState(() => {
+    return localStorage.getItem("userRole") || ""; // 역할 초기화
+  });
+
+  // isLogin 상태와 localStorage 동기화
   useEffect(() => {
     localStorage.setItem("isLogin", isLogin.toString());
     console.debug("isLogin 상태 동기화됨:", isLogin);
   }, [isLogin]);
+
+  // userRole 상태와 localStorage 동기화
+  useEffect(() => {
+    localStorage.setItem("userRole", userRole);
+    console.debug("userRole 상태 동기화됨:", userRole);
+  }, [userRole]);
 
   // 다른 탭에서 localStorage 변화 리스닝
   useEffect(() => {
     const handleStorageChange = (event) => {
       if (event.key === "isLogin") {
         setIsLogin(event.newValue === "true");
+      }
+      if (event.key === "userRole") {
+        setUserRole(event.newValue || "");
       }
     };
     window.addEventListener("storage", handleStorageChange);
@@ -31,7 +44,7 @@ export const LoginProvider = ({ children }) => {
   }, []);
 
   return (
-    <LoginContext.Provider value={{ isLogin, setIsLogin }}>
+    <LoginContext.Provider value={{ isLogin, setIsLogin, userRole, setUserRole }}>
       {children}
     </LoginContext.Provider>
   );
