@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRooms } from "../contexts/RoomsContext";
 import { fetchRooms, checkRoomAvailability } from "../api";
+import { useRooms } from "../contexts/RoomsContext";
+import { useClickLock } from "../contexts/ClickLockContext"; // 중복 클릭 방지
+
 import RoomCard from "../components/RoomCard";
-import Button from "../components/Button";
 import './RoomList.css';
 
 
@@ -11,9 +12,11 @@ const RoomList = () => {
   const { rooms, setRooms } = useRooms();
   const [userName, setUserName] = useState(""); // 유저 이름 상태 추가
   const navigate = useNavigate();
+  const { isLocked, lock, unlock } = useClickLock(); // 중복 클릭 방지 훅 사용
+
 
   useEffect(() => {
-    const loadRooms = async () => {
+    const loadRooms = async () => {        
       try {
         const response = await fetchRooms(); // API 호출
         console.log("list: ", response);
@@ -28,31 +31,29 @@ const RoomList = () => {
   }, [setRooms]);
 
   return (
-    <div>
-      <div>
-        <Button text="Room Creater" onClick={() => navigate("/roomcreater")} />
-      </div>
+    <div className="room-list-container">
       <div className="user-info">
         <p>안녕하세요, {userName}님!</p>
       </div>
       <div className="room-page">
-        <h1>게임 방 목록</h1>
         <div className="room-list">
+          <h1>게임 방 목록</h1>
           {rooms.map((room) => (
             <RoomCard
-              key={room.id}
-              roomName={room.title}
-              currentPlayers={room.currentPlayers}
-              maxPlayers={room.maxPlayers}
-              isPlaying={room.status}
-              onJoin={async () => {
+            key={room.id}
+            roomName={room.title}
+            currentPlayers={room.currentPlayers}
+            maxPlayers={room.maxPlayers}
+            isPlaying={room.status}
+            onJoin={async () => {
+                if(isLocked) return;
+                lock();
                 try {
                   // 서버에 방 입장 가능 여부 요청
                   const message = await checkRoomAvailability(room.id);
             
                   if (message === "GAME_JOIN_AVAILABLE") {
                     console.log(`${room.title}에 입장합니다.`);
-                    // 실제 방 입장 로직 추가
                     navigate("/game"); // gameUrl로 이동
 
                   } else {
@@ -63,10 +64,20 @@ const RoomList = () => {
                   console.error("입장 가능 여부 확인 중 오류 발생:", error);
                   alert("입장 가능 여부를 확인할 수 없습니다. 잠시 후 다시 시도해주세요.");
                   window.location.reload(); // 페이지 새로고침
+                } finally {
+                  unlock();
                 }
               }}
-            />
+              />
           ))}
+              <div className="room-creater">
+                <img
+                  src="/assets/plus_circle.png"
+                  className="room-creater"
+                  alt="Room Creater"
+                  onClick={() => navigate("/roomcreater")}
+                />
+              </div>
         </div>
       </div>
     </div>

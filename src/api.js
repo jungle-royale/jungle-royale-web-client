@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const BASE_URL = "http://192.168.1.241:8080/api";   //5G
+//const BASE_URL = "http://172.16.175.152:8080/api";   //olleh 24G
+
 //const BASE_URL = "http://172.16.156.158:8080/api";    //olleh
+
 
 //api 생성
 const apiClient = axios.create({
@@ -17,7 +20,6 @@ export const refreshAccessToken = async () => {
       headers: {
         authorization_refresh: `Bearer ${localStorage.getItem("refresh_token")}`,
       },
-      "Content-Type": "application/json",
     }
     );
     if (response.data.success) {
@@ -37,14 +39,12 @@ export const loginWithKakao = async (authCode) => {
   try {
     const response = await apiClient.post("/auth/kakao/login",
       { code: authCode },
-      { headers: { "Content-Type": "application/json" } }
     );
     localStorage.setItem("isLogin", "true");
     localStorage.setItem("jwt_token", response.data.jwtToken);
     localStorage.setItem("access_token", response.data.accessToken);
     localStorage.setItem("refresh_token", response.data.refreshToken);
     localStorage.setItem("expires_in", response.data.expiresIn);
-    localStorage.setItem("role", response.data.role);
     return response.data;
   } catch (error) {
     console.error("Login 실패:", error.message);
@@ -57,11 +57,9 @@ export const loginGuest = async (authCode) => {
   try {
     const response = await apiClient.post("/auth/guest/login",
       { code: authCode },
-      { headers: { "Content-Type": "application/json" } }
     );
     localStorage.setItem("isLogin", "true");
     localStorage.setItem("jwt_token", response.data.jwtToken);
-    localStorage.setItem("role", response.data.role);
     return response.data;
   } catch (error) {
     console.error("Login 실패:", error.message);
@@ -69,15 +67,15 @@ export const loginGuest = async (authCode) => {
   }
 };
 
-//로그아웃 구현 api
+// //로그아웃 구현 api
 export const logout = async () => {
   try {
-    const response = await apiClient.post("/auth/logout", {}, {
-      headers: {
-        authorization_access: `Bearer ${localStorage.getItem("access_token")}`,
-        authorization_refresh: `Bearer ${localStorage.getItem("refresh_token")}`,
-      },
+    const response = await apiClient.post("/auth/logout",
+      { userRole : localStorage.getItem("role")}, 
+      { headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,},
     });
+    console.log(response);
     if (response.data.success) {
       localStorage.clear();
       console.log("로그아웃 성공");
@@ -94,7 +92,6 @@ export const createRoom = async (roomDetails) => {
   return apiClient.post("/rooms/create", roomDetails, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
-      "Content-Type": "application/json",
     },
   });
 };
@@ -104,7 +101,6 @@ export const fetchRooms = async () => {
   return apiClient.get("/rooms/list", {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
-      "Content-Type": "application/json",
     },
   });
 };
@@ -112,6 +108,26 @@ export const fetchRooms = async () => {
 //방 입장 가능 여부 확인 api
 export const checkRoomAvailability = async (roomId) => {
   console.log(roomId);
-  const response = await apiClient.post(`/rooms/${roomId}/check`);
+  const response = await apiClient.post(`/rooms/${roomId}/check`, {}, 
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
+      },
+    }
+  );
   return response.data; // 예: { isAvailable: true, message: "방 입장 가능" }
+};
+
+
+//회원 정보 조회 api
+export const checkMemberSheet = async (roomId) => {
+  console.log(roomId);
+  const response = await apiClient.post(`/users/profile`, {}, 
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
+      },
+    }
+  );
+  return response.data;
 };

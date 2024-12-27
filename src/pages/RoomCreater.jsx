@@ -1,9 +1,10 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import Button from "../components/Button";
-import Input from "../components/Input";
-import { useRooms } from "../contexts/RoomsContext";
 import { createRoom } from "../api";
+import { useRooms } from "../contexts/RoomsContext";
+import { useClickLock } from '../contexts/ClickLockContext';
+import Input from "../components/Input";
+
 
 const RoomCreater = () => {
   const [roomName, setRoomName] = useState('');
@@ -11,9 +12,10 @@ const RoomCreater = () => {
   const [minPlayers, setMinPlayers] = useState('');
   const [maxGameTime, setMaxGameTime] = useState('');
   const [isSecret, setIsSecret] = useState(false);
-  const isLoadingRef = useRef(false);
   const [map, setMap] = useState('');
   const { addRoom } = useRooms(); // RoomsContext에서 addRoom 가져오기
+  const { isLocked, lock, unlock } = useClickLock();
+
   const navigate = useNavigate();
 
     // 랜덤 제목 목록
@@ -26,11 +28,6 @@ const RoomCreater = () => {
     ];
 
   const handleCreateRoom = async () => {
-    if (isLoadingRef.current) {
-      console.warn("중복 요청 방지: 이미 요청 중입니다.");
-      return; // 중복 요청 방지
-    }
-
     // 랜덤 제목 선택
     const defaultRoomName =
     randomTitles[Math.floor(Math.random() * randomTitles.length)];
@@ -38,27 +35,30 @@ const RoomCreater = () => {
     // 유효성 검사
     if (!minPlayers || parseInt(minPlayers, 10) < 2 || parseInt(minPlayers, 10) > 100) {
       alert("최소 인원은 2에서 100 사이의 값이어야 합니다.");
+      unlock(); // 잠금 해제
       return;
     }
     if (!maxPlayers || parseInt(maxPlayers, 10) < 2 || parseInt(maxPlayers, 10) > 100) {
       alert("최대 인원은 2에서 100 사이의 값이어야 합니다.");
+      unlock(); // 잠금 해제
       return;
     }
     if (parseInt(maxPlayers, 10) < parseInt(minPlayers, 10)) {
       alert("최대 인원은 최소 인원보다 커야 합니다.");
+      unlock(); // 잠금 해제
       return;
     }
     if (!maxGameTime || parseInt(maxGameTime, 10) < 1 || parseInt(maxGameTime, 10) > 10) {
       alert("게임 소요 시간은 1에서 10 사이의 값이어야 합니다.");
+      unlock(); // 잠금 해제
       return;
     }
     if (!map) {
       alert("맵을 선택해주세요.");
+      unlock(); // 잠금 해제
       return;
     }
-    
-    isLoadingRef.current = true; // 로딩 상태 시작
-  
+      
     const roomDetails = {
       title: roomName || defaultRoomName, // 입력값 없으면 랜덤 제목 사용
       maxPlayers: parseInt(maxPlayers, 10),
@@ -86,7 +86,7 @@ const RoomCreater = () => {
       console.error("방 생성 중 오류 발생:", error.response?.data || error.message);
       alert("방 생성 중 문제가 발생했습니다. 다시 시도해주세요.");
     } finally {
-      isLoadingRef.current = false; // 로딩 상태 복구
+      unlock();
     }
   };
 
@@ -157,11 +157,15 @@ const RoomCreater = () => {
           }}
         />
       </div>
-      <Button
-        text={isLoadingRef.current ? "생성 중..." : "방 생성"}
-        onClick={handleCreateRoom}
-        disabled={isLoadingRef.current} // 로딩 중일 때 버튼 비활성화
-      />
+      
+      <button className="button-room-list" onClick={() => {
+          if (!isLocked) {
+            lock();
+            handleCreateRoom();
+          }
+        }} disabled={isLocked}>
+        {isLocked ? "생성 중..." : "방 생성"}
+      </button>
     </div>
   );
 };

@@ -1,0 +1,21 @@
+.login-container {
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* 화면 전체 높이 */
+  background-color: #f7f9fc; /* 배경색 */
+}
+
+.login-box {
+  text-align: center;
+  background-color: #ffffff; /* 박스 배경색 */
+  padding: 20px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 */
+}
+
+.kakao-button {
+  margin-top: 20px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px; /* 버튼 최대 너비 */
+}

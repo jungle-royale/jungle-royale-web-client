@@ -1,0 +1,62 @@
+/* 상태 표시용 동그라미 */
+.indicator {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 50%; /* 둥근 모양 유지 */
+  margin-right: 10px; /* 오른쪽 여백 유지 */
+}
+
+
+.indicator.available {
+  background-color: #00d67a; /* 입장 가능: 초록색 */
+}
+
+.indicator.unavailable {
+  background-color: rgb(252, 84, 84); /* 입장 불가: 빨간색 */
+}
+
+.join-button {
+  background-color: #a9bfc7;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.join-button:hover {
+  background-color: #0056b3;
+}
+
+.join-button:disabled, /* 버튼이 비활성화될 때 */
+.join-button.unavailable { /* 상태 클래스 */
+  background-color: #ccc; /* 회색 */
+  color: #666; /* 글씨 색도 회색 */
+  cursor: not-allowed; /* 커서 비활성화 */
+}
+
+.room-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px 12px;
+  width: 100%; /* 카드가 room-list 너비를 채우도록 */
+  aspect-ratio: 15 / 1; /* 가로로 긴 비율 유지 */
+  display: flex; /* 가로 정렬 */
+  border: 3px solid #333;
+  justify-content: space-between; /* 내용 좌우 정렬 */
+  align-items: center; /* 세로 가운데 정렬 */
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff; /* 카드 배경 */
+}
+
+.room-card .room-info {
+  display: flex;
+  align-items: center; /* 세로 가운데 정렬 */
+  gap: 10px; /* 텍스트와 아이콘 간 간격 */
+}
+
+.room-card .status {
+  font-weight: bold;
+  color: #333;
+}

@@ -3,7 +3,7 @@
   line-height: 1.5; /* 텍스트 줄 간격 */
   font-weight: 400; /* 일반 텍스트에 사용되는 기본 두께 설정 */
 
-  color-scheme: light dark; /* 다크 모드와 라이트 모드 모두 지원 */
+  color-scheme: light; /*dark;  다크 모드와 라이트 모드 모두 지원 */
   color: rgba(255, 255, 255, 0.87); /* 텍스트 색상 - 다크 모드에서 읽기 쉬운 흰색 계열 */
   background-color: #242424; /* 배경색 - 다크 모드 기본값 */
 
@@ -25,35 +25,18 @@ body {
   margin: 0;
   width: 100%;
   height: 100vh;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-html {
-  overflow-y: scroll;
-}
-body {
   overflow: visible; /* 스크롤바를 추가로 생성하지 않음 */
 
 }
 
+html {
+  overflow-y: scroll;
+  display: flex;
+}
 
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547; /* 텍스트 색상 - 라이트 모드에서 어두운 색상으로 설정 */
     background-color: #ffffff; /* 배경색 - 라이트 모드에서 밝은 색상으로 변경 */
-  }
-
-  button {
-    background-color: #f9f9f9; /* 버튼 배경색 - 라이트 모드에서 명확한 색상으로 조정 */
   }
 }
