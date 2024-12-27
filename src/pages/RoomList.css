@@ -38,36 +38,6 @@
   overflow-x: hidden; /* 가로 스크롤 제거 */
 }
 
-.room-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px 12px;
-  width: 100%; /* 카드가 room-list 너비를 채우도록 */
-  aspect-ratio: 15 / 1; /* 가로로 긴 비율 유지 */
-  display: flex; /* 가로 정렬 */
-  justify-content: space-between; /* 내용 좌우 정렬 */
-  align-items: center; /* 세로 가운데 정렬 */
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff; /* 카드 배경 */
-}
-
-.room-card .room-info {
-  display: flex;
-  align-items: center; /* 세로 가운데 정렬 */
-  gap: 10px; /* 텍스트와 아이콘 간 간격 */
-}
-
-.room-card .status {
-  font-weight: bold;
-  color: #333;
-}
-
-.room-card .indicator {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: green; /* 상태 표시용 색상 */
-}
 
 .room-creater {
   cursor: pointer;

@@ -21,7 +21,7 @@ const Header = () => {
   return (
     <header>
       <div className="logo">
-        <a href="/">
+        <a href="/" onClick={(e) => navigateSafely(e, "/")}>
           <img src="/assets/header_logo.png" alt="Eternal Snowman" />
         </a>        
       </div>

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { createRoom } from "../api";
 import { useRooms } from "../contexts/RoomsContext";
 import { useClickLock } from '../contexts/ClickLockContext';
-import Button from "../components/Button";
 import Input from "../components/Input";
 
 
@@ -158,16 +157,15 @@ const RoomCreater = () => {
           }}
         />
       </div>
-      <Button
-        text={isLocked ? "생성 중..." : "방 생성"}
-        onClick={() => {
+      
+      <button className="button-room-list" onClick={() => {
           if (!isLocked) {
             lock();
             handleCreateRoom();
           }
-        }}
-        disabled={isLocked} // 상태만 사용
-      />
+        }} disabled={isLocked}>
+        {isLocked ? "생성 중..." : "방 생성"}
+      </button>
     </div>
   );
 };

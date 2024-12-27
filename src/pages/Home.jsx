@@ -1,4 +1,3 @@
-import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import { loginGuest } from "../api";
 import { useLoginContext } from "../contexts/LoginContext";
@@ -46,16 +45,12 @@ const Home = () => {
   return (
     <div>
       <div className="image-container">
-        <Button
-          text={isLogin ? "GAME START" : "LOGIN"}
-          type="button-room-list"
-          onClick={handleButtonClick}
-        />
-        <Button
-          text={isLogin ? "닉네임" : "비회원 로그인"}
-          type="button-room-list"
-          onClick={isLogin ? handleButtonClick : handleLoginGuest }
-        />
+        <button className="button-room-list" onClick={handleButtonClick}>
+        {isLogin ? "GAME START" : "LOGIN"}
+        </button>
+        <button className="button-room-list" onClick={isLogin ? handleButtonClick : handleLoginGuest }>
+        {isLogin ? "닉네임" : "비회원 로그인"}
+        </button>
       </div> 
     </div>
   );
