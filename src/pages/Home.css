@@ -14,7 +14,7 @@
   font-size: 1rem;
   font-weight: bold;
   color: #fff;
-  background-color: #535bf2; /* 메인 색상 */
+  background-color: #f9f9f9; /* 메인 색상 */
   border: none;
   border-radius: 8px;
   text-align: center;
@@ -32,4 +32,10 @@
 .button-room-list:active {
   background-color: #1a2db8; /* 클릭 시 색상 변화 */
   transform: translateY(1px); /* 버튼이 눌리는 효과 */
+}
+
+@media (prefers-color-scheme: light) {
+  .button-room-list {
+    background-color: #535bf2;   /* 버튼 배경색 - 라이트 모드에서 명확한 색상으로 조정 */ 
+  }
 }

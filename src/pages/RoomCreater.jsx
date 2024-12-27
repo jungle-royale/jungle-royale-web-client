@@ -19,7 +19,6 @@ const RoomCreater = () => {
 
   const navigate = useNavigate();
 
-
     // 랜덤 제목 목록
     const randomTitles = [
       "신나는 방",
@@ -30,8 +29,6 @@ const RoomCreater = () => {
     ];
 
   const handleCreateRoom = async () => {
-    if (isLocked) return; // 중복 클릭 방지
-
     // 랜덤 제목 선택
     const defaultRoomName =
     randomTitles[Math.floor(Math.random() * randomTitles.length)];
@@ -39,22 +36,27 @@ const RoomCreater = () => {
     // 유효성 검사
     if (!minPlayers || parseInt(minPlayers, 10) < 2 || parseInt(minPlayers, 10) > 100) {
       alert("최소 인원은 2에서 100 사이의 값이어야 합니다.");
+      unlock(); // 잠금 해제
       return;
     }
     if (!maxPlayers || parseInt(maxPlayers, 10) < 2 || parseInt(maxPlayers, 10) > 100) {
       alert("최대 인원은 2에서 100 사이의 값이어야 합니다.");
+      unlock(); // 잠금 해제
       return;
     }
     if (parseInt(maxPlayers, 10) < parseInt(minPlayers, 10)) {
       alert("최대 인원은 최소 인원보다 커야 합니다.");
+      unlock(); // 잠금 해제
       return;
     }
     if (!maxGameTime || parseInt(maxGameTime, 10) < 1 || parseInt(maxGameTime, 10) > 10) {
       alert("게임 소요 시간은 1에서 10 사이의 값이어야 합니다.");
+      unlock(); // 잠금 해제
       return;
     }
     if (!map) {
       alert("맵을 선택해주세요.");
+      unlock(); // 잠금 해제
       return;
     }
       
@@ -157,9 +159,14 @@ const RoomCreater = () => {
         />
       </div>
       <Button
-        text={lock() ? "생성 중..." : "방 생성"}
-        onClick={handleCreateRoom}
-        disabled={lock()} // 로딩 중일 때 버튼 비활성화
+        text={isLocked ? "생성 중..." : "방 생성"}
+        onClick={() => {
+          if (!isLocked) {
+            lock();
+            handleCreateRoom();
+          }
+        }}
+        disabled={isLocked} // 상태만 사용
       />
     </div>
   );

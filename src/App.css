@@ -2,6 +2,8 @@
   text-align: center;
   padding: 10px;
   display: flex;
+  left: 0; /* 화면 왼쪽에 붙음 */
+  width: 100vw; /* 화면 전체 너비를 차지 */
 }
 
 @media (max-width: 600px) {
