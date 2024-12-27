@@ -7,7 +7,7 @@ import { useClickLock } from '../contexts/ClickLockContext';
 import "./Home.css";
 
 const Home = () => {
-  const { isLogin, setIsLogin } = useLoginContext(); // 로그인 상태 확인
+  const { isLogin, setIsLogin, setUserRole } = useLoginContext(); // 로그인 상태 확인
   const { isLocked, lock, unlock } = useClickLock();
 
 
@@ -31,6 +31,7 @@ const Home = () => {
       try {
         const response = await loginGuest(); // 서버와 통신하여 토큰 수신
         setIsLogin(true); // 로그인 상태 업데이트
+        setUserRole(response.role)
         console.log("비회원 Login 성공:", response);
         alert("비회원으로 로그인되었습니다.");
         navigate("/"); // 홈 화면으로 이동

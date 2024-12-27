@@ -45,7 +45,6 @@ export const loginWithKakao = async (authCode) => {
     localStorage.setItem("access_token", response.data.accessToken);
     localStorage.setItem("refresh_token", response.data.refreshToken);
     localStorage.setItem("expires_in", response.data.expiresIn);
-    localStorage.setItem("role", response.data.role);
     return response.data;
   } catch (error) {
     console.error("Login 실패:", error.message);
@@ -61,7 +60,6 @@ export const loginGuest = async (authCode) => {
     );
     localStorage.setItem("isLogin", "true");
     localStorage.setItem("jwt_token", response.data.jwtToken);
-    localStorage.setItem("role", response.data.role);
     return response.data;
   } catch (error) {
     console.error("Login 실패:", error.message);

@@ -1,4 +1,4 @@
-import { loginWithKakao,  } from "../api";
+import { loginWithKakao } from "../api";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
@@ -13,7 +13,7 @@ const Login = () => {
   const Rest_api_key = 'e8304b2a6b5aeb5020ef6abeb405115b';
   const redirect_uri = "http://localhost:5173/login"; // 리다이렉트 URL 설정
   const navigate = useNavigate();
-  const { setIsLogin } = useLoginContext();
+  const { setIsLogin, setUserRole } = useLoginContext();
 
 
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
@@ -27,6 +27,7 @@ const Login = () => {
     try {
       const response = await loginWithKakao(authCode); // 반환된 데이터 처리
       setIsLogin(true); // 로그인 상태 업데이트
+      setUserRole(response.role);
       console.log("카카오 Login 성공:", response);
       alert("카카오 로그인 성공");
       navigate("/"); // 홈으로 이동

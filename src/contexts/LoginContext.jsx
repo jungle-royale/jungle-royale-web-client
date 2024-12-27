@@ -12,7 +12,7 @@ export const LoginProvider = ({ children }) => {
   });
 
   const [userRole, setUserRole] = useState(() => {
-    return localStorage.getItem("userRole") || ""; // 역할 초기화
+    return localStorage.getItem("role") || ""; // 역할 초기화
   });
 
   // isLogin 상태와 localStorage 동기화
