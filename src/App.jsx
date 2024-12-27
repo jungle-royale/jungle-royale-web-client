@@ -12,26 +12,31 @@ import MyPage from "./pages/MyPage"
 import GameTemp from "./pages/GameTemp"
 import useTokenRefresh from "./hooks/useTokenRefresh";
 import Header from "./components/Header";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   useTokenRefresh(); // 자동 토큰 갱신 로직
 
   return (
-    <ClickLockProvider>
-      <LoginProvider>
-        <RoomsProvider>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/rooms" element={<RoomList />} />
-            <Route path="/roomcreater" element={<RoomCreater />} />
-            <Route path="/mypage" element={<MyPage />}/>
-            <Route path="/game" element={<GameTemp />}/>
-          </Routes>
-        </RoomsProvider>
-      </LoginProvider>
-    </ClickLockProvider>
+    <>
+      <ScrollToTop />
+      <ClickLockProvider>
+        <LoginProvider>
+          <RoomsProvider>
+            <Header />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/rooms" element={<RoomList />} />
+              <Route path="/roomcreater" element={<RoomCreater />} />
+              <Route path="/mypage" element={<MyPage />}/>
+              <Route path="/game" element={<GameTemp />}/>
+            </Routes>
+          </RoomsProvider>
+        </LoginProvider>
+      </ClickLockProvider>
+    </>
+
   );
 }
 

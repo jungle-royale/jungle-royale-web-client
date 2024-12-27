@@ -45,7 +45,7 @@ const Home = () => {
 
   return (
     <div>
-      <div className="image"></div> 
+      <div className="image-container">
         <Button
           text={isLogin ? "GAME START" : "LOGIN"}
           type="button-room-list"
@@ -56,8 +56,8 @@ const Home = () => {
           type="button-room-list"
           onClick={isLogin ? handleButtonClick : handleLoginGuest }
         />
-      </div>
-  
+      </div> 
+    </div>
   );
 };
 

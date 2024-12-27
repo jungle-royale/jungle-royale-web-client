@@ -5,7 +5,6 @@ import { useRooms } from "../contexts/RoomsContext";
 import { useClickLock } from "../contexts/ClickLockContext"; // 중복 클릭 방지
 
 import RoomCard from "../components/RoomCard";
-import Button from "../components/Button";
 import './RoomList.css';
 
 
@@ -32,24 +31,21 @@ const RoomList = () => {
   }, [setRooms]);
 
   return (
-    <div>
-      <div>
-        <Button text="Room Creater" onClick={() => navigate("/roomcreater")} />
-      </div>
+    <div className="room-list-container">
       <div className="user-info">
         <p>안녕하세요, {userName}님!</p>
       </div>
       <div className="room-page">
-        <h1>게임 방 목록</h1>
         <div className="room-list">
+          <h1>게임 방 목록</h1>
           {rooms.map((room) => (
             <RoomCard
-              key={room.id}
-              roomName={room.title}
-              currentPlayers={room.currentPlayers}
-              maxPlayers={room.maxPlayers}
-              isPlaying={room.status}
-              onJoin={async () => {
+            key={room.id}
+            roomName={room.title}
+            currentPlayers={room.currentPlayers}
+            maxPlayers={room.maxPlayers}
+            isPlaying={room.status}
+            onJoin={async () => {
                 if(isLocked) return;
                 lock();
                 try {
@@ -58,7 +54,6 @@ const RoomList = () => {
             
                   if (message === "GAME_JOIN_AVAILABLE") {
                     console.log(`${room.title}에 입장합니다.`);
-                    // 실제 방 입장 로직 추가
                     navigate("/game"); // gameUrl로 이동
 
                   } else {
@@ -73,8 +68,16 @@ const RoomList = () => {
                   unlock();
                 }
               }}
-            />
+              />
           ))}
+              <div className="room-creater">
+                <img
+                  src="/assets/plus_circle.png"
+                  className="room-creater"
+                  alt="Room Creater"
+                  onClick={() => navigate("/roomcreater")}
+                />
+              </div>
         </div>
       </div>
     </div>

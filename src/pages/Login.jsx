@@ -1,11 +1,10 @@
 import { loginWithKakao } from "../api";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../components/Button";
 import { useLoginContext } from "../contexts/LoginContext";
 import { useClickLock } from '../contexts/ClickLockContext';
 
-
+import "./Login.css";
 
 const Login = () => {
   const { isLocked, lock, unlock } = useClickLock();
@@ -55,9 +54,16 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>로그인 화면</h1>
-      <Button text="카카오 로그인" onClick={handleLoginKakao} />
+    <div className="login-container">
+      <div className="login-box">
+        <h1>로그인 화면</h1>
+        <img
+          src="/assets/kakao_login_wide.png"
+          className="kakao-button"
+          alt="카카오 로그인 버튼"
+          onClick={handleLoginKakao}
+        />
+      </div>
     </div>
   );
 };

@@ -1,0 +1,37 @@
+/* 상태 표시용 동그라미 */
+.indicator {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 50%; /* 둥근 모양 유지 */
+  margin-right: 10px; /* 오른쪽 여백 유지 */
+}
+
+
+.indicator.available {
+  background-color: green; /* 입장 가능: 초록색 */
+}
+
+.indicator.unavailable {
+  background-color: red; /* 입장 불가: 빨간색 */
+}
+
+.join-button {
+  background-color: #a9bfc7;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.join-button:hover {
+  background-color: #0056b3;
+}
+
+.join-button:disabled, /* 버튼이 비활성화될 때 */
+.join-button.unavailable { /* 상태 클래스 */
+  background-color: #ccc; /* 회색 */
+  color: #666; /* 글씨 색도 회색 */
+  cursor: not-allowed; /* 커서 비활성화 */
+}

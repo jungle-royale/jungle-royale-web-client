@@ -1,5 +1,6 @@
 //RoomCard Component
 //예상 인수:{ roomName, currentPlayers, maxPlayers, isPlaying, onJoin }
+import "./RoomCard.css"
 import PropTypes from "prop-types"
 
 const RoomCard = ({ roomName, currentPlayers, maxPlayers, isPlaying, onJoin }) => {
@@ -7,17 +8,18 @@ const RoomCard = ({ roomName, currentPlayers, maxPlayers, isPlaying, onJoin }) =
 
   return (
     <div className="room-card">
+      <div className={`indicator ${ isJoinable ? "available" : "unavailable" }`}></div>
       <h2>{roomName}</h2>
       <p>
         상태: {
           isPlaying === "WAITING" ? "대기 중" : 
-          isPlaying === "RUNNING" ? "게임 중" : "완료됨"
+          isPlaying === "RUNNING" ? "게임 중" : "완료"
         }
       </p>
       <p>
-        인원: {currentPlayers} / {maxPlayers}
+        {currentPlayers} / {maxPlayers}
       </p>
-      <button onClick={onJoin} disabled={!isJoinable}>
+      <button className="join-button" onClick={onJoin} disabled={!isJoinable}>
         {isJoinable ? "입장하기" : "입장 불가"}
       </button>
     </div>
