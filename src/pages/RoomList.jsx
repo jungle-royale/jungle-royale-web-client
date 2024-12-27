@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { fetchRooms, checkRoomAvailability } from "../api";
 import { useRooms } from "../contexts/RoomsContext";
 import { useClickLock } from "../contexts/ClickLockContext"; // 중복 클릭 방지
+import Modal from "../components/Modal"; // 모달 컴포넌트 임포트
+import RoomCreater from "./RoomCreater"; // 방 생성 컴포넌트 임포트
+//import useSafeNavigation from "../hooks/useSafeNavigation";
 
 import RoomCard from "../components/RoomCard";
 import './RoomList.css';
@@ -13,6 +16,10 @@ const RoomList = () => {
   const [userName, setUserName] = useState(""); // 유저 이름 상태 추가
   const navigate = useNavigate();
   const { isLocked, lock, unlock } = useClickLock(); // 중복 클릭 방지 훅 사용
+  const [isRoomCreaterOpen, setRoomCreaterOpen] = useState(false); // 모달 열림 상태 관리
+
+  //const { navigateSafely } = useSafeNavigation();
+
 
 
   useEffect(() => {
@@ -70,16 +77,19 @@ const RoomList = () => {
               }}
               />
           ))}
-              <div className="room-creater">
-                <img
-                  src="/assets/plus_circle.png"
-                  className="room-creater"
-                  alt="Room Creater"
-                  onClick={() => navigate("/roomcreater")}
-                />
-              </div>
+          {/* 방 생성 모달 열기 버튼 */}
+          <img
+            src="/assets/plus_circle.png"
+            className="room-creater-go"
+            alt="Room Creater"
+            onClick={() => setRoomCreaterOpen(true)}
+          />
         </div>
       </div>
+      {/* 모달 컴포넌트 */}
+      <Modal isOpen={isRoomCreaterOpen} onClose={() => setRoomCreaterOpen(false)}>
+        <RoomCreater />
+      </Modal>
     </div>
   );
 };

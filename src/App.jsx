@@ -3,10 +3,10 @@ import { LoginProvider } from "./contexts/LoginContext";
 import { RoomsProvider } from "./contexts/RoomsContext";
 import { ClickLockProvider } from "./contexts/ClickLockContext";
 
+
 import './App.css';
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import RoomCreater from "./pages/RoomCreater";
 import RoomList from "./pages/RoomList";
 import MyPage from "./pages/MyPage"
 import GameTemp from "./pages/GameTemp"
@@ -28,7 +28,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/rooms" element={<RoomList />} />
-              <Route path="/roomcreater" element={<RoomCreater />} />
+              {/* <Route path="/roomcreater" element={<RoomCreater />} /> */}
               <Route path="/mypage" element={<MyPage />}/>
               <Route path="/game" element={<GameTemp />}/>
             </Routes>
