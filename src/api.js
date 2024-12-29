@@ -135,19 +135,26 @@ export const checkMemberSheet = async (roomId) => {
 
 // 게시물 목록 가져오기 api
 export const fetchPosts = async () => {
-  try {
-    const response = await axios.get(`/api/posts`);
-    return response.data; // 데이터를 호출한 곳으로 반환
-  } catch (error) {
-    console.error("API 요청 중 오류:", error);
-    throw error; // 오류를 호출한 곳으로 전달
-  }
+  return apiClient.get("/api/posts/list", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
+    },
+  });
+};
+
+// 게시물 하나 가져오기
+export const getPost = async (postId) => {
+  return apiClient.get(`/api/posts/${postId}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
+    },
+  });
 };
 
 // 게시물 올리기 api
-export const createBoardPost = async (formData) => {
+export const createPost = async (formData) => {
   try {
-    const response = await axios.post(`/api/posts/upload`, formData, {
+    const response = await apiClient.post(`/api/posts/create`, formData, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
         "Content-Type": "multipart/form-data" 

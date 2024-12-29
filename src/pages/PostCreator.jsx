@@ -1,12 +1,15 @@
 import { useState } from "react";
 import Input from "../components/Input";
-import { createBoardPost } from "../api";
+import { createPost } from "../api";
+//import { useClickLock } from '../contexts/ClickLockContext';
 
-const BoardCreator = () => {
+const PostCreator = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  //const { isLocked, lock, unlock } = useClickLock();
+
 
   const handleImageChange = (event) => {
     setImage(event.target.files[0]);
@@ -27,7 +30,7 @@ const BoardCreator = () => {
     }
 
     try {
-      const data = await createBoardPost(formData); // API 호출
+      const data = await createPost(formData); // API 호출
       console.log("게시 성공:", data);
       alert("게시물이 성공적으로 등록되었습니다.");
     } catch (error) {
@@ -66,4 +69,4 @@ const BoardCreator = () => {
   );
 };
 
-export default BoardCreator;
+export default PostCreator;
