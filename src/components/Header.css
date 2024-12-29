@@ -8,7 +8,7 @@ header {
   align-items: center;
   padding: 0 20px; /* 헤더 전체 여백 줄임 */
   height: 70px; /* 헤더 높이 */
-  background-color: rgba(255, 255, 255, 0.5); /* 헤더 배경색 */
+  background-color: rgba(255, 255, 255, 0.9); /* 헤더 배경색 */
   border-bottom: 1px solid #ccc; /* 헤더 하단 구분선 */
   z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
   box-sizing: border-box; /* 패딩 포함 크기 계산 */

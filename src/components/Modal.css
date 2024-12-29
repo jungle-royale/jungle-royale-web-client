@@ -18,9 +18,13 @@
   border-radius: 8px;
   width: 90%;
   max-width: 1000px;
-  max-height: 800px;
+  height: 90%; /* 세로 크기를 동적으로 설정 */
+  max-height: 800px; /* 최대 높이 제한 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
+  overflow: auto; /* 넘치는 콘텐츠를 스크롤 가능하게 설정 */
 }
 
 .modal-close {
