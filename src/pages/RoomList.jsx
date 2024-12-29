@@ -18,10 +18,6 @@ const RoomList = () => {
   const { isLocked, lock, unlock } = useClickLock(); // 중복 클릭 방지 훅 사용
   const [isRoomCreaterOpen, setRoomCreaterOpen] = useState(false); // 모달 열림 상태 관리
 
-  //const { navigateSafely } = useSafeNavigation();
-
-
-
   useEffect(() => {
     const loadRooms = async () => {        
       try {

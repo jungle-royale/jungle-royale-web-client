@@ -1,7 +1,9 @@
 .image-container {
   position: relative; /* 부모 요소 기준으로 절대 위치를 설정하기 위해 필요 */
   width: 100%; 
+  /* background-image: url("/assets/home3.jpg"); */
   background-image: url("/assets/home.png");
+
   background-size: contain; /* 이미지 비율 유지 */
   background-repeat: no-repeat; 
   background-position: top center; /* 상단 중앙 정렬 */
@@ -43,14 +45,17 @@
 /* 첫 번째 버튼 */
 .button-room-list:first-of-type {
   height: 100px; /* 버튼의 고정 높이 */
-  bottom: 50px;
+  top: 50px;
 }
 
 /* 두 번째 버튼 */
 .button-room-list:last-of-type {
   height: 50px; /* 버튼의 고정 높이 */
-  bottom: 0; /* 두 번째 버튼을 컨테이너 맨 아래로 배치 */
-  top: auto; /* 상단 배치 속성 제거 */
+  top: 150px; /* 상단 배치 속성 제거 */
+}
+
+.board-container{
+  
 }
 
 

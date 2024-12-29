@@ -1,5 +1,3 @@
-//RoomCard Component
-//예상 인수:{ roomName, currentPlayers, maxPlayers, isPlaying, onJoin }
 import "./RoomCard.css"
 import PropTypes from "prop-types"
 

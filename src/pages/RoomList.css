@@ -38,6 +38,10 @@
   overflow-x: hidden; /* 가로 스크롤 제거 */
 }
 
+.room-cheat{
+  
+}
+
 
 .room-creater-go {
   cursor: pointer;
