@@ -79,7 +79,7 @@ const RoomList = () => {
           ))}
           {/* 방 생성 모달 열기 버튼 */}
           <img
-            src="/assets/plus_circle.png"
+            src="/assets/pluscircle.png"
             className="room-creater-go"
             alt="Room Creater"
             onClick={() => setRoomCreaterOpen(true)}

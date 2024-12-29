@@ -9,7 +9,6 @@ const Home = () => {
   const { isLogin, setIsLogin, setUserRole } = useLoginContext(); // 로그인 상태 확인
   const { isLocked, lock, unlock } = useClickLock();
 
-
   const navigate = useNavigate();
 
   const handleButtonClick = () => {

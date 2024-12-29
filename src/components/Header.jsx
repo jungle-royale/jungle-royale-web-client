@@ -22,7 +22,7 @@ const Header = () => {
     <header>
       <div className="logo">
         <a href="/" onClick={(e) => navigateSafely(e, "/")}>
-          <img src="/assets/header_logo.png" alt="Eternal Snowman" />
+          <img src="/assets/headercon.png" alt="Eternal Snowman" />
         </a>        
       </div>
       <nav>

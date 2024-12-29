@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const BASE_URL = "http://192.168.1.241:8080/api";   //5G
-//const BASE_URL = "http://172.16.175.152:8080/api";   //olleh 24G
-
-//const BASE_URL = "http://172.16.156.158:8080/api";    //olleh
+//const BASE_URL = import.meta.env.VITE_API_URL;
+const BASE_URL = "http://192.168.1.241:8080";   //5G
+//const BASE_URL = "http://172.16.175.152:8080";   //olleh 24G
+//const BASE_URL = "http://172.16.156.158:8080";    //olleh
+//const BASE_URL = "http://172.30.1.34:8080";    //watercooler
 
 
 //api 생성
@@ -16,7 +17,7 @@ const apiClient = axios.create({
 export const refreshAccessToken = async () => {
   try {
     console.log("Access token 갱신 요청 시작"); // 요청 시작 확인
-    const response = await apiClient.post("/auth/kakao/refresh-token", {}, {
+    const response = await apiClient.post("/api/auth/kakao/refresh-token", {}, {
       headers: {
         authorization_refresh: `Bearer ${localStorage.getItem("refresh_token")}`,
       },
@@ -37,7 +38,7 @@ export const refreshAccessToken = async () => {
 //카카오 로그인 구현 api
 export const loginWithKakao = async (authCode) => {
   try {
-    const response = await apiClient.post("/auth/kakao/login",
+    const response = await apiClient.post("/api/auth/kakao/login",
       { code: authCode },
     );
     localStorage.setItem("isLogin", "true");
@@ -56,7 +57,7 @@ export const loginWithKakao = async (authCode) => {
 //비회원 로그인 구현 api
 export const loginGuest = async (authCode) => {
   try {
-    const response = await apiClient.post("/auth/guest/login",
+    const response = await apiClient.post("/api/auth/guest/login",
       { code: authCode },
     );
     localStorage.setItem("isLogin", "true");
@@ -71,7 +72,7 @@ export const loginGuest = async (authCode) => {
 // //로그아웃 구현 api
 export const logout = async () => {
   try {
-    const response = await apiClient.post("/auth/logout",
+    const response = await apiClient.post("/api/auth/logout",
       { userRole : localStorage.getItem("role")}, 
       { headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,},
@@ -90,7 +91,7 @@ export const logout = async () => {
 
 //방 생성 api
 export const createRoom = async (roomDetails) => {
-  return apiClient.post("/rooms/create", roomDetails, {
+  return apiClient.post("/api/rooms/create", roomDetails, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
     },
@@ -99,7 +100,7 @@ export const createRoom = async (roomDetails) => {
 
 //방 list 생성 api(list + player 객체)
 export const fetchRooms = async () => {
-  return apiClient.get("/rooms/list", {
+  return apiClient.get("/api/rooms/list", {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
     },
@@ -109,7 +110,7 @@ export const fetchRooms = async () => {
 //방 입장 가능 여부 확인 api
 export const checkRoomAvailability = async (roomId) => {
   console.log(roomId);
-  const response = await apiClient.post(`/rooms/${roomId}/check`, {}, 
+  const response = await apiClient.post(`/api/rooms/${roomId}/check`, {}, 
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
@@ -123,7 +124,7 @@ export const checkRoomAvailability = async (roomId) => {
 //회원 정보 조회 api
 export const checkMemberSheet = async (roomId) => {
   console.log(roomId);
-  const response = await apiClient.post(`/users/profile`, {}, 
+  const response = await apiClient.post(`/api/users/profile`, {}, 
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
