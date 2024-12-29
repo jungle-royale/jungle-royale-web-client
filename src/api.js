@@ -109,7 +109,6 @@ export const fetchRooms = async () => {
 
 //방 입장 가능 여부 확인 api
 export const checkRoomAvailability = async (roomId) => {
-  console.log(roomId);
   const response = await apiClient.post(`/api/rooms/${roomId}/check`, {}, 
     {
       headers: {
@@ -132,4 +131,31 @@ export const checkMemberSheet = async (roomId) => {
     }
   );
   return response.data;
+};
+
+// 게시물 목록 가져오기 api
+export const fetchPosts = async () => {
+  try {
+    const response = await axios.get(`/api/posts`);
+    return response.data; // 데이터를 호출한 곳으로 반환
+  } catch (error) {
+    console.error("API 요청 중 오류:", error);
+    throw error; // 오류를 호출한 곳으로 전달
+  }
+};
+
+// 게시물 올리기 api
+export const createBoardPost = async (formData) => {
+  try {
+    const response = await axios.post(`/api/posts/upload`, formData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
+        "Content-Type": "multipart/form-data" 
+      },
+    });
+    return response.data; // 성공한 데이터를 반환
+  } catch (error) {
+    console.error("게시물 생성 중 오류:", error);
+    throw error; // 에러를 호출한 곳으로 전달
+  }
 };

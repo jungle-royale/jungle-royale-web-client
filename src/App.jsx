@@ -13,6 +13,9 @@ import GameTemp from "./pages/GameTemp"
 import useTokenRefresh from "./hooks/useTokenRefresh";
 import Header from "./components/Header";
 import ScrollToTop from "./components/ScrollToTop";
+import Board from "./pages/Board"
+import BoardCreator from "./pages/BoardCreator";
+import BoardEditor from "./pages/BoardEditor";
 
 function App() {
   useTokenRefresh(); // 자동 토큰 갱신 로직
@@ -30,6 +33,9 @@ function App() {
               <Route path="/rooms" element={<RoomList />} />
               <Route path="/mypage" element={<MyPage />}/>
               <Route path="/game" element={<GameTemp />}/>
+              <Route path="/board" element={<Board />}/>
+              <Route path="/board-creator" element={<BoardCreator />}/>
+              <Route path="/board-editor" element={<BoardEditor />}/>
             </Routes>
           </RoomsProvider>
         </LoginProvider>

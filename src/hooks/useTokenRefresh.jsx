@@ -21,7 +21,6 @@ const useTokenRefresh = () => {
       console.log("15-minute interval check");
       refreshInterval();
     }, 15 * 60 * 1000); // 15분마다 실행
-    //const intervalId = setInterval(refreshInterval, 15 * 60 * 1000); // 15분 주기 확인
     return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 타이머 정리
   }, []);
 };
