@@ -3,14 +3,12 @@ import { loginGuest } from "../api";
 import { useLoginContext } from "../contexts/LoginContext";
 import { useClickLock } from '../contexts/ClickLockContext';
 import Snowfall from "../components/SnowFall.jsx"; // Snowfall 경로 맞추기
-
-
+import Post from "../components/Post.jsx"; // Post 컴포넌트 가져오기
 import "./Home.css";
 
 const Home = () => {
   const { isLogin, setIsLogin, setUserRole } = useLoginContext(); // 로그인 상태 확인
   const { isLocked, lock, unlock } = useClickLock();
-
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
@@ -53,6 +51,9 @@ const Home = () => {
         <button className="button-room-list" onClick={isLogin ? handleButtonClick : handleLoginGuest }>
         {isLogin ? "닉네임" : "비회원 로그인"}
         </button>
+        <div className="post-container">
+          <Post />
+        </div>
       </div> 
     </div>
   );

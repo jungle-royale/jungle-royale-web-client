@@ -1,3 +1,4 @@
+/* .image-container styles */
 .image-container {
   position: relative;
   width: 100%;
@@ -13,6 +14,23 @@
   align-items: center; /* 자식 요소의 세로 정렬 */
 }
 
+/* .post-container styles */
+.post-container {
+  position: absolute; /* .image-container 내부에서 절대적인 위치 */
+  top: calc(80%); /* 컨테이너 높이의 60% 위치 */
+  left: 50%; /* 가로 중앙 정렬 */
+  transform: translate(-50%, 0); /* 수평 중앙 정렬만 적용 */
+  width: 80%; /* 너비를 배경 이미지 너비 기준으로 설정 */
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: rgba(249, 249, 249, 0.9); /* 반투명 배경 */
+  transition: transform 0.2s ease-in-out; /* 부드러운 움직임 추가 */
+}
+
+/* .button-room-list styles */
 .button-room-list {
   position: absolute; /* 이미지 위에 겹치도록 설정 */
   left: 50%; /* 가로 중앙 정렬 */
@@ -55,11 +73,6 @@
   height: 50px; /* 버튼의 고정 높이 */
   top: 150px; /* 상단 배치 속성 제거 */
 }
-
-.board-container{
-  
-}
-
 
 /* 미디어 쿼리: 작은 화면에서 버튼 크기 조정 */
 @media (max-width: 600px) {
