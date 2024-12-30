@@ -7,6 +7,8 @@ const MyPage = () => {
   const mountRef = useRef(null); // 캔버스를 렌더링할 DOM 요소 참조
 
   useEffect(() => {
+    if (!mountRef.current) return; // mountRef 초기화 확인
+
     // Three.js 기본 설정
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
@@ -39,7 +41,8 @@ const MyPage = () => {
     let isCameraClose = false;
 
     const getRelativeMousePosition = (event) => {
-      const rect = mountRef.current.getBoundingClientRect();
+      const rect = mountRef.current?.getBoundingClientRect();
+      if (!rect) return { x: 0, y: 0 };
       const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
       const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
       return { x, y };
@@ -52,7 +55,7 @@ const MyPage = () => {
     };
 
     const handleMouseDown = (event) => {
-      if (mountRef.current.contains(event.target)) {
+      if (mountRef.current?.contains(event.target)) {
         isMouseDown = true;
       }
     };
@@ -62,18 +65,14 @@ const MyPage = () => {
     };
 
     const handleDoubleClick = (event) => {
-      if (mountRef.current.contains(event.target)) {
-        if (isCameraClose) {
-          camera.position.z = 5;
-        } else {
-          camera.position.z = 2;
-        }
+      if (mountRef.current?.contains(event.target)) {
+        camera.position.z = isCameraClose ? 5 : 2;
         isCameraClose = !isCameraClose;
       }
     };
 
     const handleWheel = (event) => {
-      if (mountRef.current.contains(event.target)) {
+      if (mountRef.current?.contains(event.target)) {
         camera.position.z += event.deltaY * 0.01; // 휠 값을 사용해 delta 계산
         camera.position.z = Math.max(2, Math.min(10, camera.position.z)); // 카메라 z축 위치 제한 (2 ~ 10)
         event.preventDefault();
@@ -82,6 +81,7 @@ const MyPage = () => {
     };
 
     const handleResize = () => {
+      if (!mountRef.current) return;
       camera.aspect = mountRef.current.clientWidth / mountRef.current.clientHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
@@ -109,24 +109,21 @@ const MyPage = () => {
 
     // 클린업 함수
     return () => {
-      mountRef.current.removeEventListener("mousemove", handleMouseMove);
-      mountRef.current.removeEventListener("mousedown", handleMouseDown);
-      mountRef.current.removeEventListener("mouseup", handleMouseUp);
-      mountRef.current.removeEventListener("dblclick", handleDoubleClick);
-      mountRef.current.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("resize", handleResize);
       if (mountRef.current) {
-        mountRef.current.removeChild(renderer.domElement); 
+        mountRef.current.removeEventListener("mousemove", handleMouseMove);
+        mountRef.current.removeEventListener("mousedown", handleMouseDown);
+        mountRef.current.removeEventListener("mouseup", handleMouseUp);
+        mountRef.current.removeEventListener("dblclick", handleDoubleClick);
+        mountRef.current.removeEventListener("wheel", handleWheel);
+        mountRef.current.removeChild(renderer.domElement);
       }
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   return (
     <div className="mypage-container">
-      <div
-        ref={mountRef}
-        className="mypage-canvas"
-      />
+      <div ref={mountRef} className="mypage-canvas" />
       <div className="mypage-form">
         <h2>닉네임 정보</h2>
         <Input label="닉네임" type="text" value="" onChange={() => {}} placeholder="닉네임 입력" />

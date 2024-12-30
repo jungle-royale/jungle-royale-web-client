@@ -1,0 +1,22 @@
+.post-viewer {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.post-viewer h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.post-viewer p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+.loading-message {
+  font-size: 1.2rem;
+  color: gray;
+  text-align: center;
+}

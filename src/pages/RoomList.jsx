@@ -5,7 +5,6 @@ import { useRooms } from "../contexts/RoomsContext";
 import { useClickLock } from "../contexts/ClickLockContext"; // 중복 클릭 방지
 import Modal from "../components/Modal"; // 모달 컴포넌트 임포트
 import RoomCreater from "./RoomCreater"; // 방 생성 컴포넌트 임포트
-//import useSafeNavigation from "../hooks/useSafeNavigation";
 
 import RoomCard from "../components/RoomCard";
 import './RoomList.css';
