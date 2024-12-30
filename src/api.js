@@ -1,8 +1,8 @@
 import axios from "axios";
 
 //const BASE_URL = import.meta.env.VITE_API_URL;
-const BASE_URL = "http://172.30.1.69:8080";   //긱사
-//const BASE_URL = "http://192.168.1.241:8080";   //5G
+//const BASE_URL = "http://172.30.1.69:8080";   //긱사
+const BASE_URL = "http://192.168.1.241:8080";   //5G
 //const BASE_URL = "http://172.16.175.152:8080";   //olleh 24G
 //const BASE_URL = "http://172.16.156.158:8080";    //olleh
 //const BASE_URL = "http://172.30.1.34:8080";    //watercooler
@@ -134,13 +134,18 @@ export const checkMemberSheet = async (roomId) => {
 };
 
 // 게시물 목록 가져오기 api
-export const fetchPosts = async () => {
+export const fetchPosts = async ({ page = 1, limit = 10 }) => {
   return apiClient.get("/api/posts/list", {
+    params: {
+      page, // 현재 페이지 번호
+      limit,
+    },
     headers: {
       Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
     },
   });
 };
+
 
 // 게시물 하나 가져오기
 export const getPost = async (postId) => {
@@ -188,6 +193,7 @@ export const updatePost = async (postId, updatedData) => {
     const response = await apiClient.put(`/api/posts/${postId}`,updatedData,{
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt_token")}`, // JWT 토큰 포함
+        "Content-Type": "multipart/form-data" 
       },
     });
     return response.data;

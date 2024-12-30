@@ -28,14 +28,14 @@ const PostViewer = () => {
         console.log("Decoded sub from JWT:", sub);
 
         setPost(response.data);
-        setIsOwner(response.data.writerId === parseInt(sub, 10)); // 타입 변환 후 비교
+        setIsOwner(response.data.writerId === parseInt(sub, 10));
       } catch (error) {
         console.error("게시물을 불러오는 중 오류 발생:", error.message);
       }
     };
 
     fetchPost();
-  }, [id, sub]); // `sub`이 null이 아닐 때만 실행
+  }, [id, sub]);
 
   const handleEdit = (e) => {
     e.preventDefault();
@@ -62,6 +62,15 @@ const PostViewer = () => {
         <>
           <h1>{post.title}</h1>
           <p>{post.content}</p>
+          {post.imageUrl && (
+            <div className="post-image-container">
+              <img
+                src={post.imageUrl}
+                alt="게시물 이미지"
+                className="post-image"
+              />
+            </div>
+          )}
           {isOwner && (
             <div className="button-group">
               <button className="edit-button" onClick={handleEdit}>

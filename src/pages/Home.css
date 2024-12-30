@@ -1,14 +1,16 @@
 .image-container {
-  position: relative; /* 부모 요소 기준으로 절대 위치를 설정하기 위해 필요 */
-  width: 100%; 
-  /* background-image: url("/assets/home3.jpg"); */
+  position: relative;
+  width: 100%;
+  max-width: 1550px;
+  margin: 0 auto; /* 가로 중앙 정렬 */
   background-image: url("/assets/home.png");
-
   background-size: contain; /* 이미지 비율 유지 */
-  background-repeat: no-repeat; 
+  background-repeat: no-repeat;
   background-position: top center; /* 상단 중앙 정렬 */
-  /* 높이를 비율에 맞게 설정 */
   padding-top: 56.25%; /* 16:9 비율 (높이 = 가로의 56.25%) */
+  display: flex;
+  justify-content: center; /* 자식 요소의 가로 정렬 */
+  align-items: center; /* 자식 요소의 세로 정렬 */
 }
 
 .button-room-list {

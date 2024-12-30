@@ -3,6 +3,7 @@
   padding: 20px;
   max-width: 600px;
   margin: 0 auto;
+  background-color: #f9f9f9;
 }
 
 .post-container h1 {
@@ -44,4 +45,31 @@
   font-size: 1.2rem;
   color: gray;
   text-align: center;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.page-button {
+  margin: 0 5px;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.page-button:hover {
+  background-color: #f0f0f0;
+}
+
+.page-button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #0056b3;
+  font-weight: bold;
 }
