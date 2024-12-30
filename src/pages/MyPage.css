@@ -2,17 +2,25 @@
 
 /* 전체 컨테이너 */
 .mypage-container {
+  width: 100%; /* 화면 너비에 맞게 설정 */
+  max-width: 1400px; /* 최대 너비 제한 */
+  min-height: 900px;
+  aspect-ratio: 4 / 3; /* TV 화면 비율 유지 (16:9) */
+  background-color: #d9d9d9; /* 배경색 */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+  margin: 30px auto; /* 중앙 정렬 */
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding: 20px;
-  background-color: #f5f5f5; /* 배경색 설정 */
+  overflow: hidden; /* 내용이 영역 밖으로 나가지 않도록 */
 }
 
 /* 캔버스 스타일 */
 .mypage-canvas {
-  width: 100%;
+  width: 60%;
   height: 500px;
+  margin: 50px auto; /* 중앙 정렬 */
   background-color: #e0f7fa; /* 캔버스 배경색 */
   border: 1px solid #ccc; /* 경계선 추가 */
   border-radius: 8px; /* 모서리 둥글게 */
@@ -22,8 +30,8 @@
 /* 입력 폼 스타일 */
 .mypage-form {
   margin-top: 20px;
-  width: 100%;
-  max-width: 400px;
+  width: 60%; /* 부모 컨테이너 비율에 따라 조정 */
+  max-width: 400px; /* 최대 너비 제한 */
   background-color: #ffffff; /* 폼 배경색 */
   padding: 20px;
   border: 1px solid #ddd; /* 경계선 */
@@ -39,17 +47,19 @@
 
 /* 입력 필드 기본 스타일 */
 .mypage-form input[type="text"] {
-  width: 100%;
+  width: 100%; /* 입력 필드 너비를 부모 기준으로 설정 */
+  max-width: 90%; /* 부모 내 최대 너비 제한 */
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
+  box-sizing: border-box; /* 패딩 포함 너비 계산 */
 }
 
 /* 폼 내부의 버튼 스타일 (필요시) */
 .mypage-form button {
-  width: 100%;
+  width: 100%; /* 버튼도 비율에 맞게 조정 */
   padding: 10px;
   background-color: #007bff;
   color: #fff;

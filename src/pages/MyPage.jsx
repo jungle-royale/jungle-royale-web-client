@@ -1,12 +1,44 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import Input from "../components/Input"; // Adjust import path if necessary
+import Input from "../components/Input"; 
+import { fetchMyPage, myPageEdit } from '../api.js';
 import "./MyPage.css";
 
 const MyPage = () => {
   const mountRef = useRef(null); // 캔버스를 렌더링할 DOM 요소 참조
+  const [nickname, setNickname] = useState('');
+
+  const handleNicknameChange = (e) => {
+    setNickname(e.target.value);
+  };
+
+  const handleSaveNickname = async () => {
+    try {
+      await myPageEdit(nickname); // 닉네임 업데이트
+      alert('닉네임이 성공적으로 변경되었습니다.'); // 성공 메시지 경고창으로 표시
+      // 최신 데이터를 다시 가져와 상태 업데이트
+      const response = await fetchMyPage();
+      setNickname(response.data.username || ''); // 닉네임 업데이트
+      window.location.reload()
+    } catch (error) {
+      alert('닉네임 변경 중 오류가 발생했습니다.'); // 에러 메시지 경고창으로 표시
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetchMyPage();
+        console.log("Response: ", response.data);
+        setNickname(response.data.username || ''); // 닉네임 데이터 설정
+      } catch (error) {
+        console.error('마이페이지 데이터를 불러오는 중 오류 발생:', error);
+      }
+    };
+
+    fetchData(); // 초기 데이터를 가져옴
+
     if (!mountRef.current) return; // mountRef 초기화 확인
 
     // Three.js 기본 설정
@@ -126,9 +158,8 @@ const MyPage = () => {
       <div ref={mountRef} className="mypage-canvas" />
       <div className="mypage-form">
         <h2>닉네임 정보</h2>
-        <Input label="닉네임" type="text" value="" onChange={() => {}} placeholder="닉네임 입력" />
-        <Input label="전적" type="text" value="" onChange={() => {}} placeholder="전적 정보 입력" />
-        <Input label="선물함" type="text" value="" onChange={() => {}} placeholder="선물함 입력" />
+        <Input label="닉네임" type="text" value={nickname} onChange={handleNicknameChange} placeholder="닉네임 입력" />
+        <button onClick={handleSaveNickname}>닉네임 저장</button>
       </div>
     </div>
   );

@@ -120,7 +120,7 @@ export const checkRoomAvailability = async (roomId) => {
 };
 
 
-//회원 정보 조회 api
+//회원 정보 조회 api-미사용중
 export const checkMemberSheet = async (roomId) => {
   console.log(roomId);
   const response = await apiClient.post(`/api/users/profile`, {}, 
@@ -131,6 +131,29 @@ export const checkMemberSheet = async (roomId) => {
     }
   );
   return response.data;
+};
+
+export const fetchMyPage = () => {
+  return apiClient.get(`/api/users/mypage`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
+    },
+  });
+};
+
+//마이 페이지 api
+export const myPageEdit = async (username) => {
+  try {
+    const response = await apiClient.put(`/api/users/mypage`,username,{
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`, // JWT 토큰 포함
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("닉네임 수정 중 오류:", error);
+    throw error; // 호출한 곳에서 에러 처리
+  }
 };
 
 // 게시물 목록 가져오기 api
