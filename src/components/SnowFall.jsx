@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./Snowfall.css"; // 위에서 작성한 CSS 추가
+import "./SnowFall.css"; // 위에서 작성한 CSS 추가
 
 const Snowfall = () => {
   const [flakes, setFlakes] = useState([]);
