@@ -13,7 +13,6 @@ import GameTemp from "./pages/GameTemp"
 import useTokenRefresh from "./hooks/useTokenRefresh";
 import Header from "./components/Header";
 import ScrollToTop from "./components/ScrollToTop";
-import Post from "./pages/Post"
 import PostViewer from "./pages/PostViewer";
 import PostCreator from "./pages/PostCreator";
 import PostEditor from "./pages/PostEditor";
@@ -34,7 +33,6 @@ function App() {
               <Route path="/rooms" element={<RoomList />} />
               <Route path="/mypage" element={<MyPage />}/>
               <Route path="/game" element={<GameTemp />}/>
-              <Route path="/post" element={<Post />}/>
               <Route path="/posts/:id" element={<PostViewer />} /> {/* 동적 경로 */}
               <Route path="/post-creator" element={<PostCreator />}/>
               <Route path="/posts/:id/update" element={<PostEditor />}/>
