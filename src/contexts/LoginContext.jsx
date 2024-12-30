@@ -12,7 +12,11 @@ export const LoginProvider = ({ children }) => {
   });
 
   const [userRole, setUserRole] = useState(() => {
-    return localStorage.getItem("role") || ""; // 역할 초기화
+    return localStorage.getItem("userRole") || ""; // 역할 초기화
+  });
+
+  const [jwtToken, setJwtToken] = useState(() => {
+    return localStorage.getItem("jwt_token") || null; // JWT 초기화
   });
 
   // isLogin 상태와 localStorage 동기화
@@ -27,6 +31,17 @@ export const LoginProvider = ({ children }) => {
     console.debug("userRole 상태 동기화됨:", userRole);
   }, [userRole]);
 
+  // jwtToken 상태와 localStorage 동기화
+  useEffect(() => {
+    if (jwtToken) {
+      localStorage.setItem("jwt_token", jwtToken);
+      console.debug("JWT Token 상태 동기화됨:", jwtToken);
+    } else {
+      localStorage.removeItem("jwt_token"); // 로그아웃 시 제거
+      console.debug("JWT Token이 제거됨");
+    }
+  }, [jwtToken]);
+
   // 다른 탭에서 localStorage 변화 리스닝
   useEffect(() => {
     const handleStorageChange = (event) => {
@@ -36,6 +51,9 @@ export const LoginProvider = ({ children }) => {
       if (event.key === "userRole") {
         setUserRole(event.newValue || "");
       }
+      if (event.key === "jwt_token") {
+        setJwtToken(event.newValue || null);
+      }
     };
     window.addEventListener("storage", handleStorageChange);
     return () => {
@@ -44,7 +62,7 @@ export const LoginProvider = ({ children }) => {
   }, []);
 
   return (
-    <LoginContext.Provider value={{ isLogin, setIsLogin, userRole, setUserRole }}>
+    <LoginContext.Provider value={{ isLogin, setIsLogin, userRole, setUserRole, jwtToken, setJwtToken }}>
       {children}
     </LoginContext.Provider>
   );

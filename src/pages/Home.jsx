@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { loginGuest } from "../api";
 import { useLoginContext } from "../contexts/LoginContext";
 import { useClickLock } from '../contexts/ClickLockContext';
+import Snowfall from "../components/SnowFall.jsx"; // Snowfall 경로 맞추기
+
 
 import "./Home.css";
 
@@ -44,6 +46,7 @@ const Home = () => {
   return (
     <div>
       <div className="image-container">
+      <Snowfall /> {/* 눈 효과 추가 */}
         <button className="button-room-list" onClick={handleButtonClick}>
         {isLogin ? "GAME START" : "LOGIN"}
         </button>

@@ -1,0 +1,55 @@
+.post-viewer {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.post-viewer h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.post-viewer p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+.loading-message {
+  font-size: 1.2rem;
+  color: gray;
+  text-align: center;
+}
+
+.post-image-container {
+  margin-top: 10px;
+}
+
+.post-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.button-group {
+  margin-top: 20px;
+}
+
+.edit-button, .delete-button {
+  padding: 10px 15px;
+  margin-right: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+}

@@ -1,6 +1,7 @@
 import axios from "axios";
 
 //const BASE_URL = import.meta.env.VITE_API_URL;
+//const BASE_URL = "http://172.30.1.69:8080";   //긱사
 const BASE_URL = "http://192.168.1.241:8080";   //5G
 //const BASE_URL = "http://172.16.175.152:8080";   //olleh 24G
 //const BASE_URL = "http://172.16.156.158:8080";    //olleh
@@ -42,7 +43,6 @@ export const loginWithKakao = async (authCode) => {
       { code: authCode },
     );
     localStorage.setItem("isLogin", "true");
-    localStorage.setItem("userRole", response.data.role);
     localStorage.setItem("jwt_token", response.data.jwtToken);
     localStorage.setItem("access_token", response.data.accessToken);
     localStorage.setItem("refresh_token", response.data.refreshToken);
@@ -73,7 +73,7 @@ export const loginGuest = async (authCode) => {
 export const logout = async () => {
   try {
     const response = await apiClient.post("/api/auth/logout",
-      { userRole : localStorage.getItem("role")}, 
+      { userRole : localStorage.getItem("userRole")}, 
       { headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,},
     });
@@ -120,7 +120,7 @@ export const checkRoomAvailability = async (roomId) => {
 };
 
 
-//회원 정보 조회 api
+//회원 정보 조회 api-미사용중
 export const checkMemberSheet = async (roomId) => {
   console.log(roomId);
   const response = await apiClient.post(`/api/users/profile`, {}, 
@@ -133,14 +133,42 @@ export const checkMemberSheet = async (roomId) => {
   return response.data;
 };
 
-// 게시물 목록 가져오기 api
-export const fetchPosts = async () => {
-  return apiClient.get("/api/posts/list", {
+export const fetchMyPage = () => {
+  return apiClient.get(`/api/users/mypage`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
     },
   });
 };
+
+//마이 페이지 api
+export const myPageEdit = async (username) => {
+  try {
+    const response = await apiClient.put(`/api/users/mypage`,username,{
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`, // JWT 토큰 포함
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("닉네임 수정 중 오류:", error);
+    throw error; // 호출한 곳에서 에러 처리
+  }
+};
+
+// 게시물 목록 가져오기 api
+export const fetchPosts = async ({ page = 1, limit = 10 }) => {
+  return apiClient.get("/api/posts/list", {
+    params: {
+      page, // 현재 페이지 번호
+      limit,
+    },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
+    },
+  });
+};
+
 
 // 게시물 하나 가져오기
 export const getPost = async (postId) => {
@@ -163,6 +191,37 @@ export const createPost = async (formData) => {
     return response.data; // 성공한 데이터를 반환
   } catch (error) {
     console.error("게시물 생성 중 오류:", error);
-    throw error; // 에러를 호출한 곳으로 전달
+    throw error; 
+  }
+};
+
+//게시글 삭제 api
+export const deletePost = async (postId) => {
+  try {
+    const response = await apiClient.delete(`/api/posts/${postId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`, // JWT 토큰 포함
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("게시물 삭제 중 오류:", error);
+    throw error; // 호출한 곳에서 에러 처리
+  }
+};
+
+//게시글 수정 api
+export const updatePost = async (postId, updatedData) => {
+  try {
+    const response = await apiClient.put(`/api/posts/${postId}`,updatedData,{
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`, // JWT 토큰 포함
+        "Content-Type": "multipart/form-data" 
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("게시물 수정 중 오류:", error);
+    throw error; // 호출한 곳에서 에러 처리
   }
 };
