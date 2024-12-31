@@ -19,7 +19,6 @@ const RoomList = () => {
     const loadRooms = async () => {        
       try {
         const response = await fetchRooms(); // API 호출
-        console.log("list: ", response);
         setRooms(response.data.gameRooms); // 상태 업데이트
         setUserName(response.data.userInfo.username); // 유저 이름 상태 업데이트
       } catch (error) {

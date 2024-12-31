@@ -5,7 +5,6 @@ import { useClickLock } from '../contexts/ClickLockContext';
 import Input from "../components/Input";
 import "./RoomCreater.css"
 
-
 const RoomCreater = () => {
   const [roomName, setRoomName] = useState('');
   const [maxPlayers, setMaxPlayers] = useState('');
