@@ -6,24 +6,28 @@
 }
 
 .audio-control-button {
-  padding: 10px 20px;
-  font-size: 1rem;
+  padding: 15px;
+  font-size: 1.2rem;
   color: #ffffff;
-  background-color: rgba(0, 0, 0, 0.5); /* 투명한 배경 */
-  border: 2px solid #ffffff; /* 윤곽선 추가 */
+  background: rgba(255, 255, 255, 0.2); /* 투명한 버튼 */
+  border: 2px solid rgba(255, 255, 255, 0.7); /* 반투명한 테두리 */
   border-radius: 50%; /* 원형 버튼 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .audio-control-button:hover {
-  background-color: rgba(255, 255, 255, 0.3); /* hover 상태 */
+  background: rgba(255, 255, 255, 0.4); /* hover 상태에서 조금 더 밝게 */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* 그림자 강조 */
 }
 
 .audio-control-button.playing {
-  background-color: rgba(0, 128, 0, 0.7); /* Play 상태 - 녹색 */
+  background: rgba(173, 216, 230, 0.4); /* 플레이 상태에서 부드러운 파란색 */
+  border: 2px solid rgba(173, 216, 230, 0.7);
 }
 
 .audio-control-button.paused {
-  background-color: rgba(128, 0, 0, 0.7); /* Pause 상태 - 빨간색 */
+  background: rgba(255, 182, 193, 0.4); /* 일시정지 상태에서 부드러운 분홍색 */
+  border: 2px solid rgba(255, 182, 193, 0.7);
 }

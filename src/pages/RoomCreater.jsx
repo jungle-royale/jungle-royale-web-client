@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { createRoom } from "../api";
-import { useRooms } from "../contexts/RoomsContext";
 import { useClickLock } from '../contexts/ClickLockContext';
 import Input from "../components/Input";
 import "./RoomCreater.css"
-
 
 const RoomCreater = () => {
   const [roomName, setRoomName] = useState('');
@@ -14,7 +12,6 @@ const RoomCreater = () => {
   const [maxGameTime, setMaxGameTime] = useState('');
   const [isSecret, setIsSecret] = useState(false);
   const [map, setMap] = useState('');
-  const { addRoom } = useRooms(); // RoomsContext에서 addRoom 가져오기
   const { isLocked, lock, unlock } = useClickLock();
 
   const navigate = useNavigate();
@@ -72,17 +69,11 @@ const RoomCreater = () => {
     try {
       const response = await createRoom(roomDetails); // API 요청
       console.log("create 성공:", response);
-
-      addRoom({
-        id: response.data.id, 
-        title: response.data.title,
-        currentPlayers: response.data.currentPlayers,
-        maxPlayers: response.data.maxPlayers,
-        status: response.data.status,
-      });
-  
+      const roomId = response.data.roomId;
+      const clientId = response.data.clientId;
       alert("방이 성공적으로 생성되었습니다!");
-      navigate("/game"); // RoomList로 이동
+      //url 수정 예정
+      navigate(`http://eternalsnowman.com/game?roomId=${roomId}&clientId=${clientId}`); 
     } catch (error) {
       console.error("방 생성 중 오류 발생:", error.response?.data || error.message);
       alert("방 생성 중 문제가 발생했습니다. 다시 시도해주세요.");

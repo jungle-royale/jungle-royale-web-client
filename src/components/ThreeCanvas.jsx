@@ -114,9 +114,12 @@ const ThreeCanvas = () => {
         mountRef.current.removeEventListener("dblclick", handleDoubleClick);
         mountRef.current.removeEventListener("wheel", handleWheel);
         mountRef.current.removeChild(renderer.domElement);
-      }
+      };
       window.removeEventListener("resize", handleResize);
-    };
+      geometry.dispose();
+      material.dispose();
+      scene.clear();
+    }
   }, []);
 
   return <div ref={mountRef} className="three-canvas" />;
