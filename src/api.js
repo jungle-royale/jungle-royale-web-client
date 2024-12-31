@@ -260,6 +260,7 @@ export const purchaseItem = async (itemCode) => {
         Authorization: `Bearer ${localStorage.getItem("jwt_token")}`, // JWT 토큰 포함
       },
     });
+    console.log("Response: ", response)
     return response.data;
   } catch (error) {
     console.error("아이템 구매 중 오류 발생:", error.response?.data || error.message);
