@@ -103,7 +103,7 @@ export const fetchRooms = async () => {
 
 //방 입장 가능 여부 확인 api
 export const checkRoomAvailability = async (roomId) => {
-  const response = await apiClient.post(`/api/rooms/${roomId}/check`, {}, 
+  const response = await apiClient.post(`/api/rooms/${roomId}/join`, {}, 
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
@@ -113,20 +113,7 @@ export const checkRoomAvailability = async (roomId) => {
   return response.data; // 예: { isAvailable: true, message: "방 입장 가능" }
 };
 
-
-//회원 정보 조회 api-미사용중
-export const checkMemberSheet = async (roomId) => {
-  console.log(roomId);
-  const response = await apiClient.post(`/api/users/profile`, {}, 
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
-      },
-    }
-  );
-  return response.data;
-};
-
+//마이 페이지 불러오기 api
 export const fetchMyPage = () => {
   return apiClient.get(`/api/users/mypage`, {
     headers: {
@@ -135,7 +122,7 @@ export const fetchMyPage = () => {
   });
 };
 
-//마이 페이지 api
+//마이 페이지 수정 api
 export const myPageEdit = async (username) => {
   try {
     const response = await apiClient.put(`/api/users/mypage`,username,{
@@ -163,8 +150,7 @@ export const fetchPosts = async ({ page = 1, limit = 10 }) => {
   });
 };
 
-
-// 게시물 하나 가져오기
+// 게시물 하나 가져오기 api
 export const getPost = async (postId) => {
   return apiClient.get(`/api/posts/${postId}`, {
     headers: {

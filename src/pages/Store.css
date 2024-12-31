@@ -123,3 +123,115 @@
     width: 100%;
   }
 }
+
+/**********************************************************************/
+/* 전체 컨테이너 스타일 */
+.store-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #eef7ff; /* 부드러운 파란 배경 */
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  background-image: url('path_to_snowflake_pattern'); /* 눈송이 패턴 배경 */
+  background-size: cover;
+}
+
+/* 유저 정보 섹션 스타일 */
+.user-info {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-info h2 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  color: #005f9e; /* 차가운 파란 색상 */
+}
+
+.user-info p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* 아이템 목록 섹션 스타일 */
+.item-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* 아이템 카드 스타일 */
+.item-card {
+  width: 220px;
+  padding: 15px;
+  background-color: #ffffff;
+  border: 1px solid #aad1e6;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.item-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.item-card h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #007bff;
+}
+
+.item-card p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* 구매 버튼 스타일 */
+.item-card button {
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.item-card button:hover {
+  background-color: #218838;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.item-card button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.item-card button:active {
+  background-color: #1e7e34;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .store-container {
+    padding: 15px;
+  }
+
+  .item-card {
+    width: 100%;
+  }
+}
+
