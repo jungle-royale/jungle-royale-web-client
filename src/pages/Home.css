@@ -1,5 +1,4 @@
-/* .image-container styles */
-.image-container {
+.home-image-container {
   position: relative;
   width: 100%;
   max-width: 1550px;
@@ -14,24 +13,22 @@
   align-items: center; /* 자식 요소의 세로 정렬 */
 }
 
-/* .post-container styles */
-.post-container {
-  position: absolute; /* .image-container 내부에서 절대적인 위치 */
-  top: calc(80%); /* 컨테이너 높이의 60% 위치 */
+.home-post-container {
+  position: relative; /* .image-container 내부에서 절대적인 위치 */
+  top: calc(50%); /* 컨테이너 높이의 60% 위치 */
   left: 50%; /* 가로 중앙 정렬 */
   transform: translate(-50%, 0); /* 수평 중앙 정렬만 적용 */
-  width: 80%; /* 너비를 배경 이미지 너비 기준으로 설정 */
+  width: 100%; /* 너비를 배경 이미지 너비 기준으로 설정 */
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   background-color: rgba(249, 249, 249, 0.9); /* 반투명 배경 */
-  transition: transform 0.2s ease-in-out; /* 부드러운 움직임 추가 */
+  min-height: 400px; /* 최소 높이를 설정하여 겹침 방지 */
+  overflow-y: auto; /* 내용이 많을 경우 스크롤 가능하도록 설정 */
 }
 
-/* .button-room-list styles */
-.button-room-list {
+.home-button-room-list {
   position: absolute; /* 이미지 위에 겹치도록 설정 */
   left: 50%; /* 가로 중앙 정렬 */
   transform: translateX(-50%); /* 중앙 정렬 보정 */
@@ -51,32 +48,32 @@
   z-index: 1; /* 이미지 위에 표시 */
 }
 
-.button-room-list:hover {
+.home-button-room-list:hover {
   background-color: #2c3ee7; 
   color: #ffffff;
   transform: translate(-50%, -2px); /* Hover 시 버튼이 올라오는 효과 */
 }
 
-.button-room-list:active {
+.home-button-room-list:active {
   background-color: #1a2db8; 
   transform: translate(-50%, 2px); /* 클릭 시 눌리는 효과 */
 }
 
 /* 첫 번째 버튼 */
-.button-room-list:first-of-type {
+.home-button-room-list:first-of-type {
   height: 100px; /* 버튼의 고정 높이 */
   top: 50px;
 }
 
 /* 두 번째 버튼 */
-.button-room-list:last-of-type {
+.home-button-room-list:last-of-type {
   height: 50px; /* 버튼의 고정 높이 */
   top: 150px; /* 상단 배치 속성 제거 */
 }
 
 /* 미디어 쿼리: 작은 화면에서 버튼 크기 조정 */
 @media (max-width: 600px) {
-  .button-room-list {
+  .home-button-room-list {
     width: 30vw; /* 작은 화면에서는 버튼 너비를 화면 너비의 30%로 설정 */
     height: 12vh; /* 버튼 높이를 화면 높이의 12%로 설정 */
     font-size: 0.9rem; /* 글씨 크기 축소 */

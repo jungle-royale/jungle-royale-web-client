@@ -16,6 +16,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import PostViewer from "./pages/PostViewer";
 import PostCreator from "./pages/PostCreator";
 import PostEditor from "./pages/PostEditor";
+import Store from "./pages/Store";
 
 function App() {
   useTokenRefresh(); // 자동 토큰 갱신 로직
@@ -36,6 +37,8 @@ function App() {
               <Route path="/posts/:id" element={<PostViewer />} /> {/* 동적 경로 */}
               <Route path="/post-creator" element={<PostCreator />}/>
               <Route path="/posts/:id/update" element={<PostEditor />}/>
+              <Route path="/store" element={<Store />} />
+
             </Routes>
           </RoomsProvider>
         </LoginProvider>

@@ -225,3 +225,50 @@ export const updatePost = async (postId, updatedData) => {
     throw error; // 호출한 곳에서 에러 처리
   }
 };
+
+//상점 전체 정보 불러오기 api
+export const fetchStoreData = async () => {
+  try {
+    const response = await apiClient.get("/api/shops/items", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`, // JWT 토큰 포함
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("API 호출 중 오류 발생:", error.response?.data || error.message);
+    throw error;
+  }
+};
+//임시 서버
+// export const fetchStoreData = async () => {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       resolve({
+//         nickname: "테스트유저",
+//         gameMoney: 10000,
+//         items: [
+//           { name: "아이템1", price: 500 },
+//           { name: "아이템2", price: 1500 },
+//           { name: "아이템3", price: 2500 },
+//         ],
+//       });
+//     }, 500); // 테스트를 위해 500ms 지연
+//   });
+// };
+
+
+//상점 아이템 구매 api
+export const purchaseItem = async (itemCode) => {
+  try {
+    const response = await apiClient.post(`/api/shops/purchase?itemCode=${itemCode}`, {}, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`, // JWT 토큰 포함
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("아이템 구매 중 오류 발생:", error.response?.data || error.message);
+    throw error;
+  }
+};

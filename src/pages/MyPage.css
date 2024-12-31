@@ -25,6 +25,16 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
 }
 
+/* .three-canvas {
+  width: 60%;
+  height: 500px;
+  /* margin: 50px auto; 중앙 정렬 */
+  /*border: 1px solid #ccc;  경계선 추가 */
+  /*border-radius: 8px;  모서리 둥글게 */
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 그림자 효과 */
+/* } */
+
+
 /* 입력 폼 스타일 */
 .mypage-form {
   margin-top: 20px;
