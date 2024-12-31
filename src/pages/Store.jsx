@@ -73,7 +73,7 @@ const Store = () => {
         {Array.isArray(items) && items.length > 0 ? (
           items.map((item) => (
         <div key={item.itemCode} className="item-card">
-          <img src={item.image} alt={item.name} className="item-image" />
+          <img src={item.imageUrl} alt={item.name} className="item-image" />
           <h3>{item.name}</h3>
           <p>가격: {item.price}₩</p>
           <button 
