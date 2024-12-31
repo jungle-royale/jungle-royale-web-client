@@ -85,9 +85,17 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.item-card button:disabled {
+  background-color: #ccc; /* 회색 */
+  color: #666; /* 글씨 색도 회색 */
+  cursor: not-allowed; /* 커서 비활성화 */
+}
+
 .item-card button:active {
   background-color: #1e7e34;
 }
+
+
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
