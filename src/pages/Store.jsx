@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchStoreData, purchaseItem } from "../api";
-import ThreeCanvas from "../components/ThreeCanvas";
+//import ThreeCanvas from "../components/ThreeCanvas";
 import "./Store.css";
 
 const Store = () => {
@@ -67,8 +67,6 @@ const Store = () => {
         <p>닉네임: {userData.username}</p>
         <p>게임머니: {userData.gameMoney}₩</p>
       </div>
-
-      <ThreeCanvas />
 
       <div className="item-list">
         <h2>아이템 목록</h2>

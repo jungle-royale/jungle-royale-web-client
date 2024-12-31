@@ -5,6 +5,7 @@ import { ClickLockProvider } from "./contexts/ClickLockContext";
 
 
 import './App.css';
+import AudioPlayer from "./components/AudioPlayer"; // AudioPlayer 컴포넌트 임포트
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import RoomList from "./pages/RoomList";
@@ -18,11 +19,13 @@ import PostCreator from "./pages/PostCreator";
 import PostEditor from "./pages/PostEditor";
 import Store from "./pages/Store";
 
+
 function App() {
   useTokenRefresh(); // 자동 토큰 갱신 로직
 
   return (
     <>
+      <AudioPlayer src="/assets/BackgroundBGM.wav" autoPlay={true} loop={true} />
       <ScrollToTop />
       <ClickLockProvider>
         <LoginProvider>
