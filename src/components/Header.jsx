@@ -27,7 +27,7 @@ const Header = () => {
       </div>
       <nav>
       <a href="/mypage" onClick={(e) => navigateSafely(e, "/mypage")}>css</a>
-
+      <a href="/store" onClick={(e) => navigateSafely(e, "/store")}>상점</a>
       <a href="/board" onClick={(e) => navigateSafely(e, "/post")}>소식</a>
       <a href="/ranking" onClick={(e) => navigateSafely(e, "/ranking")}>랭킹</a>
         <div className="nav-links">
