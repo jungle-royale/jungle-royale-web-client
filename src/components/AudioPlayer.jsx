@@ -4,7 +4,7 @@ import "./AudioPlayer.css";
 
 const AudioPlayer = ({ src, loop = true }) => {
   const audioRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false); // 기본값: 재생되지 않음
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlayPause = () => {
     if (isPlaying) {
@@ -18,16 +18,19 @@ const AudioPlayer = ({ src, loop = true }) => {
   return (
     <div className="audio-player">
       <audio ref={audioRef} src={src} loop={loop} />
-      <button className="audio-control-button" onClick={handlePlayPause}>
-        {isPlaying ? "Pause Music" : "Play Music"}
+      <button
+        className={`audio-control-button ${isPlaying ? "playing" : "paused"}`}
+        onClick={handlePlayPause}
+      >
+        {isPlaying ? "Pause" : "Play"}
       </button>
     </div>
   );
 };
 
 AudioPlayer.propTypes = {
-  src: PropTypes.string.isRequired, // 오디오 파일 경로
-  loop: PropTypes.bool, // 반복 여부
+  src: PropTypes.string.isRequired,
+  loop: PropTypes.bool,
 };
 
 export default AudioPlayer;

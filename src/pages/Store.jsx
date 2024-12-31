@@ -72,16 +72,17 @@ const Store = () => {
         <h2>아이템 목록</h2>
         {Array.isArray(items) && items.length > 0 ? (
           items.map((item) => (
-            <div key={item.itemCode} className="item-card">
-              <h3>{item.name}</h3>
-              <p>가격: {item.price}₩</p>
-              <button 
-                onClick={() => handlePurchase(item.itemCode)} 
-                disabled={item.isOwned || isLoading} // 이미 구매한 아이템 또는 로딩 중 비활성화
-              >
-                {item.isOwned ? "품절" : "구매"}
-              </button>
-            </div>
+        <div key={item.itemCode} className="item-card">
+          <img src={item.image} alt={item.name} className="item-image" />
+          <h3>{item.name}</h3>
+          <p>가격: {item.price}₩</p>
+          <button 
+            onClick={() => handlePurchase(item.itemCode)} 
+            disabled={item.isOwned || isLoading}
+          >
+            {item.isOwned ? "품절" : "구매"}
+          </button>
+        </div>
           ))
         ) : (
           <p>아이템이 없습니다.</p>

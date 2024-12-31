@@ -59,6 +59,13 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
 }
+.item-card .item-image {
+  width: 100px; /* 원하는 이미지 크기 */
+  height: 100px; /* 원하는 이미지 크기 */
+  object-fit: cover; /* 이미지 비율 유지 */
+  margin-bottom: 10px; /* 이름과의 간격 */
+}
+
 
 .item-card:hover {
   transform: translateY(-5px);
