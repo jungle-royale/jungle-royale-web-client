@@ -14,11 +14,11 @@ const Store = () => {
       // 서버에서 구매 요청 처리
       const updatedUserData = await purchaseItem(itemCode);
       alert("구매가 완료되었습니다!");
-
+      console.log(updatedUserData);
       // 상태 업데이트
       setUserData((prev) => ({
         ...prev,
-        gameMoney: updatedUserData.gameMoney,
+        gameMoney: updatedUserData.userInfo.gameMoney,
         inventory: [...prev.inventory, updatedUserData.newItem],
       }));
 
