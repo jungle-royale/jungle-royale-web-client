@@ -13,7 +13,7 @@ const Login = () => {
 
   const Rest_api_key = 'e8304b2a6b5aeb5020ef6abeb405115b';
   //const redirect_uri = "http://localhost:5173/login"; // 리다이렉트 URL 설정
-  const redirect_uri = `${import.meta.env.VITE_API_URL}/login`;
+  const redirect_uri = `${import.meta.env.KAKAO_REDIRECT_URL}/login`;
 
   const navigate = useNavigate();
   const { setIsLogin, setUserRole } = useLoginContext();
