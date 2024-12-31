@@ -31,6 +31,15 @@
   color: #555;
 }
 
+.shop-three-canvas {
+  width: 100%; /* 상점 레이아웃에 맞게 크기 설정 */
+  height: 300px; /* 캔버스 높이 */
+  margin: 20px 0; /* 상하 여백 추가 */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f0f0f0; /* 캔버스 배경색 */
+}
+
 /* 아이템 목록 섹션 스타일 */
 .item-list {
   display: flex;

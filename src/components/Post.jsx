@@ -129,7 +129,8 @@ const Post = () => {
 
   return (
     <div>
-      <h1>게시물 목록</h1>
+      <h1>게시판</h1>
+      <h3>소중한 의견을 남겨주세요!</h3>
       <button
         onClick={(e) => navigateSafely(e, "/post-creator")}
         className="post-write-button"
