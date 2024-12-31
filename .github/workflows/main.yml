@@ -1,0 +1,28 @@
+name: Build, Push Docker Image, and Deploy
+
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1) AWS Credentials 설정
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      # 2) PEM 파일 저장
+      - name: Save PEM file
+        run: echo "${{ secrets.PEM_FILE }}" > ~/my-key.pem
+        
+      # 3) EC2에서 client.sh 실행
+      - name: Run server.sh on EC2
+        run: |
+          chmod 600 ~/my-key.pem
+          ssh -o StrictHostKeyChecking=no -i ~/my-key.pem ec2-user@${{ secrets.EC2_HOST }} "bash ~/client.sh"
