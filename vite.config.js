@@ -5,7 +5,7 @@ export default defineConfig(({ mode }) => {
   // 환경 변수 로드
   const env = loadEnv(mode, './');
 
-  console.log("Loaded VITE_API_URL:", env.VITE_API_URL); // 디버깅용 출력
+  console.log("Loaded API_BASE_URL:", env.API_BASE_URL); // 디버깅용 출력
 
   return {
     plugins: [react()],
@@ -14,7 +14,8 @@ export default defineConfig(({ mode }) => {
       host: '0.0.0.0',
     },
     define: {
-      'import.meta.env.VITE_API_URL': JSON.stringify(env.VITE_API_URL),
+      'import.meta.env.API_BASE_URL': JSON.stringify(env.API_BASE_URL),
+      'import.meta.env.KAKAO_REDIRECT_URL': JSON.stringify(env.KAKAO_REDIRECT_URL),
     },
   };
 });
