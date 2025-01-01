@@ -18,7 +18,7 @@ import PostViewer from "./pages/PostViewer";
 import PostCreator from "./pages/PostCreator";
 import PostEditor from "./pages/PostEditor";
 import Store from "./pages/Store";
-import TestPage from "./pages/TestPage";
+// import TestPage from "./pages/TestPage";
 
 
 function App() {
@@ -42,7 +42,7 @@ function App() {
               <Route path="/post-creator" element={<PostCreator />}/>
               <Route path="/posts/:id/update" element={<PostEditor />}/>
               <Route path="/store" element={<Store />} />
-              <Route path="/test" element={<TestPage />}/>
+              {/* <Route path="/test" element={<TestPage />}/> */}
             </Routes>
           </RoomsProvider>
         </LoginProvider>

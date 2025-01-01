@@ -46,15 +46,15 @@ const Home = () => {
       <Snowfall /> {/* 눈 효과 추가 */}
       <div className="home-image-container">
         <button className="home-button-room-list" onClick={handleButtonClick}>
-        {isLogin ? "GAME START" : "LOGIN"}
+          {isLogin ? "GAME START" : "LOGIN"}
         </button>
-        <button className="home-button-room-list" onClick={isLogin ? handleButtonClick : handleLoginGuest }>
-        {isLogin ? "닉네임" : "비회원 로그인"}
-        </button>
-        <div className="post-container">
-          <Post />
-        </div>
+        {!isLogin && (
+          <button className="home-button-room-list" onClick={isLogin ? handleButtonClick : handleLoginGuest }>
+            비회원 로그인
+          </button>
+        )}
       </div> 
+      <Post />
     </div>
   );
 };

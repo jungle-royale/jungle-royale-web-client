@@ -1,17 +1,17 @@
 .post-container {
-  position: absolute; /* 부모 컨테이너 기준으로 배치 */
-  top: 80%; /* 배경 이미지 기준 배치 */
+  position: relative; /* 부모 컨테이너에 종속되도록 변경 */
   left: 50%; /* 가로 중앙 정렬 */
   transform: translateX(-50%);
-  width: 100%;
-  max-width: 1550px;  margin: 0 auto;
+  width: 90%;
+  max-width: 1550px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  background-color: rgba(249, 249, 249, 0.9); /* 반투명 배경 */
-  min-height: 400px; /* 최소 높이를 설정하여 겹침 방지 */
-  overflow-y: auto; /* 내용이 많을 경우 스크롤 가능하도록 설정 */
+  background-color: rgba(249, 249, 249, 0.9);
+  min-height: 400px;
+  overflow-y: auto;
 }
+
 
 .post-container h1,
 .post-container h3 {
