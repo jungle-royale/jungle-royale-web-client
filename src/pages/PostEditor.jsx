@@ -7,7 +7,8 @@ import "./PostEditor.css";
 const PostEditor = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [post, setPost] = useState({ title: "", content: "", image: null });
+  // const [post, setPost] = useState({ title: "", content: "", image: null });
+  const [post, setPost] = useState({ title: "", content: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { isLocked, lock, unlock } = useClickLock();
 
@@ -33,10 +34,10 @@ const PostEditor = () => {
     setPost((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleImageChange = (event) => {
-    if (isLocked) return;
-    setPost((prev) => ({ ...prev, image: event.target.files[0] }));
-  };
+  // const handleImageChange = (event) => {
+  //   if (isLocked) return;
+  //   setPost((prev) => ({ ...prev, image: event.target.files[0] }));
+  // };
 
   const handleSubmit = async () => {
     if (isLocked) return;
@@ -90,14 +91,14 @@ const PostEditor = () => {
         className="postedit-input"
         placeholder="본문 내용을 입력하세요"
       />
-      <div>
+      {/* <div>
         <label className="postedit-input-label">사진</label>
         <input
           type="file"
           onChange={handleImageChange}
           className="postedit-input-file"
         />
-      </div>
+      </div> */}
       <button
         onClick={handleSubmit}
         disabled={isSubmitting}
