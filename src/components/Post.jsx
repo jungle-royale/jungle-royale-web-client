@@ -15,12 +15,11 @@ const Post = () => {
   useEffect(() => {
     const loadPosts = async () => {
       try {
-        const response = await fetchPosts({ page: currentPage });
+        const response = await fetchPosts({ page: currentPage, limit: postsPerPage });
         const fetchedPosts = response.data.data || [];
         const total = response.data.total || 0;
         console.log("fetchedPosts: ", fetchedPosts);
         console.log("total: ", total);
-
         setPosts(fetchedPosts);
         setTotalPosts(total);
       } catch (error) {
@@ -47,6 +46,7 @@ const Post = () => {
   console.log("postsPerPage:", postsPerPage);
   console.log("totalPages:", totalPages);
 
+
   return (
     <div className="post-container">
       <h1>게시판</h1>
@@ -69,7 +69,6 @@ const Post = () => {
             <div>날짜</div>
           </li>
           {posts
-            .slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage)
             .map((post, index) => {
               const postNumber = (currentPage - 1) * postsPerPage + index + 1;
               return (
