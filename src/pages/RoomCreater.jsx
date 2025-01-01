@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { createRoom } from "../api";
 import { useClickLock } from '../contexts/ClickLockContext';
 import Input from "../components/Input";
@@ -14,7 +14,7 @@ const RoomCreater = () => {
   const [map, setMap] = useState('');
   const { isLocked, lock, unlock } = useClickLock();
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
     // 랜덤 제목 목록
     const randomTitles = [
@@ -73,7 +73,7 @@ const RoomCreater = () => {
       const clientId = response.data.clientId;
       alert("방이 성공적으로 생성되었습니다!");
       //url 수정 예정
-      navigate(`http://eternalsnowman.com/game?roomId=${roomId}&clientId=${clientId}`); 
+      window.location.href = `http://game.eternalsnowman.com/rooms?roomId=${roomId}&clientId=${clientId}`;
     } catch (error) {
       console.error("방 생성 중 오류 발생:", error.response?.data || error.message);
       alert("방 생성 중 문제가 발생했습니다. 다시 시도해주세요.");
