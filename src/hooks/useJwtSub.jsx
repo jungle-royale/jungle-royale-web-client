@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import {jwtDecode} from "jwt-decode"; // 올바른 import 방식
+import {jwtDecode} from "jwt-decode"
+
 
 const useJwtSub = (token) => {
   const [sub, setSub] = useState(null);

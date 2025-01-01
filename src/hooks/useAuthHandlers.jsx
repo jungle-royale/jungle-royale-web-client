@@ -24,7 +24,6 @@ function useAuthHandlers() {
       setIsLogin(false);
       alert("로그아웃되었습니다.");
       navigate("/");
-
     } catch (error) {
       console.error("로그아웃 요청 실패:", error.message);
       alert("로그아웃 요청 중 문제가 발생했습니다.");

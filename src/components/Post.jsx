@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { fetchPosts } from "../api.js";
 import useSafeNavigation from "../hooks/useSafeNavigation.jsx";
 import { useLoginContext } from "../contexts/LoginContext.jsx";
+import { formatDistanceToNowStrict, parseISO } from "date-fns";
+import { ko } from "date-fns/locale"; // 한국어 로케일
 import "./Post.css"; 
 
 const Post = () => {
@@ -33,6 +35,22 @@ const Post = () => {
   }, [currentPage]);
 
   const formatDate = (isoString) => {
+    const now = new Date();
+    const postDate = parseISO(isoString);
+  
+    const differenceInSeconds = Math.floor((now - postDate) / 1000);
+  
+    // 1분 미만이면 초 단위로 표시
+    if (differenceInSeconds < 60) {
+      return `${differenceInSeconds}초 전`;
+    }
+  
+    // 오늘 작성된 글이라면 "몇 분 전", "몇 시간 전" 등 표시
+    if (postDate.toDateString() === now.toDateString()) {
+      return formatDistanceToNowStrict(postDate, { addSuffix: true, locale: ko });
+    }
+  
+    // 오늘 이전 글은 날짜만 표시
     return isoString.split("T")[0];
   };
 
@@ -110,103 +128,3 @@ const Post = () => {
 };
 
 export default Post;
-
-
-
-// import { useEffect, useState } from "react";
-// import useSafeNavigation from "../hooks/useSafeNavigation.jsx";
-// import "./Post.css";
-
-// const Post = () => {
-//   const [posts, setPosts] = useState([]); // 초기값 빈 배열
-//   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-//   const [postsPerPage] = useState(10); // 한 페이지당 게시물 수
-//   const { navigateSafely } = useSafeNavigation();
-
-//   useEffect(() => {
-//     // 임시 데이터 생성
-//     const generateMockPosts = () => {
-//       const mockPosts = [];
-//       for (let i = 1; i <= 15; i++) {
-//         mockPosts.push({
-//           id: i,
-//           title: `임시 게시물 제목 ${i}`,
-//           author: `작성자 ${i}`,
-//           date: `2024-12-${i < 10 ? `0${i}` : i}`,
-//         });
-//       }
-//       setPosts(mockPosts);
-//     };
-
-//     generateMockPosts();
-//   }, []);
-
-//   const totalPages = Math.ceil(posts.length / postsPerPage);
-
-//   const handlePageChange = (pageNumber) => {
-//     setCurrentPage(pageNumber);
-//   };
-
-//   return (
-//     <div>
-//       <h1>게시판</h1>
-//       <h3>소중한 의견을 남겨주세요!</h3>
-//       <button
-//         onClick={(e) => navigateSafely(e, "/post-creator")}
-//         className="post-write-button"
-//       >
-//         글쓰기
-//       </button>
-//       {posts.length > 0 ? (
-//         <ul className="post-list">
-//           {/* 헤더 부분 */}
-//           <li className="post-header">
-//             <div>번호</div>
-//             <div>제목</div>
-//             <div>작성자</div>
-//             <div>날짜</div>
-//           </li>
-//           {/* 게시물 목록 */}
-//           {posts
-//             .slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage)
-//             .map((post, index) => {
-//               const postNumber = (currentPage - 1) * postsPerPage + index + 1;
-//               return (
-//                 <li key={post.id} className="post-item">
-//                   <div>{postNumber}</div>
-//                   <div
-//                     onClick={(e) => navigateSafely(e, `/posts/${post.id}`)}
-//                     style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
-//                   >
-//                     {post.title}
-//                   </div>
-//                   <div>{post.author}</div>
-//                   <div>{post.date}</div>
-//                 </li>
-//               );
-//             })}
-//         </ul>
-//       ) : (
-//         <p className="no-posts-message">게시물이 없습니다.</p>
-//       )}
-
-//       {/* 페이지네이션 */}
-//       <div className="post-pagination">
-//         {totalPages > 1 &&
-//           [...Array(totalPages)].map((_, index) => (
-//             <button
-//               key={index}
-//               className={`post-page-button ${
-//                 currentPage === index + 1 ? "active" : ""
-//               }`}
-//               onClick={() => handlePageChange(index + 1)}
-//             >
-//               {index + 1}
-//             </button>
-//           ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Post;
