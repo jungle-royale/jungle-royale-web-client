@@ -21,7 +21,6 @@ import Store from "./pages/Store";
 import Ranking from "./pages/Ranking";
 // import TestPage from "./pages/TestPage";
 
-
 function App() {
   useTokenRefresh(); // 자동 토큰 갱신 로직
 
