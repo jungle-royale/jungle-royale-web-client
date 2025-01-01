@@ -8,24 +8,24 @@ import "./PostCreator.css";
 const PostCreator = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [image, setImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
+  // const [image, setImage] = useState(null);
+  //const [imagePreview, setImagePreview] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { isLocked, lock, unlock } = useClickLock();
   const navigate = useNavigate();
 
-  const handleImageChange = (event) => {
-    if (isLocked) return;
-    const file = event.target.files[0];
-    setImage(file);
+  // const handleImageChange = (event) => {
+  //   if (isLocked) return;
+  //   const file = event.target.files[0];
+  //   setImage(file);
 
-    if (file) {
-      const previewUrl = URL.createObjectURL(file);
-      setImagePreview(previewUrl);
-    } else {
-      setImagePreview(null);
-    }
-  };
+  //   if (file) {
+  //     const previewUrl = URL.createObjectURL(file);
+  //     setImagePreview(previewUrl);
+  //   } else {
+  //     setImagePreview(null);
+  //   }
+  // };
 
   const handleSubmit = async () => {
     if (isLocked) return;
@@ -39,9 +39,9 @@ const PostCreator = () => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
-    if (image) {
-      formData.append("image", image);
-    }
+    // if (image) {
+    //   formData.append("image", image);
+    // }
 
     try {
       const data = await createPost(formData);
@@ -84,7 +84,7 @@ const PostCreator = () => {
           placeholder="본문 내용을 입력하세요"
         />
 
-        <div>
+        {/* <div>
           <label className="postcrt-input-label">사진</label>
           <input
             type="file"
@@ -100,7 +100,7 @@ const PostCreator = () => {
               />
             </div>
           )}
-        </div>
+        </div> */}
 
         <button
           className="postcrt-button"
