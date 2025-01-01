@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Input from "../components/Input";
 import { getPost, updatePost } from "../api";
 import { useClickLock } from "../contexts/ClickLockContext";
+import "./PostEditor.css";
 
 const PostEditor = () => {
   const { id } = useParams();
@@ -69,27 +69,40 @@ const PostEditor = () => {
   };
 
   return (
-    <div style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
-      <h1>게시물 수정</h1>
-      <Input
-        label="제목"
+    <div className="postedit-container">
+      <h1 className="postedit-header">게시물 수정</h1>
+      <label className="postedit-input-label" htmlFor="title">제목</label>
+      <input
+        id="title"
         type="text"
         name="title"
         value={post.title}
         onChange={handleChange}
+        className="postedit-input"
+        placeholder="제목을 입력하세요"
       />
-      <Input
-        label="본문"
-        type="textarea"
+      <label className="postedit-input-label" htmlFor="content">본문</label>
+      <textarea
+        id="content"
         name="content"
         value={post.content}
         onChange={handleChange}
+        className="postedit-input"
+        placeholder="본문 내용을 입력하세요"
       />
       <div>
-        <label>사진</label>
-        <input type="file" onChange={handleImageChange} />
+        <label className="postedit-input-label">사진</label>
+        <input
+          type="file"
+          onChange={handleImageChange}
+          className="postedit-input-file"
+        />
       </div>
-      <button onClick={handleSubmit} disabled={isSubmitting}>
+      <button
+        onClick={handleSubmit}
+        disabled={isSubmitting}
+        className="postedit-button"
+      >
         {isSubmitting ? "수정 중..." : "저장"}
       </button>
     </div>

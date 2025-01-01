@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { fetchRooms, checkRoomAvailability } from "../api";
 import { useClickLock } from "../contexts/ClickLockContext"; // 중복 클릭 방지
 import Modal from "../components/Modal"; // 모달 컴포넌트 임포트
@@ -11,7 +11,7 @@ import './RoomList.css';
 const RoomList = () => {
   const [ rooms, setRooms ] = useState([]);
   const [userName, setUserName] = useState(""); // 유저 이름 상태 추가
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { isLocked, lock, unlock } = useClickLock(); // 중복 클릭 방지 훅 사용
   const [isRoomCreaterOpen, setRoomCreaterOpen] = useState(false); // 모달 열림 상태 관리
 
@@ -50,7 +50,7 @@ const RoomList = () => {
                   // 서버에 방 입장 가능 여부 요청
                   const response = await checkRoomAvailability(room.id);
                   console.log(`${room.title}에 입장합니다.`);
-                  navigate(`http://game.eternalsnowman.com/room?roomId=${response.roomId}&clientId=${response.clientId}`); // gameUrl로 이동
+                  window.location.href = `http://game.eternalsnowman.com/room?roomId=${response.roomId}&clientId=${response.clientId}`;
                 } catch (error) {
                   console.error("입장 가능 여부 확인 중 오류 발생:", error.errorCode);
                   alert("입장 가능 여부를 확인할 수 없습니다. 잠시 후 다시 시도해주세요.");
