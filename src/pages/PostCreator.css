@@ -1,0 +1,142 @@
+.postcrt-header {
+  margin: 0;
+  font-size: 2.5rem;
+  color: #0288d1;
+  font-weight: bold;
+  width: 100%;
+  padding: 20px 0;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-bottom: 2px solid #b3d4f1;
+  margin-bottom: 20px; /* 헤더 아래 여백 추가 */
+}
+  
+
+.postcrt-container {
+  width: 80%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 입력창을 가운데 정렬 */
+}
+
+.postcrt-container h2 {
+  font-size: 1.8rem;
+  color: #01579b;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.postcrt-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  background: #0288d1;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.postcrt-button:hover {
+  background: #0277bd;
+  transform: translateY(-2px);
+}
+
+.postcrt-button:active {
+  background: #01579b;
+  transform: translateY(2px);
+}
+
+.postcrt-snowfall {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: url('/assets/snowflake.png') repeat;
+  opacity: 0.2;
+  animation: postcrt-snowfall 10s linear infinite;
+}
+
+@keyframes postcrt-snowfall {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100vh;
+  }
+}
+
+.postcrt-footer {
+  margin-top: auto;
+  padding: 10px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.8);
+  border-top: 2px solid #b3d4f1; /* 색상을 부드럽게 조정 */
+}
+
+.postcrt-footer p {
+  margin: 0;
+  color: #616161;
+  font-size: 0.9rem;
+}
+
+.postcrt-input {
+  width: 80%; /* 입력창의 크기를 줄여 박스 안에 정렬 */
+  max-width: 600px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  border: 1px solid #b3d4f1; /* 색상을 부드럽게 조정 */
+  border-radius: 8px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.postcrt-input:focus {
+  border-color: #80bfe3; /* 색상을 부드럽게 조정 */
+  box-shadow: 0 0 8px rgba(128, 191, 227, 0.5);
+  outline: none;
+}
+
+.postcrt-input-label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: #01579b;
+  font-weight: bold;
+  text-align: left; /* 레이블을 필드 왼쪽 위로 정렬 */
+  width: 80%; /* 레이블도 필드와 정렬 */
+  max-width: 600px;
+}
+
+.postcrt-input-file {
+  width: 80% !important; /* !important 추가로 우선순위 높임 */
+  max-width: 600px !important;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  border: 1px solid #b3d4f1; /* 색상을 부드럽게 조정 */
+  border-radius: 8px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.postcrt-input-file:focus {
+  border-color: #80bfe3; /* 색상을 부드럽게 조정 */
+  box-shadow: 0 0 8px rgba(128, 191, 227, 0.5);
+  outline: none;
+}

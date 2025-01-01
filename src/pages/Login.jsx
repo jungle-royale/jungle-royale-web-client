@@ -12,8 +12,8 @@ const Login = () => {
   const { isLocked, lock, unlock } = useClickLock();
 
   const Rest_api_key = 'e8304b2a6b5aeb5020ef6abeb405115b';
-  //const redirect_uri = "http://localhost:5173/login"; // 리다이렉트 URL 설정
   const redirect_uri = `${import.meta.env.VITE_KAKAO_REDIRECT_URL}/login`;
+  console.log(redirect_uri);
 
   const navigate = useNavigate();
   const { setIsLogin, setUserRole } = useLoginContext();
@@ -35,7 +35,7 @@ const Login = () => {
       alert("카카오 로그인 성공");
       navigate("/"); // 홈으로 이동
     } catch (error) {
-      console.error("Login 처리 중 오류 발생:", error.message);
+      console.error("서버 응답:", error.response?.data || error.message);
     } finally{
       unlock();
     }

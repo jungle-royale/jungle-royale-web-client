@@ -30,12 +30,12 @@ const RoomList = () => {
 
   return (
     <div className="room-list-container">
-      <div className="user-info">
+      <div className="room-user-info">
         <p>안녕하세요, {userName}님!</p>
       </div>
       <div className="room-page">
+        <h1>게임 방 목록</h1>
         <div className="room-list">
-          <h1>게임 방 목록</h1>
           {rooms.map((room) => (
             <RoomCard
             key={room.id}
@@ -50,7 +50,7 @@ const RoomList = () => {
                   // 서버에 방 입장 가능 여부 요청
                   const response = await checkRoomAvailability(room.id);
                   console.log(`${room.title}에 입장합니다.`);
-                  navigate(`http://eternalsnowman.com/game?roomId=${response.roomId}&clientId=${response.clientId}`); // gameUrl로 이동
+                  navigate(`http://game.eternalsnowman.com/room?roomId=${response.roomId}&clientId=${response.clientId}`); // gameUrl로 이동
                 } catch (error) {
                   console.error("입장 가능 여부 확인 중 오류 발생:", error.errorCode);
                   alert("입장 가능 여부를 확인할 수 없습니다. 잠시 후 다시 시도해주세요.");
