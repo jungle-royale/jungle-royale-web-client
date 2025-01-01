@@ -28,6 +28,6 @@
 }
 
 .audio-control-button.paused {
-  background: rgba(255, 182, 193, 0.4); /* 일시정지 상태에서 부드러운 분홍색 */
-  border: 2px solid rgba(255, 182, 193, 0.7);
+  background: rgba(255, 182, 193, 0.7); /* 일시정지 상태에서 부드러운 분홍색 */
+  border: 2px solid rgba(255, 182, 193, 0.9);
 }

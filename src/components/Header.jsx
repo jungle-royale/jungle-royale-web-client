@@ -8,16 +8,6 @@ const Header = () => {
   const { handleLogin, handleLogout } = useAuthHandlers();
   const { navigateSafely } = useSafeNavigation();
 
-  const handleMypageClick = (e) => {
-    if (userRole !== "MEMBER") {
-      e.preventDefault();
-      alert("마이페이지는 회원만 접근할 수 있습니다.");
-      navigateSafely(e, "/login");
-      return;
-    }
-    navigateSafely(e, "/mypage");
-  };
-
   return (
     <header>
       <div className="logo">
@@ -34,8 +24,9 @@ const Header = () => {
           {isLogin ? (
             <>
               <a onClick={handleLogout} className="logout-link">로그아웃</a>
-              <a href="/mypage" onClick={handleMypageClick}>
-              마이페이지</a>
+              {userRole === "MEMBER" &&(
+                <a href="/mypage" onClick={(e) => navigateSafely(e, "/mypage")}>마이페이지</a>
+              )}
               </>
             ) : (
             <>
