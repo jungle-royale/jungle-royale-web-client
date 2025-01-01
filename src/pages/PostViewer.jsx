@@ -4,7 +4,7 @@ import useSafeNavigation from "../hooks/useSafeNavigation.jsx";
 import { deletePost, getPost } from "../api";
 import "./PostViewer.css";
 import useJwtSub from "../hooks/useJwtSub";
-import { useLoginContext } from "../contexts/LoginContext";
+// import { useLoginContext } from "../contexts/LoginContext";
 
 const PostViewer = () => {
   const { id } = useParams();
@@ -12,7 +12,8 @@ const PostViewer = () => {
   const [post, setPost] = useState(null);
   const [isOwner, setIsOwner] = useState(false);
 
-  const { jwtToken } = useLoginContext();
+  // const { jwtToken } = useLoginContext();
+  const jwtToken = localStorage.getItem("jwt_token");
   const sub = useJwtSub(jwtToken);
 
   useEffect(() => {
@@ -48,7 +49,7 @@ const PostViewer = () => {
       try {
         await deletePost(id);
         alert("게시물이 삭제되었습니다.");
-        navigateSafely(e, "/post");
+        navigateSafely(e, "/");
       } catch (error) {
         console.error("게시물 삭제 중 오류 발생:", error.message);
         alert("게시물 삭제에 실패했습니다. 다시 시도해주세요.");
@@ -62,7 +63,7 @@ const PostViewer = () => {
         <>
           <h1>{post.title}</h1>
           <p>{post.content}</p>
-          {post.imageUrl && (
+          {/* {post.imageUrl && (
             <div className="post-image-container">
               <img
                 src={post.imageUrl}
@@ -70,7 +71,7 @@ const PostViewer = () => {
                 className="post-image"
               />
             </div>
-          )}
+          )} */}
           {isOwner && (
             <div className="button-group">
               <button className="edit-button" onClick={handleEdit}>
