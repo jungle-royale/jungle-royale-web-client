@@ -30,12 +30,12 @@ const RoomList = () => {
 
   return (
     <div className="room-list-container">
-      <div className="user-info">
+      <div className="room-user-info">
         <p>안녕하세요, {userName}님!</p>
       </div>
       <div className="room-page">
+        <h1>게임 방 목록</h1>
         <div className="room-list">
-          <h1>게임 방 목록</h1>
           {rooms.map((room) => (
             <RoomCard
             key={room.id}

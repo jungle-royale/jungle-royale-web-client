@@ -51,7 +51,7 @@ const Home = () => {
         <button className="home-button-room-list" onClick={isLogin ? handleButtonClick : handleLoginGuest }>
         {isLogin ? "닉네임" : "비회원 로그인"}
         </button>
-        <div className="home-post-container">
+        <div className="post-container">
           <Post />
         </div>
       </div> 

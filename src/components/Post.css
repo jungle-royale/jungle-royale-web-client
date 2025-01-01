@@ -1,11 +1,33 @@
+.post-container {
+  position: absolute; /* 부모 컨테이너 기준으로 배치 */
+  top: 80%; /* 배경 이미지 기준 배치 */
+  left: 50%; /* 가로 중앙 정렬 */
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1550px;  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: rgba(249, 249, 249, 0.9); /* 반투명 배경 */
+  min-height: 400px; /* 최소 높이를 설정하여 겹침 방지 */
+  overflow-y: auto; /* 내용이 많을 경우 스크롤 가능하도록 설정 */
+}
+
+.post-container h1,
+.post-container h3 {
+  text-align: center; /* 텍스트를 중앙 정렬 */
+  margin-bottom: 10px; /* 하단 여백 추가 */
+}
+
+
 .post-header {
   display: flex;
   flex-direction: row; /* 가로 정렬 */
-  background-color: #e0e0e0; /* 헤더 배경색 */
+  background-color: #ffffff; /* 헤더 배경색 */
   font-weight: bold; /* 굵은 글씨 */
   padding: 10px;
-  border: 1px solid #ccc;
-  cursor: default; /* 클릭 불가능한 커서 */
+  border-bottom: 1px solid #ccc; /* 밑줄 추가 */  cursor: default; /* 클릭 불가능한 커서 */
+  position: relative; /* 글쓰기 버튼 위치를 위한 상대 위치 지정 */
 }
 
 .post-header div {
@@ -15,6 +37,23 @@
   user-select: none; /* 텍스트 선택 불가 */
   pointer-events: none; /* 클릭 이벤트 제거 */
 }
+
+.post-write-button {
+  position: absolute;
+  top: 10px;
+  right: 10px; /* 헤더 오른쪽 위 */
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.post-write-button:hover {
+  background: #1a2db8;
+}
+
 
 .post-list {
   list-style: none;
@@ -54,17 +93,17 @@
 .post-pagination {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .post-page-button {
-  margin: 0 5px;
-  padding: 10px 15px;
+  margin: 0 3px;
+  padding: 5px 10px;
   border: 1px solid #ccc;
   background-color: #fff;
   cursor: pointer;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 12px; 
 }
 
 .post-page-button:hover {
@@ -72,8 +111,7 @@
 }
 
 .post-page-button.active {
-  background-color: #007bff;
+  background-color: #6cb6ff;
   color: white;
-  border-color: #0056b3;
   font-weight: bold;
 }

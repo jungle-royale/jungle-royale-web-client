@@ -3,9 +3,8 @@
   line-height: 1.5; /* 텍스트 줄 간격 */
   font-weight: 400; /* 일반 텍스트에 사용되는 기본 두께 설정 */
 
-  color-scheme: light dark; /* 다크 모드와 라이트 모드 모두 지원 */
-  color: rgba(255, 255, 255, 0.87); /* 텍스트 색상 - 다크 모드에서 읽기 쉬운 흰색 계열 */
-  background-color: #242424; /* 배경색 - 다크 모드 기본값 */
+  color: #213547; /* 텍스트 색상 - 라이트 모드에서 어두운 색상으로 설정 */
+  background-color: #a9bfc7; /* 배경색 - 라이트 모드에서 밝은 색상으로 변경 */
 
   font-synthesis: none; /* 자동 글꼴 스타일링 비활성화 (기울임꼴, 굵은 글꼴 등) */
   text-rendering: optimizeLegibility; /* 텍스트 가독성을 최적화하도록 브라우저에 요청 */
@@ -23,20 +22,13 @@ a {
 }
 
 body {
-  margin: 0;
+  /* margin: 0; */
   width: 100%;
-  height: 100vh;
+  /* height: 100vh; */
   overflow: visible; /* 스크롤바를 추가로 생성하지 않음 */
 }
 
 html {
   overflow-y: scroll;
   display: flex;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547; /* 텍스트 색상 - 라이트 모드에서 어두운 색상으로 설정 */
-    background-color: #a9bfc7; /* 배경색 - 라이트 모드에서 밝은 색상으로 변경 */
-  }
 }
