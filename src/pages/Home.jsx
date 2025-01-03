@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { loginGuest } from "../api";
 import { useLoginContext } from "../contexts/LoginContext";
 import { useClickLock } from '../contexts/ClickLockContext';
-import Snowfall from "../components/SnowFall.jsx"; // Snowfall 경로 맞추기
+import Snowfall from "../utils/SnowFall.jsx"; // Snowfall 경로 맞추기
 import Post from "../components/Post.jsx"; // Post 컴포넌트 가져오기
 import Modal from "../components/Modal.jsx"; // 모달 컴포넌트 임포트
-import QRcode from "../components/QRcode.jsx";
+import QRcode from "../utils/QRcode.jsx";
 import "./Home.css";
 
 const Home = () => {
@@ -50,7 +50,9 @@ const Home = () => {
     <div>
       <Snowfall /> {/* 눈 효과 추가 */}
       <div className="home-image-container">
+        {isLogin && 
         <button className="home-button-room-list" onClick={() => setIsQRModalOpen(true)}>QRcode</button>
+        }
         <button className="home-button-room-list" onClick={handleButtonClick}>
           {isLogin ? "GAME START" : "LOGIN"}
         </button>

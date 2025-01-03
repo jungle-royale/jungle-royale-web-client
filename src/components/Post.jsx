@@ -60,11 +60,6 @@ const Post = () => {
     setCurrentPage(pageNumber);
   };
 
-  console.log("totalPosts:", totalPosts);
-  console.log("postsPerPage:", postsPerPage);
-  console.log("totalPages:", totalPages);
-
-
   return (
     <div className="post-container">
       <h1>게시판</h1>

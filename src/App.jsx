@@ -5,7 +5,7 @@ import { ClickLockProvider } from "./contexts/ClickLockContext";
 
 
 import './App.css';
-import AudioPlayer from "./components/AudioPlayer"; // AudioPlayer 컴포넌트 임포트
+import AudioPlayer from "./utils/AudioPlayer"; // AudioPlayer 컴포넌트 임포트
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import RoomList from "./pages/RoomList";
@@ -13,7 +13,7 @@ import MyPage from "./pages/MyPage"
 import GameTemp from "./pages/GameTemp"
 import useTokenRefresh from "./hooks/useTokenRefresh";
 import Header from "./components/Header";
-import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTop from "./utils/ScrollToTop";
 import PostViewer from "./pages/PostViewer";
 import PostCreator from "./pages/PostCreator";
 import PostEditor from "./pages/PostEditor";
