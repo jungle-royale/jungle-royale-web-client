@@ -1,12 +1,46 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { TextureLoader } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Sky } from "three/examples/jsm/objects/Sky";
 import "./MyPage.css";
 
+const loadModelWithTexture = (scene, modelRef) => {
+  const loader = new GLTFLoader();
+  const textureLoader = new TextureLoader();
+
+  // 텍스처 로드
+  const texture = textureLoader.load('/assets/RW_LP_Texture_00.jpg'); // 경로 확인 필요
+
+  loader.load(
+    '/assets/RW_LP_CP_Character_SnowMan.001.gltf', // 모델 경로
+    (gltf) => {
+      const model = gltf.scene;
+
+      // 텍스처 적용
+      model.traverse((child) => {
+        if (child.isMesh) {
+          child.material.map = texture;
+          child.material.needsUpdate = true; // 변경 사항 반영
+        }
+      });
+
+      model.scale.set(2, 2, 2); // 크기 조정
+      model.position.set(0, 0, 0);
+      scene.add(model); // 씬에 추가
+
+      modelRef.current = model; // modelRef에 저장
+    },
+    undefined,
+    (error) => {
+      console.error("Error loading GLTF:", error);
+    }
+  );
+};
+
 const TestPage = () => {
   const mountRef = useRef(null); // 캔버스를 렌더링할 DOM 요소 참조
-  let model = null; // 컴포넌트 범위에서 선언
+  const modelRef = useRef(null); // 로드된 모델 참조
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -34,15 +68,17 @@ const TestPage = () => {
     camera.lookAt(0, 0, 0);
 
     // 조명 추가
-    const ambientLight = new THREE.AmbientLight(0xffffff, -6); // 부드러운 환경 조명
+    const ambientLight = new THREE.AmbientLight(0xffffff, -1); // 부드러운 환경 조명
     scene.add(ambientLight);
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // 강한 방향 조명
-    directionalLight.position.set(-5, 5, -5);
-    directionalLight.target.position.set(0, 1, 0);
-    scene.add(directionalLight);
-    scene.add(directionalLight.target);
-    const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1);
-    scene.add(directionalLightHelper);
+    // const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8); // 강한 방향 조명
+    // directionalLight.position.set(-5, 5, -5);
+    // directionalLight.target.position.set(0, 1, 0);
+    // scene.add(directionalLight);
+    // scene.add(directionalLight.target);
+    // const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1);
+    // scene.add(directionalLightHelper);
+
+    loadModelWithTexture(scene, modelRef);
 
     ///////////////////////////////////////////////////////////////////
     // 빙하 느낌의 하늘 설정
@@ -61,34 +97,6 @@ const TestPage = () => {
     const environmentMap = pmremGenerator.fromScene(sky).texture;
     scene.environment = environmentMap;
     ///////////////////////////////////////////////////////////////////
-
-    // GLTFLoader로 모델 로드
-    const loader = new GLTFLoader();
-    loader.load(
-      "/assets/RW_Snowman01.glb",
-      (gltf) => {
-        model = gltf.scene;
-        model.traverse((child) => {
-          if (child.isMesh) {
-            // 환경맵을 반사로 적용
-            child.material.envMap = environmentMap;
-            child.material.needsUpdate = true;
-            // 디버깅 출력
-            if (child.material.map) {
-              console.log("Scene:", scene);
-              console.log("Texture Map:", child);
-            }
-          }
-        });
-        model.scale.set(2, 2, 2);
-        model.position.set(0, 0, 0);
-        scene.add(model);
-      },
-      undefined,
-      (error) => {
-        console.error("An error occurred while loading the GLB model:", error);
-      }
-    );
 
     // 이동 관련 변수
     const moveSpeed = 0.1;
@@ -199,7 +207,9 @@ const TestPage = () => {
 
     // 객체 이동 업데이트 함수
     const updateObjectPosition = () => {
+      const model = modelRef.current;
       if (!model) return;
+      console.log("객체 이동 확인");
       if (moveDirection.forward) model.position.z -= moveSpeed;
       if (moveDirection.backward) model.position.z += moveSpeed;
       if (moveDirection.left) model.position.x -= moveSpeed;
@@ -211,10 +221,12 @@ const TestPage = () => {
     const animate = () => {
       requestAnimationFrame(animate);
     // 모델이 로드된 경우에만 객체 위치 업데이트
-      if (model) {
+      // if (model) {
+      //   updateObjectPosition();
+      // }
+      if (moveDirection.forward || moveDirection.backward || moveDirection.left || moveDirection.right) {
         updateObjectPosition();
-      }
-
+    }
       renderer.render(scene, camera);
     };
 
