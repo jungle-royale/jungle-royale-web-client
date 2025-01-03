@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
-import { fetchRooms, checkRoomAvailability } from "../api";
+import { fetchRooms, joinRoomAvailability } from "../api";
 import { useClickLock } from "../contexts/ClickLockContext"; // 중복 클릭 방지
 import Modal from "../components/Modal"; // 모달 컴포넌트 임포트
 import RoomCreater from "./RoomCreater"; // 방 생성 컴포넌트 임포트
@@ -48,7 +48,7 @@ const RoomList = () => {
                 lock();
                 try {
                   // 서버에 방 입장 가능 여부 요청
-                  const response = await checkRoomAvailability(room.id);
+                  const response = await joinRoomAvailability(room.id);
                   console.log(`${room.title}에 입장합니다.`);
                   window.location.href = `http://game.eternalsnowman.com/room?roomId=${response.roomId}&clientId=${response.clientId}`;
                 } catch (error) {

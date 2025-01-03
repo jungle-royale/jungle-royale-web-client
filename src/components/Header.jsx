@@ -16,7 +16,7 @@ const Header = () => {
         </a>        
       </div>
       <nav>
-      {/* <a href="/test" onClick={(e) => navigateSafely(e, "/test")}>css</a> */}
+      <a href="/test" onClick={(e) => navigateSafely(e, "/test")}>css</a>
       <a href="/store" onClick={(e) => navigateSafely(e, "/store")}>상점</a>
       {/* <a href="/board" onClick={(e) => navigateSafely(e, "/post")}>소식</a> */}
       <a href="/ranking" onClick={(e) => navigateSafely(e, "/ranking")}>랭킹</a>

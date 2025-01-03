@@ -102,7 +102,7 @@ export const fetchRooms = async () => {
 };
 
 //방 입장 가능 여부 확인 api
-export const checkRoomAvailability = async (roomId) => {
+export const joinRoomAvailability = async (roomId) => {
   const response = await apiClient.post(`/api/rooms/${roomId}/join`, {}, 
     {
       headers: {
