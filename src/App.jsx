@@ -19,7 +19,7 @@ import PostCreator from "./pages/PostCreator";
 import PostEditor from "./pages/PostEditor";
 import Store from "./pages/Store";
 import Ranking from "./pages/Ranking";
-// import TestPage from "./pages/TestPage";
+import TestPage from "./pages/TestPage";
 
 function App() {
   useTokenRefresh(); // 자동 토큰 갱신 로직
@@ -43,7 +43,7 @@ function App() {
               <Route path="/posts/:id/update" element={<PostEditor />}/>
               <Route path="/store" element={<Store />} />
               <Route path="/ranking" element={<Ranking />} />
-              {/* <Route path="/test" element={<TestPage />}/> */}
+              <Route path="/test" element={<TestPage />}/>
             </Routes>
           </RoomsProvider>
         </LoginProvider>

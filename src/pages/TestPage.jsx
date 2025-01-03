@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
+import { Sky } from "three/examples/jsm/objects/Sky";
 import "./MyPage.css";
 
 const TestPage = () => {
   const mountRef = useRef(null); // 캔버스를 렌더링할 DOM 요소 참조
+  let model = null; // 컴포넌트 범위에서 선언
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -33,54 +34,77 @@ const TestPage = () => {
     camera.lookAt(0, 0, 0);
 
     // 조명 추가
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // 부드러운 환경 조명
+    const ambientLight = new THREE.AmbientLight(0xffffff, -6); // 부드러운 환경 조명
     scene.add(ambientLight);
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5); // 강한 방향 조명
-    directionalLight.position.set(5, 5, 5);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // 강한 방향 조명
+    directionalLight.position.set(-5, 5, -5);
     directionalLight.target.position.set(0, 1, 0);
     scene.add(directionalLight);
     scene.add(directionalLight.target);
     const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1);
     scene.add(directionalLightHelper);
 
-    // HDR 환경맵 로드
-    const rgbeLoader = new RGBELoader();
-    rgbeLoader.load("/path_to_hdr.hdr", (texture) => {
-      texture.mapping = THREE.EquirectangularReflectionMapping; // 구형 맵핑 방식
-      scene.environment = texture; // 환경맵 설정
-      scene.background = texture; // 배경으로 설정 (선택 사항)
+    ///////////////////////////////////////////////////////////////////
+    // 빙하 느낌의 하늘 설정
+    const sky = new Sky();
+    sky.scale.setScalar(1000);
+    scene.add(sky);
 
-      // GLTFLoader로 모델 로드
-      const loader = new GLTFLoader();
-      loader.load(
-        "/assets/RW_Snowman01.glb",
-        (gltf) => {
-          const model = gltf.scene;
-          model.traverse((child) => {
-            if (child.isMesh) {
-              // 환경맵을 반사로 적용
-              child.material.envMap = texture;
-              child.material.needsUpdate = true;
+    const sun = new THREE.Vector3();
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    const sunPhi = THREE.MathUtils.degToRad(90-20); // 태양 고도
+    const sunTheta = THREE.MathUtils.degToRad(45); // 태양 방위각
+
+    sun.setFromSphericalCoords(1, sunPhi, sunTheta);
+    sky.material.uniforms["sunPosition"].value.copy(sun);
+
+    const environmentMap = pmremGenerator.fromScene(sky).texture;
+    scene.environment = environmentMap;
+    ///////////////////////////////////////////////////////////////////
+
+    // GLTFLoader로 모델 로드
+    const loader = new GLTFLoader();
+    loader.load(
+      "/assets/RW_Snowman01.glb",
+      (gltf) => {
+        model = gltf.scene;
+        model.traverse((child) => {
+          if (child.isMesh) {
+            // 환경맵을 반사로 적용
+            child.material.envMap = environmentMap;
+            child.material.needsUpdate = true;
+            // 디버깅 출력
+            if (child.material.map) {
+              console.log("Texture Map:", child);
             }
-          });
-          model.scale.set(2, 2, 2);
-          scene.add(model);
-        },
-        undefined,
-        (error) => {
-          console.error("An error occurred while loading the GLB model:", error);
-        }
-      );
-    });
+          }
+        });
+        model.scale.set(2, 2, 2);
+        model.position.set(0, 0, 0);
+        scene.add(model);
+      },
+      undefined,
+      (error) => {
+        console.error("An error occurred while loading the GLB model:", error);
+      }
+    );
+
+    // 이동 관련 변수
+    const moveSpeed = 0.1;
+    const moveDirection = { forward: false, backward: false, left: false, right: false };
 
     // 마우스 이벤트 처리
+    let radius = Math.sqrt(
+      camera.position.x ** 2 +
+      camera.position.y ** 2 +
+      camera.position.z ** 2
+    ); // 초기 반경
     let isMouseDown = false;
     let startMouseX = 0;
     let startMouseY = 0;
-    let theta = 0; // 수평 회전 각도
-    let phi = Math.PI / 4; // 수직 회전 각도
-    const radius = 5; // 카메라의 거리
+    let rotationTheta = Math.atan2(camera.position.z, camera.position.x); // 초기 수평 각도
 
+    let rotationPhi = Math.acos(camera.position.y / radius); // 초기 수직 각도
     const handleMouseMove = (event) => {
       if (!isMouseDown) return;
       const deltaX = event.clientX - startMouseX;
@@ -89,16 +113,16 @@ const TestPage = () => {
       startMouseY = event.clientY;
 
       // 마우스 움직임에 따라 각도 조정
-      theta += deltaX * 0.01; // 수평 회전
-      phi -= deltaY * 0.01; // 수직 회전
+      rotationTheta += deltaX * 0.01; // 수평 회전
+      rotationPhi -= deltaY * 0.01; // 수직 회전
 
       // 수직 회전 각도 제한 (상하로 완전히 뒤집히지 않도록)
-      phi = Math.max(0.1, Math.min(Math.PI - 0.1, phi));
+      rotationPhi = Math.max(0.1, Math.min(Math.PI - 0.1, rotationPhi));
 
       // 새로운 카메라 위치 계산
-      const x = radius * Math.sin(phi) * Math.cos(theta);
-      const y = radius * Math.cos(phi);
-      const z = radius * Math.sin(phi) * Math.sin(theta);
+      const x = radius * Math.sin(rotationPhi) * Math.cos(rotationTheta);
+      const y = radius * Math.cos(rotationPhi);
+      const z = radius * Math.sin(rotationPhi) * Math.sin(rotationTheta);
 
       camera.position.set(x, y, z);
       camera.lookAt(0, 0, 0);
@@ -115,15 +139,55 @@ const TestPage = () => {
     };
 
     const handleWheel = (event) => {
-      const delta = event.deltaY * 0.01;
-      const newRadius = radius + delta;
-      const clampedRadius = Math.max(1, Math.min(10, newRadius)); // 거리 제한
+      const delta = event.deltaY * 0.005; // 델타 값 감소-더 부드러운 줌 효과
+      radius += delta;
+      radius = Math.max(3, Math.min(10, radius)); // 거리 제한
+
       camera.position.set(
-        clampedRadius * Math.sin(phi) * Math.cos(theta),
-        clampedRadius * Math.cos(phi),
-        clampedRadius * Math.sin(phi) * Math.sin(theta)
+        radius * Math.sin(rotationPhi) * Math.cos(rotationTheta),
+        radius * Math.cos(rotationPhi),
+        radius * Math.sin(rotationPhi) * Math.sin(rotationTheta)
       );
       camera.lookAt(0, 0, 0);
+    };
+
+    // 키보드 이벤트 핸들러
+    const handleKeyDown = (event) => {
+      switch (event.key) {
+        case "w":
+          moveDirection.forward = true;
+          break;
+        case "s":
+          moveDirection.backward = true;
+          break;
+        case "a":
+          moveDirection.left = true;
+          break;
+        case "d":
+          moveDirection.right = true;
+          break;
+        default:
+          break;
+      }
+    };
+
+    const handleKeyUp = (event) => {
+      switch (event.key) {
+        case "w":
+          moveDirection.forward = false;
+          break;
+        case "s":
+          moveDirection.backward = false;
+          break;
+        case "a":
+          moveDirection.left = false;
+          break;
+        case "d":
+          moveDirection.right = false;
+          break;
+        default:
+          break;
+      }
     };
 
     const handleResize = () => {
@@ -132,9 +196,24 @@ const TestPage = () => {
       renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
     };
 
+    // 객체 이동 업데이트 함수
+    const updateObjectPosition = () => {
+      if (!model) return;
+      if (moveDirection.forward) model.position.z -= moveSpeed;
+      if (moveDirection.backward) model.position.z += moveSpeed;
+      if (moveDirection.left) model.position.x -= moveSpeed;
+      if (moveDirection.right) model.position.x += moveSpeed;
+    };
+
+
     // 애니메이션 루프
     const animate = () => {
       requestAnimationFrame(animate);
+    // 모델이 로드된 경우에만 객체 위치 업데이트
+      if (model) {
+        updateObjectPosition();
+      }
+
       renderer.render(scene, camera);
     };
 
@@ -143,6 +222,8 @@ const TestPage = () => {
     mountRef.current.addEventListener("mousedown", handleMouseDown);
     mountRef.current.addEventListener("mouseup", handleMouseUp);
     mountRef.current.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
     window.addEventListener("resize", handleResize);
 
     animate();
@@ -151,11 +232,13 @@ const TestPage = () => {
     return () => {
       if (mountRef.current) {
         mountRef.current.removeChild(renderer.domElement);
+        mountRef.current.removeEventListener("mousemove", handleMouseMove);
+        mountRef.current.removeEventListener("mousedown", handleMouseDown);
+        mountRef.current.removeEventListener("mouseup", handleMouseUp);
+        mountRef.current.removeEventListener("wheel", handleWheel);
       }
-      mountRef.current.removeEventListener("mousemove", handleMouseMove);
-      mountRef.current.removeEventListener("mousedown", handleMouseDown);
-      mountRef.current.removeEventListener("mouseup", handleMouseUp);
-      mountRef.current.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
