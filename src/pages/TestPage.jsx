@@ -220,10 +220,6 @@ const TestPage = () => {
     // 애니메이션 루프
     const animate = () => {
       requestAnimationFrame(animate);
-    // 모델이 로드된 경우에만 객체 위치 업데이트
-      // if (model) {
-      //   updateObjectPosition();
-      // }
       if (moveDirection.forward || moveDirection.backward || moveDirection.left || moveDirection.right) {
         updateObjectPosition();
     }
