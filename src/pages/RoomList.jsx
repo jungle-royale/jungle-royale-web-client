@@ -4,6 +4,7 @@ import { useClickLock } from "../contexts/ClickLockContext";
 import Modal from "../components/Modal";
 import RoomCreater from "./RoomCreater";
 import RoomCard from "../components/RoomCard";
+import StompChat from "../components/StompChat";
 import "./RoomList.css";
 
 const RoomList = () => {
@@ -75,17 +76,7 @@ const RoomList = () => {
             />
           </div>
         </div>
-
-        {/* 새로 추가된 채팅창 */}
-        <div className="chat-container">
-          <div className="chat-messages">
-            <p>채팅 메시지가 여기에 표시됩니다.</p>
-          </div>
-          <div className="chat-input">
-            <input type="text" placeholder="메시지를 입력하세요..." />
-            <button>전송</button>
-          </div>
-        </div>
+        <StompChat />
       </div>
 
       {/* 기존 코드: 방 생성 모달 */}
