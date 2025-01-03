@@ -75,6 +75,7 @@ const TestPage = () => {
             child.material.needsUpdate = true;
             // 디버깅 출력
             if (child.material.map) {
+              console.log("Scene:", scene);
               console.log("Texture Map:", child);
             }
           }
