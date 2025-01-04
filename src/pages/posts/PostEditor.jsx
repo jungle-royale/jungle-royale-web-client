@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getPost, updatePost } from "../api";
-import { useClickLock } from "../contexts/ClickLockContext";
+import { getPost, updatePost } from "../../api";
+import { useClickLock } from "../../contexts/ClickLockContext";
 import "./PostEditor.css";
 
 const PostEditor = () => {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchStoreData, purchaseItem } from "../api";
+import { fetchStoreData, purchaseItem } from "../../api";
 //import ThreeCanvas from "../components/ThreeCanvas";
 import "./Store.css";
 

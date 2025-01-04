@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { TextureLoader } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Sky } from "three/examples/jsm/objects/Sky";
-import "./MyPage.css";
+import "./mypage/MyPage.css";
 
 const loadModelWithTexture = (scene, modelRef) => {
   const loader = new GLTFLoader();

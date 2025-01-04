@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { loginGuest } from "../api";
-import { useLoginContext } from "../contexts/LoginContext";
-import { useClickLock } from '../contexts/ClickLockContext';
-import Snowfall from "../utils/SnowFall.jsx"; // Snowfall 경로 맞추기
-import Post from "../components/Post.jsx"; // Post 컴포넌트 가져오기
-import Modal from "../components/Modal.jsx"; // 모달 컴포넌트 임포트
-import QRcode from "../utils/QRcode.jsx";
+import { loginGuest } from "../../api.js";
+import { useLoginContext } from "../../contexts/LoginContext.jsx";
+import { useClickLock } from '../../contexts/ClickLockContext.jsx';
+import Snowfall from "../../utils/SnowFall.jsx"; // Snowfall 경로 맞추기
+import PostBox from "../../components/PostBox.jsx"; // PostBox 컴포넌트 가져오기
+import Modal from "../../components/Modal.jsx"; // 모달 컴포넌트 임포트
+import QRcode from "../../utils/QRcode.jsx";
 import "./Home.css";
 
 const Home = () => {
@@ -62,7 +62,7 @@ const Home = () => {
           </button>
         )}
       </div> 
-      <Post />
+      <PostBox />
       <Modal isOpen={isQRModalOpen} onClose={() => setIsQRModalOpen(false)}>
         <QRcode />
       </Modal>
