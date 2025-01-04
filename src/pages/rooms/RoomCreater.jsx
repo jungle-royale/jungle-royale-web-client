@@ -1,8 +1,8 @@
 import { useState } from 'react';
 // import { useNavigate } from "react-router-dom";
-import { createRoom } from "../api";
-import { useClickLock } from '../contexts/ClickLockContext';
-import Input from "../components/Input";
+import { createRoom } from "../../api";
+import { useClickLock } from '../../contexts/ClickLockContext';
+import Input from "../../components/Input";
 import "./RoomCreater.css"
 
 const RoomCreater = () => {

@@ -4,9 +4,9 @@ import useSafeNavigation from "../hooks/useSafeNavigation.jsx";
 import { useLoginContext } from "../contexts/LoginContext.jsx";
 import { formatDistanceToNowStrict, parseISO } from "date-fns";
 import { ko } from "date-fns/locale"; // 한국어 로케일
-import "./Post.css"; 
+import "./PostBox.css"; 
 
-const Post = () => {
+const PostBox = () => {
   const [posts, setPosts] = useState([]); // 초기값 빈 배열
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const [postsPerPage] = useState(10); // 한 페이지당 게시물 수
@@ -122,4 +122,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default PostBox;

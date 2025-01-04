@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import Input from "../components/Input"; 
-import { fetchMyPage, myPageEdit } from '../api.js';
+import Input from "../../components/Input.jsx"; 
+import { fetchMyPage, myPageEdit } from '../../api.js';
 import "./MyPage.css";
 
 const MyPage = () => {

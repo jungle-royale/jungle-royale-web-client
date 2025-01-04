@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { fetchRooms, joinRoomAvailability } from "../api";
-import { useClickLock } from "../contexts/ClickLockContext";
-import Modal from "../components/Modal";
+import { fetchRooms, joinRoomAvailability } from "../../api";
+import { useClickLock } from "../../contexts/ClickLockContext";
+import Modal from "../../components/Modal";
 import RoomCreater from "./RoomCreater";
-import RoomCard from "../components/RoomCard";
-import StompChat from "../components/StompChat";
+import RoomCard from "../../components/RoomCard";
+import StompChat from "../../components/StompChat";
 import "./RoomList.css";
 
 const RoomList = () => {
