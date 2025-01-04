@@ -41,7 +41,8 @@ function App() {
               <Route path="/posts/:id/update" element={<PostEditor />}/>
               <Route path="/store" element={<Store />} />
               <Route path="/ranking" element={<Ranking />} />
-              <Route path="/test" element={<TestPageStore />}/>
+              {/* <Route path="/qr/:roomid" element={<RoomReady />} /> */}
+              <Route path="/test" element={<TestPageStore />}/> {/* 삭제 예정 */}
             </Routes>
           </RoomsProvider>
         </LoginProvider>

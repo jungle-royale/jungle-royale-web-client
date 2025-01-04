@@ -1,14 +1,10 @@
 /* 전체 컨테이너 스타일 */
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background-image: url('/path/to/your/background.jpg'); /* 배경 이미지 경로 */
-  background-size: cover; /* 배경을 화면에 맞게 조정 */
-  background-attachment: fixed; /* 배경 고정 */
+  background-size: cover; 
+  background-attachment: fixed; 
   background-position: center;
-  overflow: hidden; /* 기본 스크롤 제거 */
+  overflow: hidden; 
 }
 
 /* 게시판 컨테이너 */
@@ -26,6 +22,7 @@ body {
   transition: top 0.3s ease-in-out;
   top: 100%; /* 화면 아래 */
 }
+
 
 /* 스크롤로 고정 */
 .post-container.sticky {
