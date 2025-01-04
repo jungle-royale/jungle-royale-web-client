@@ -1,8 +1,8 @@
-import { loginWithKakao } from "../api";
+import { loginWithKakao } from "../../api";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLoginContext } from "../contexts/LoginContext";
-import { useClickLock } from '../contexts/ClickLockContext';
+import { useLoginContext } from "../../contexts/LoginContext";
+import { useClickLock } from '../../contexts/ClickLockContext';
 
 import "./Login.css";
 
@@ -26,7 +26,6 @@ const Login = () => {
   const sendCodeToServer = async (authCode) => {
     if (isLocked) return; // 중복 클릭 방지
     lock();
-
     try {
       const response = await loginWithKakao(authCode); // 반환된 데이터 처리
       setIsLogin(true); // 로그인 상태 업데이트

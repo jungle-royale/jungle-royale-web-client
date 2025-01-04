@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import Input from "../components/Input";
-import { createPost } from "../api";
-import { useClickLock } from "../contexts/ClickLockContext";
+import { createPost } from "../../api";
+import { useClickLock } from "../../contexts/ClickLockContext";
 import "./PostCreator.css"; 
 
 const PostCreator = () => {

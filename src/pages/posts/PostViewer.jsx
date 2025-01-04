@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import useSafeNavigation from "../hooks/useSafeNavigation.jsx";
-import { deletePost, getPost } from "../api";
+import useSafeNavigation from "../../hooks/useSafeNavigation.jsx";
+import { deletePost, getPost } from "../../api.js";
 import "./PostViewer.css";
-import useJwtSub from "../hooks/useJwtSub";
+import useJwtSub from "../../hooks/useJwtSub.jsx";
 // import { useLoginContext } from "../contexts/LoginContext";
 
 const PostViewer = () => {

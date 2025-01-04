@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { TextureLoader } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Sky } from "three/examples/jsm/objects/Sky";
-import "./MyPage.css";
+import "./mypage/MyPage.css";
 
 const loadModelWithTexture = (scene, modelRef) => {
   const loader = new GLTFLoader();
@@ -38,7 +38,7 @@ const loadModelWithTexture = (scene, modelRef) => {
   );
 };
 
-const TestPage = () => {
+const TestPageStore = () => {
   const mountRef = useRef(null); // 캔버스를 렌더링할 DOM 요소 참조
   const modelRef = useRef(null); // 로드된 모델 참조
 
@@ -57,8 +57,8 @@ const TestPage = () => {
     renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     mountRef.current.appendChild(renderer.domElement);
-    renderer.shadowMap.enabled = true; // 그림자 활성화
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap; // 부드러운 그림자
+    // renderer.shadowMap.enabled = true; // 그림자 활성화
+    // renderer.shadowMap.type = THREE.PCFSoftShadowMap; // 부드러운 그림자
 
     // 축 헬퍼 추가
     const axesHelper = new THREE.AxesHelper(5);
@@ -255,4 +255,4 @@ const TestPage = () => {
   return <div ref={mountRef} className="mypage-canvas" />;
 };
 
-export default TestPage;
+export default TestPageStore;
