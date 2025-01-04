@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import './StompChat.css'; // CSS 파일 불러오기
 
 const StompChat = () => {
-  const SERVER_URL = "ws://192.168.1.241:8081/ws-stomp";
+  const SERVER_URL = "ws://192.168.1.241:8080/ws-stomp";
 
   const [wsClient, setWsClient] = useState(null);
   const [messages, setMessages] = useState([]); // 메시지 배열
@@ -21,16 +21,18 @@ const StompChat = () => {
     };
 
     client.onmessage = (event) => {
-      console.log("Data:", event.data);
       const { content, sender, id } = JSON.parse(event.data);
-      console.log('Parsed content:', content);
-
 
       setMessages((prev) => {
         // 중복 메시지 확인
         if (prev.some((msg) => msg.id === id)) return prev;
         return [...prev, { content, sender, id }];
       });
+
+      // 사용자가 맨 아래에 있지 않을 경우 newMessagesCount 증가
+      if (!isUserAtBottom) {
+        setNewMessagesCount((prevCount) => prevCount + 1);
+      }
     };
 
     client.onerror = (error) => {
@@ -78,13 +80,12 @@ const StompChat = () => {
   const sendMessage = () => {
     if (wsClient && message.trim()) {
       const newMessage = { content: message, sender: 'User', id: Date.now() };
-
-      // 메시지를 로컬 상태에 추가
-      // setMessages((prev) => [...prev, newMessage]);
-
+      
       // 메시지를 WebSocket을 통해 전송
       wsClient.send(JSON.stringify(newMessage));
-
+      // 메시지를 로컬 상태에 추가
+      setMessages((prev) => [...prev, newMessage]);
+      
       // 입력 필드 초기화
       setMessage('');
     }
