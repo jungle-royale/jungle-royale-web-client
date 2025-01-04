@@ -52,7 +52,7 @@ const RoomList = () => {
                   try {
                     const response = await joinRoomAvailability(room.id);
                     console.log(`${room.title}에 입장합니다.`);
-                    window.location.href = `http://game.eternalsnowman.com/rooms?roomId=${response.roomId}&clientId=${response.clientId}`;
+                    window.location.href = `http://game.eternalsnowman.com/room?roomId=${response.roomId}&clientId=${response.clientId}`;
                   } catch (error) {
                     console.error(
                       "입장 가능 여부 확인 중 오류 발생:",
