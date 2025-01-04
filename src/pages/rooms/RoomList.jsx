@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { fetchRooms, joinRoomAvailability } from "../../api";
-import { useClickLock } from "../../contexts/ClickLockContext";
+import { fetchRooms } from "../../api";
+// import { useClickLock } from "../../contexts/ClickLockContext";
+import useSafeNavigation from "../../hooks/useSafeNavigation";
 import Modal from "../../components/Modal";
 import RoomCreater from "./RoomCreater";
 import RoomCard from "../../components/RoomCard";
@@ -13,8 +14,9 @@ const RoomList = () => {
   const [userName, setUserName] = useState("");
   const [isQRCodeOpen, setQRCodeOpen] = useState(false);
   const [qrData, setQRData] = useState("");
-  const { isLocked, lock, unlock } = useClickLock();
+  const [roomIdForNavigation, setRoomIdForNavigation] = useState(""); // Navigation용 roomId 저장
   const [isRoomCreaterOpen, setRoomCreaterOpen] = useState(false);
+  const {navigateSafely} = useSafeNavigation();
 
   useEffect(() => {
     const loadRooms = async () => {
@@ -29,22 +31,13 @@ const RoomList = () => {
     loadRooms();
   }, []);
 
-  const handleJoinRoom = async (room) => {
-    if (isLocked) return;
-    lock();
-    try {
-      const response = await joinRoomAvailability(room.id);
-      const url = `http://game.eternalsnowman.com/rooms?roomId=${response.roomId}&clientId=${response.clientId}`;
-      setQRData(url);
-      setQRCodeOpen(true);
-    } catch (error) {
-      console.error("입장 가능 여부 확인 중 오류 발생:", error.errorCode);
-      alert("입장 가능 여부를 확인할 수 없습니다. 잠시 후 다시 시도해주세요.");
-      window.location.reload();
-    } finally {
-      unlock();
-    }
+  const handleJoinRoom = (room) => {
+    const staticUrl = `${import.meta.env.VITE_API_BASE_URL}/rooms/ready?roomId=${room.id}`;
+    setQRData(staticUrl); // QR 데이터 설정
+    setRoomIdForNavigation(room.id); // 클릭용 roomId 설정
+    setQRCodeOpen(true); // QR 코드 모달 열기
   };
+  
 
   return (
     <div className="room-list-container">
@@ -77,7 +70,14 @@ const RoomList = () => {
       </div>
       <Modal isOpen={isQRCodeOpen} onClose={() => setQRCodeOpen(false)}>
         <QRcode qrdata={qrData} />
-      </Modal>
+          <button
+            onClick={(event) =>
+              navigateSafely(event, `/rooms/ready?roomId=${roomIdForNavigation}`)
+            }
+          >
+            바로가기
+          </button>
+        </Modal>
       <Modal isOpen={isRoomCreaterOpen} onClose={() => setRoomCreaterOpen(false)}>
         <RoomCreater />
       </Modal>

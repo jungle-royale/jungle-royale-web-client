@@ -7,6 +7,7 @@ import AudioPlayer from "./utils/AudioPlayer"; // AudioPlayer 컴포넌트 임�
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import RoomList from "./pages/rooms/RoomList";
+import RoomReady from "./pages/rooms/RoomReady";
 import MyPage from "./pages/mypage/MyPage"
 import GameTemp from "./pages/GameTemp"
 import useTokenRefresh from "./hooks/useTokenRefresh";
@@ -34,6 +35,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/rooms" element={<RoomList />} />
+              <Route path="/rooms/ready" element={<RoomReady />} />
               <Route path="/mypage" element={<MyPage />}/>
               <Route path="/game" element={<GameTemp />}/>
               <Route path="/posts/:id" element={<PostViewer />} /> {/* 동적 경로 */}
@@ -41,7 +43,6 @@ function App() {
               <Route path="/posts/:id/update" element={<PostEditor />}/>
               <Route path="/store" element={<Store />} />
               <Route path="/ranking" element={<Ranking />} />
-              {/* <Route path="/qr/:roomid" element={<RoomReady />} /> */}
               <Route path="/test" element={<TestPageStore />}/> {/* 삭제 예정 */}
             </Routes>
           </RoomsProvider>
