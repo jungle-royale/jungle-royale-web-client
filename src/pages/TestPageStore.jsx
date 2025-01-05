@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 // import { TextureLoader } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-// import { Sky } from "three/examples/jsm/objects/Sky";
+import { Sky } from "three/examples/jsm/objects/Sky";
 import "./mypage/MyPage.css";
 
 const loadModelWithTexture = (scene, modelRef) => {
@@ -83,20 +83,20 @@ const TestPageStore = () => {
 
     ///////////////////////////////////////////////////////////////////
     // 빙하 느낌의 하늘 설정
-    // const sky = new Sky();
-    // sky.scale.setScalar(1000);
-    // scene.add(sky);
+    const sky = new Sky();
+    sky.scale.setScalar(1000);
+    scene.add(sky);
 
-    // const sun = new THREE.Vector3();
-    // // const pmremGenerator = new THREE.PMREMGenerator(renderer);
-    // const sunPhi = THREE.MathUtils.degToRad(90-20); // 태양 고도
-    // const sunTheta = THREE.MathUtils.degToRad(45); // 태양 방위각
+    const sun = new THREE.Vector3();
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    const sunPhi = THREE.MathUtils.degToRad(90-20); // 태양 고도
+    const sunTheta = THREE.MathUtils.degToRad(45); // 태양 방위각
 
-    // sun.setFromSphericalCoords(1, sunPhi, sunTheta);
-    // sky.material.uniforms["sunPosition"].value.copy(sun);
+    sun.setFromSphericalCoords(1, sunPhi, sunTheta);
+    sky.material.uniforms["sunPosition"].value.copy(sun);
 
-    // const environmentMap = pmremGenerator.fromScene(sky).texture;
-    // scene.environment = environmentMap;
+    const environmentMap = pmremGenerator.fromScene(sky).texture;
+    scene.environment = environmentMap;
     ///////////////////////////////////////////////////////////////////
 
     // 이동 관련 변수
