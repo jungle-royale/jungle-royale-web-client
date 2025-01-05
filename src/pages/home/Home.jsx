@@ -16,7 +16,7 @@ const Home = () => {
   const handleButtonClick = () => {
     if (isLocked) return; // 중복 클릭 방지
     if (isLogin) {
-      navigate("/rooms");
+      navigate("/room");
       unlock();
     } else {
       navigate("/login");

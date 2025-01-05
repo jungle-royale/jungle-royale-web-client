@@ -41,7 +41,7 @@ const RoomList = () => {
   }, []);
 
   const handleJoinRoom = (room) => {
-    const staticUrl = `${import.meta.env.VITE_API_BASE_URL}/rooms/ready?roomId=${room.id}`;
+    const staticUrl = `${import.meta.env.VITE_API_BASE_URL}/room/ready?roomId=${room.id}`;
     setQRData(staticUrl);
     setRoomIdForNavigation(room.id);
     setQRCodeOpen(true);
@@ -100,7 +100,7 @@ const RoomList = () => {
         <QRcode qrdata={qrData} />
         <button
           onClick={(event) =>
-            navigateSafely(event, `/rooms/ready?roomId=${roomIdForNavigation}`)
+            navigateSafely(event, `/room/ready?roomId=${roomIdForNavigation}`)
           }
         >
           바로가기

@@ -34,8 +34,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/rooms" element={<RoomList />} />
-              <Route path="/rooms/ready" element={<RoomReady />} />
+              <Route path="/room" element={<RoomList />} />
+              <Route path="/room/ready" element={<RoomReady />} />
               <Route path="/mypage" element={<MyPage />}/>
               <Route path="/game" element={<GameTemp />}/>
               <Route path="/posts/:id" element={<PostViewer />} /> {/* 동적 경로 */}
