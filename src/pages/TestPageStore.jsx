@@ -5,6 +5,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Sky } from "three/examples/jsm/objects/Sky";
 import "./mypage/MyPage.css";
 
+
 const loadModelWithTexture = (scene, modelRef) => {
   const loader = new GLTFLoader();
   const textureLoader = new TextureLoader();
