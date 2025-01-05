@@ -12,7 +12,7 @@ const PostBox = () => {
   const [postsPerPage] = useState(10);
   const [totalPosts, setTotalPosts] = useState(0);
   const [isSticky, setIsSticky] = useState(false);
-  // const [isVisible, setIsVisible] = useState(false); // 박스 보임 상태
+  const [isVisible, setIsVisible] = useState(false); // 박스 보임 상태
   const containerRef = useRef(null);
   const { isLogin } = useLoginContext();
   const { navigateSafely } = useSafeNavigation();
@@ -63,7 +63,7 @@ const PostBox = () => {
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
         setIsSticky(rect.top <= 50); // 특정 위치에서 고정
-        // setIsVisible(rect.top < window.innerHeight && rect.bottom > 0); // 박스가 화면에 보이는지 확인
+        setIsVisible(rect.top < window.innerHeight && rect.bottom > 0); // 박스가 화면에 보이는지 확인
       }
     };
 
@@ -71,30 +71,38 @@ const PostBox = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // const handleScrollToTop = () => {
-  //   if (isVisible && containerRef.current.scrollTop === 0) {
-  //     // 배경 이미지가 보이도록 PostBox를 아래로 이동
-  //     containerRef.current.style.transition = "transform 0.5s ease-out";
-  //     containerRef.current.style.transform = "translateY(100vh)"; // 화면 아래로 이동
-  //     setTimeout(() => {
-  //       // 초기 위치로 복구
-  //       containerRef.current.style.transition = "none";
-  //       containerRef.current.style.transform = "translateY(0)";
-  //     }, 500); // 애니메이션 시간 후 초기화
-  //   } else {
-  //     // PostBox 맨 위로 스크롤
-  //     containerRef.current.scrollTo({ top: 0, behavior: "smooth" });
-  //   }
-  // };
+  const handleScrollToTop = () => {
+    if (containerRef.current && isVisible) {
+      const containerScrollTop = containerRef.current.scrollTop;
+      console.log(containerRef.current);  
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        console.log('rect.top:', rect.top); // 추가
+        console.log('rect.bottom:', rect.bottom); // 추가
+        setIsSticky(rect.top <= 50);
+        setIsVisible(rect.top < window.innerHeight && rect.bottom > 0);
+      }
+      if (containerScrollTop === 0) {
+        // PostBox를 배경 이미지가 보이도록 초기 위치로 복원
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        // PostBox 내부 스크롤이 있을 경우 맨 위로 스크롤
+        containerRef.current.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+  };
   
   return (
     <div>
       <div
         ref={containerRef}
         className={`post-container ${isSticky ? "sticky" : ""}`}
+        onClick={handleScrollToTop} // PostBox를 클릭하면 함수 실행
       >
+      <div className="post-container-header">
         <h1>게시판</h1>
         <h3>소중한 의견을 남겨주세요!</h3>
+        {isSticky && <button>홈으로</button>}
         {isLogin && (
           <button
             onClick={(e) => navigateSafely(e, "/post-creator")}
@@ -103,6 +111,7 @@ const PostBox = () => {
             글쓰기
           </button>
         )}
+      </div>
         {posts.length > 0 ? (
           <ul className="post-list">
             <li className="post-header">
@@ -122,8 +131,8 @@ const PostBox = () => {
                       {post.title}
                     </div>
                     <div className="post-author-date-container">
-                      <div className="post-author">{post.username}</div>
-                      <div className="post-date">{formatDate(post.createdAt)}</div>
+                      <div className="post-author">{post.username} | {formatDate(post.createdAt)}</div>
+                      {/* <div className="post-date">{formatDate(post.createdAt)}</div> */}
                     </div>
                   </div>
                 </li>

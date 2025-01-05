@@ -1,7 +1,7 @@
 /* 상태 표시용 동그라미 */
 .indicator {
-  width: 30px !important;
-  height: 30px !important;
+  width: 30px;
+  height: 30px;
   border-radius: 50%; /* 둥근 모양 유지 */
   margin-right: 10px; /* 오른쪽 여백 유지 */
 }

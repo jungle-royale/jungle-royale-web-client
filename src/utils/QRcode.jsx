@@ -1,15 +1,16 @@
 import { QRCodeCanvas } from 'qrcode.react';
-// import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const QRcode = () => {
-  // const navigate = useNavigate();
-  const qrdata = 'https://www.naver.com/';
-
+const QRcode = ({ qrdata }) => {
   return (
     <>
       <QRCodeCanvas value={qrdata} />
     </>
-  )
+  );
+};
 
-}
+QRcode.propTypes = {
+  qrdata: PropTypes.string.isRequired,
+};
+
 export default QRcode;

@@ -98,17 +98,19 @@
     font-size: 1rem;
     font-weight: bold;
     color: white;
-    background: linear-gradient(135deg, #4c8bf5, #1a73e8);
+    background: #4c8bf5; /* 단일 색상 */
     border: none;
     border-radius: 30px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     cursor: pointer;
     transition: transform 0.2s ease, background-color 0.3s ease;
+    opacity: 0.8; /* 기본 투명도 설정 */
   }
 
   .home-button-room-list:hover {
     background: linear-gradient(135deg, #3b72df, #1258c6);
+    opacity: 1; /* Hover 시 완전히 불투명하게 설정 */
     transform: scale(1.02);
   }
 

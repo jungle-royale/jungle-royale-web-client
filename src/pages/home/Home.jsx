@@ -50,9 +50,6 @@ const Home = () => {
     <div>
       <Snowfall /> {/* 눈 효과 추가 */}
       <div className="home-image-container">
-        {isLogin && 
-        <button className="home-button-room-list" onClick={() => setIsQRModalOpen(true)}>QRcode</button>
-        }
         <button className="home-button-room-list" onClick={handleButtonClick}>
           {isLogin ? "GAME START" : "LOGIN"}
         </button>

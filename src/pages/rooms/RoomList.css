@@ -1,10 +1,10 @@
-.room-list-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh; /* 화면 전체 높이 */
-  background-color: #a9bfc7; /* 배경색 */
+.room-container {
+  position: fixed; /* 고정 위치 설정 */
+  top: 60px; /* header 높이 */
+  left: 0;
+  width: 100%; /* 화면 너비 채우기 */
+  height: 100vh; /* 화면 높이 채우기 */
+  min-height: unset; /* min-height 속성 제거 */
 }
 
 .room-page {
@@ -13,7 +13,7 @@
   aspect-ratio: 16 / 9; /* TV 화면 비율 유지 (16:9) */
   background-color: #d9d9d9; /* 배경색 */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
-  margin: 50px auto; /* 중앙 정렬 */
+  /* margin: 50px auto; 중앙 정렬 */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -38,31 +38,7 @@
   overflow-x: hidden; /* 가로 스크롤 제거 */
 }
 
-.room-creater-go {
-  cursor: pointer;
-}
-
-/* 반응형 디자인 */
-@media (max-width: 800px) {
-  .room-page {
-    width: 100%; /* 작은 화면에서도 너비를 채움 */
-  }
-
-  .room-card {
-    aspect-ratio: 5 / 1; /* 모바일 환경에서 조금 더 좁은 비율 */
-  }
-}
-
-@media (max-width: 600px) {
-  .room-card {
-    width: 100%; /* 모바일 화면에서는 가로를 꽉 채움 */
-    padding: 10px; /* 내부 여백 축소 */
-    aspect-ratio: 6 / 1; /* 모바일 환경에서 더 좁은 비율 */
-  }
-}
-
-/************************************************/
-.room-chat-container {
+.room-list-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -70,3 +46,130 @@
   width: 100%;
 }
 
+.room-creater-go {
+  cursor: pointer;
+}
+
+
+
+/* 모바일에서만 적용 */
+@media (max-width: 768px) {
+  .room-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 70px);
+  }
+
+  .room-user-info {
+    position: static;
+    width: 100%;
+    background-color: #f8f9fa;
+    height: 50px;
+  }
+
+  .room-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    background-color: #d9d9d9;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .room-page h1 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .room-list {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .room-card {
+    width: 95%; /* 가로로 꽉 채움 */
+    max-width: 600px; /* 최대 너비 제한 */
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 요소를 좌우로 배치 */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #f7f7f7;
+  }
+
+  .room-card .indicator {
+    flex: 0 0 auto; /* 고정 크기 */
+    width: 10px; /* 크기 축소 */
+    height: 10px; /* 크기 축소 */
+    border-radius: 50%;
+    margin-right: 10px; /* 오른쪽 간격 */
+  }
+
+  .room-card .room-info {
+    display: flex;
+    flex: 3; /* 3 비율 */
+    flex-direction: column; /* 제목과 인원을 세로 정렬 */
+    gap: 5px;
+    flex: 1; /* 가로 공간 채움 */
+  }
+
+  .room-card h2 {
+    font-size: 1rem;
+    margin: 0;
+    text-align: left; /* 왼쪽 정렬 */
+    width: 50%; /* 텍스트가 전체 너비를 차지하도록 설정 */
+  }
+  
+  .room-card p {
+    font-size: 0.85rem;
+    margin: 0;
+    color: #666; /* 보조 텍스트 색상 */
+  }
+
+  .join-button {
+    width: auto;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+
+  .join-button:hover {
+    background-color: #0056b3;
+  }
+
+  .join-button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+  }
+  .room-creater-go {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+}
