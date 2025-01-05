@@ -1,41 +1,4 @@
-import axios from "axios";
-
-const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`;
-
-//api 생성
-const apiClient = axios.create({
-  baseURL: BASE_URL,
-  headers: { "Content-Type": "application/json" },
-});
-
-//토큰 재발급 요청 api
-export const refreshAccessToken = async () => {
-  try {
-    console.log("Access token 갱신 요청 시작"); // 요청 시작 확인
-    const response = await apiClient.post("/api/auth/refresh-token", {}, {
-      headers: {
-        authorization_refresh: `Bearer ${localStorage.getItem("refresh_token")}`,
-      },
-    }
-    );
-    if (response && response.data) {
-      localStorage.setItem("jwt_token", response.data.jwtToken);
-      localStorage.setItem("refresh_token", response.data.refreshToken);
-      console.log("Access 토큰 갱신 완료");
-    } else {
-      console.error("Access 토큰 갱신 실패: 서버 응답 없음");
-      throw new Error("Server response is empty");
-    }
-  } catch (error) {
-    if (error.response && error.response.status === 401) {
-      console.error("Access 토큰 갱신 실패: 인증 오류 (401)");
-      localStorage.clear(); // 로컬 스토리지 초기화
-      window.location.href = "/login"; // 로그인 페이지로 리다이렉트
-    } else {
-      console.error("Access 토큰 갱신 중 오류 발생:", error.message);
-    }
-  }
-};
+import apiClient from "./axiosClient";
 
 //카카오 로그인 구현 api
 export const loginWithKakao = async (authCode) => {
@@ -43,11 +6,16 @@ export const loginWithKakao = async (authCode) => {
     const response = await apiClient.post("/api/auth/kakao/login",
       { code: authCode },
     );
-    localStorage.setItem("isLogin", "true");
-    localStorage.setItem("jwt_token", response.data.jwtToken);
-    // localStorage.setItem("access_token", response.data.accessToken);
-    localStorage.setItem("refresh_token", response.data.refreshToken);
-    // localStorage.setItem("expires_in", response.data.expiresIn);
+    if(response.data && response.data.jwtToken && response.data.refreshToken){
+      localStorage.setItem("isLogin", "true");
+      localStorage.setItem("jwt_token", response.data.jwtToken);
+      // localStorage.setItem("access_token", response.data.accessToken);
+      localStorage.setItem("refresh_token", response.data.refreshToken);
+      // localStorage.setItem("expires_in", response.data.expiresIn);
+    }else{
+      console.error("토큰 정보가 누락되었습니다.");
+      throw new Error("Incomplete token response");
+    }
     return response.data;
   } catch (error) {
     console.error("Login 실패:", error.message);
@@ -61,9 +29,14 @@ export const loginGuest = async (authCode) => {
     const response = await apiClient.post("/api/auth/guest/login",
       { code: authCode },
     );
-    localStorage.setItem("isLogin", "true");
-    localStorage.setItem("jwt_token", response.data.jwtToken);
-    localStorage.setItem("refresh_token", response.data.refreshToken);
+    if(response.data && response.data.jwtToken && response.data.refreshToken){
+      localStorage.setItem("isLogin", "true");
+      localStorage.setItem("jwt_token", response.data.jwtToken);
+      localStorage.setItem("refresh_token", response.data.refreshToken);
+    } else {
+      console.error("토큰 정보가 누락되었습니다.");
+      throw new Error("Incomplete token response");
+    }
     return response.data;
   } catch (error) {
     console.error("Login 실패:", error.message);
@@ -71,11 +44,11 @@ export const loginGuest = async (authCode) => {
   }
 };
 
-// //로그아웃 구현 api
+//로그아웃 구현 api
 export const logout = async () => {
   try {
     const response = await apiClient.post("/api/auth/logout",
-      { userRole : localStorage.getItem("userRole")}, 
+      { refreshToken : localStorage.getItem("refresh_token")}, 
       { headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,},
     });
@@ -93,51 +66,29 @@ export const logout = async () => {
 
 //방 생성 api
 export const createRoom = async (roomDetails) => {
-  return apiClient.post("/api/rooms/create", roomDetails, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
-    },
-  });
+  return apiClient.post("/api/rooms/create", roomDetails);
 };
 
 //방 list 생성 api(list + player 객체)
 export const fetchRooms = async () => {
-  return apiClient.get("/api/rooms/list", {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
-    },
-  });
+  return apiClient.get("/api/rooms/list");
 };
 
 //방 입장 가능 여부 확인 api
 export const joinRoomAvailability = async (roomId) => {
-  const response = await apiClient.post(`/api/rooms/${roomId}/join`, {}, 
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
-      },
-    }
-  );
+  const response = await apiClient.post(`/api/rooms/${roomId}/join`, {});
   return response.data; // 예: { isAvailable: true, message: "방 입장 가능" }
 };
 
 //마이 페이지 불러오기 api
 export const fetchMyPage = () => {
-  return apiClient.get(`/api/users/mypage`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
-    },
-  });
+  return apiClient.get(`/api/users/mypage`);
 };
 
 //마이 페이지 수정 api
 export const myPageEdit = async (username) => {
   try {
-    const response = await apiClient.put(`/api/users/mypage`,username,{
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`, // JWT 토큰 포함
-      },
-    });
+    const response = await apiClient.put(`/api/users/mypage`,username);
     return response.data;
   } catch (error) {
     console.error("닉네임 수정 중 오류:", error);
@@ -151,20 +102,13 @@ export const fetchPosts = async ({ page = 1, limit = 10 }) => {
     params: {
       page, // 현재 페이지 번호
       limit,
-    },
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
-    },
+    }
   });
 };
 
 // 게시물 하나 가져오기 api
 export const getPost = async (postId) => {
-  return apiClient.get(`/api/posts/${postId}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
-    },
-  });
+  return apiClient.get(`/api/posts/${postId}`);
 };
 
 // 게시물 올리기 api
@@ -172,8 +116,7 @@ export const createPost = async (formData) => {
   try {
     const response = await apiClient.post(`/api/posts/create`, formData, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
-        "Content-Type": "multipart/form-data" 
+        "Content-Type": "multipart/form-data", 
       },
     });
     return response.data; // 성공한 데이터를 반환
@@ -186,11 +129,7 @@ export const createPost = async (formData) => {
 //게시글 삭제 api
 export const deletePost = async (postId) => {
   try {
-    const response = await apiClient.delete(`/api/posts/${postId}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`, // JWT 토큰 포함
-      },
-    });
+    const response = await apiClient.delete(`/api/posts/${postId}`);
     return response.data;
   } catch (error) {
     console.error("게시물 삭제 중 오류:", error);
@@ -203,7 +142,6 @@ export const updatePost = async (postId, updatedData) => {
   try {
     const response = await apiClient.put(`/api/posts/${postId}`,updatedData,{
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`, // JWT 토큰 포함
         "Content-Type": "multipart/form-data" 
       },
     });
@@ -217,11 +155,7 @@ export const updatePost = async (postId, updatedData) => {
 //상점 전체 정보 불러오기 api
 export const fetchStoreData = async () => {
   try {
-    const response = await apiClient.get("/api/shops/items", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`, // JWT 토큰 포함
-      },
-    });
+    const response = await apiClient.get("/api/shops/items");
     return response.data;
   } catch (error) {
     console.error("API 호출 중 오류 발생:", error.response?.data || error.message);
@@ -249,11 +183,7 @@ export const fetchStoreData = async () => {
 //상점 아이템 구매 api
 export const purchaseItem = async (itemCode) => {
   try {
-    const response = await apiClient.post(`/api/shops/purchase?itemCode=${itemCode}`, {}, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("jwt_token")}`, // JWT 토큰 포함
-      },
-    });
+    const response = await apiClient.post(`/api/shops/purchase?itemCode=${itemCode}`, {});
     console.log("Response: ", response)
     return response.data;
   } catch (error) {
