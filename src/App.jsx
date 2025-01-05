@@ -9,7 +9,7 @@ import RoomList from "./pages/rooms/RoomList";
 import RoomReady from "./pages/rooms/RoomReady";
 import MyPage from "./pages/mypage/MyPage"
 import GameTemp from "./pages/GameTemp"
-import useTokenRefresh from "./hooks/useTokenRefresh";
+// import useTokenRefresh from "./hooks/useTokenRefresh";
 import Header from "./components/Header";
 import ScrollToTop from "./utils/ScrollToTop";
 import PostViewer from "./pages/posts/PostViewer";
@@ -20,7 +20,7 @@ import Ranking from "./pages/Ranking";
 import TestPageStore from "./pages/TestPageStore";
 
 function App() {
-  useTokenRefresh(); // 자동 토큰 갱신 로직
+  // useTokenRefresh(); // 자동 토큰 갱신 로직
 
   return (
     <>
