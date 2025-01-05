@@ -69,6 +69,12 @@ const RoomList = () => {
       </div>
       <div className="room-page" {...swipeHandlers}>
         <h1>게임 방 목록</h1>
+        <img
+          src="/assets/pluscircle.png"
+          className="room-creater-go"
+          alt="Room Creater"
+          onClick={() => setRoomCreaterOpen(true)}
+        />
         <div className="room-list">
           {currentRooms.map((room) => (
             <RoomCard
@@ -80,12 +86,6 @@ const RoomList = () => {
               onJoin={() => handleJoinRoom(room)}
             />
           ))}
-          <img
-            src="/assets/pluscircle.png"
-            className="room-creater-go"
-            alt="Room Creater"
-            onClick={() => setRoomCreaterOpen(true)}
-          />
         </div>
         <div className="pagination-controls">
           <button onClick={handlePrevPage}>이전</button>

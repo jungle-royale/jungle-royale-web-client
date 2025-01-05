@@ -3,7 +3,6 @@ import { LoginProvider } from "./contexts/LoginContext";
 import { RoomsProvider } from "./contexts/RoomsContext";
 import { ClickLockProvider } from "./contexts/ClickLockContext";
 import './App.css';
-import AudioPlayer from "./utils/AudioPlayer"; // AudioPlayer 컴포넌트 임포트
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import RoomList from "./pages/rooms/RoomList";
@@ -25,7 +24,6 @@ function App() {
 
   return (
     <>
-      <AudioPlayer src="/assets/BackgroundBGM.wav" autoPlay={true} loop={true} />
       <ScrollToTop />
       <ClickLockProvider>
         <LoginProvider>

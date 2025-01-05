@@ -12,21 +12,28 @@ const apiClient = axios.create({
 export const refreshAccessToken = async () => {
   try {
     console.log("Access token 갱신 요청 시작"); // 요청 시작 확인
-    const response = await apiClient.post("/api/auth/kakao/refresh-token", {}, {
+    const response = await apiClient.post("/api/auth/refresh-token", {}, {
       headers: {
         authorization_refresh: `Bearer ${localStorage.getItem("refresh_token")}`,
       },
     }
     );
-    if (response.data.success) {
-      localStorage.setItem("access_token", response.data.access_token);
-      localStorage.setItem("expires_in", response.data.expires_in);
+    if (response && response.data) {
+      localStorage.setItem("jwt_token", response.data.jwtToken);
+      localStorage.setItem("refresh_token", response.data.refreshToken);
       console.log("Access 토큰 갱신 완료");
     } else {
-      console.error("Access 토큰 갱신 실패:", response.data.message);
+      console.error("Access 토큰 갱신 실패: 서버 응답 없음");
+      throw new Error("Server response is empty");
     }
   } catch (error) {
-    console.error("Access 토큰 갱신 중 오류 발생:", error.message);
+    if (error.response && error.response.status === 401) {
+      console.error("Access 토큰 갱신 실패: 인증 오류 (401)");
+      localStorage.clear(); // 로컬 스토리지 초기화
+      window.location.href = "/login"; // 로그인 페이지로 리다이렉트
+    } else {
+      console.error("Access 토큰 갱신 중 오류 발생:", error.message);
+    }
   }
 };
 
@@ -38,9 +45,9 @@ export const loginWithKakao = async (authCode) => {
     );
     localStorage.setItem("isLogin", "true");
     localStorage.setItem("jwt_token", response.data.jwtToken);
-    localStorage.setItem("access_token", response.data.accessToken);
+    // localStorage.setItem("access_token", response.data.accessToken);
     localStorage.setItem("refresh_token", response.data.refreshToken);
-    localStorage.setItem("expires_in", response.data.expiresIn);
+    // localStorage.setItem("expires_in", response.data.expiresIn);
     return response.data;
   } catch (error) {
     console.error("Login 실패:", error.message);
@@ -56,6 +63,7 @@ export const loginGuest = async (authCode) => {
     );
     localStorage.setItem("isLogin", "true");
     localStorage.setItem("jwt_token", response.data.jwtToken);
+    localStorage.setItem("refresh_token", response.data.refreshToken);
     return response.data;
   } catch (error) {
     console.error("Login 실패:", error.message);
