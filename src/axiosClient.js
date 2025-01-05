@@ -53,10 +53,9 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // 401 오류 처리
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // 만료 토큰 오류 처리
+    if (error.response?.errorCode === "EXPIRED_TOKEN" && !originalRequest._retry) {
       originalRequest._retry = true; // 무한 루프 방지
-
       try {
         const newToken = await refreshAccessToken(); // 토큰 갱신
         originalRequest.headers.Authorization = `Bearer ${newToken}`; // 갱신된 토큰으로 재요청
@@ -68,7 +67,6 @@ apiClient.interceptors.response.use(
         return Promise.reject(refreshError); // 최종 실패 반환
       }
     }
-
     // 다른 오류는 그대로 반환
     return Promise.reject(error);
   }
