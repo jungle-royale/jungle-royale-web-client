@@ -1,18 +1,15 @@
-import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { loginGuest } from "../../api.js";
 import { useLoginContext } from "../../contexts/LoginContext.jsx";
 import { useClickLock } from '../../contexts/ClickLockContext.jsx';
 import Snowfall from "../../utils/SnowFall.jsx"; // Snowfall 경로 맞추기
 import PostBox from "../../components/PostBox.jsx"; // PostBox 컴포넌트 가져오기
-import Modal from "../../components/Modal.jsx"; // 모달 컴포넌트 임포트
-import QRcode from "../../utils/QRcode.jsx";
+
 import "./Home.css";
 
 const Home = () => {
   const { isLogin, setIsLogin, setUserRole } = useLoginContext(); // 로그인 상태 확인
   const { isLocked, lock, unlock } = useClickLock();
-    const [isQRModalOpen, setIsQRModalOpen] = useState(false); // 모달 열림 상태 관리
   
   const navigate = useNavigate();
 
@@ -60,9 +57,7 @@ const Home = () => {
         )}
       </div> 
       <PostBox />
-      <Modal isOpen={isQRModalOpen} onClose={() => setIsQRModalOpen(false)}>
-        <QRcode />
-      </Modal>
+  
     </div>
   );
 };

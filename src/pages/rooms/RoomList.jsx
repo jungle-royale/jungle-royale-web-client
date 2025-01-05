@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
+import { useSwipeable } from "react-swipeable";
 import { fetchRooms } from "../../api";
-// import { useClickLock } from "../../contexts/ClickLockContext";
 import useSafeNavigation from "../../hooks/useSafeNavigation";
 import Modal from "../../components/Modal";
 import RoomCreater from "./RoomCreater";
@@ -14,9 +14,18 @@ const RoomList = () => {
   const [userName, setUserName] = useState("");
   const [isQRCodeOpen, setQRCodeOpen] = useState(false);
   const [qrData, setQRData] = useState("");
-  const [roomIdForNavigation, setRoomIdForNavigation] = useState(""); // Navigation용 roomId 저장
+  const [roomIdForNavigation, setRoomIdForNavigation] = useState("");
   const [isRoomCreaterOpen, setRoomCreaterOpen] = useState(false);
-  const {navigateSafely} = useSafeNavigation();
+  const { navigateSafely } = useSafeNavigation();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentRooms = rooms.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(rooms.length / itemsPerPage);
 
   useEffect(() => {
     const loadRooms = async () => {
@@ -33,56 +42,74 @@ const RoomList = () => {
 
   const handleJoinRoom = (room) => {
     const staticUrl = `${import.meta.env.VITE_API_BASE_URL}/rooms/ready?roomId=${room.id}`;
-    setQRData(staticUrl); // QR 데이터 설정
-    setRoomIdForNavigation(room.id); // 클릭용 roomId 설정
-    setQRCodeOpen(true); // QR 코드 모달 열기
+    setQRData(staticUrl);
+    setRoomIdForNavigation(room.id);
+    setQRCodeOpen(true);
   };
-  
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => (prevPage === totalPages ? 1 : prevPage + 1));
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => (prevPage === 1 ? totalPages : prevPage - 1));
+  };
+
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: handleNextPage,  // Swipe left -> Next page
+    onSwipedRight: handlePrevPage, // Swipe right -> Previous page
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
 
   return (
-    <>
-      <div className="room-container">
-        <div className="room-user-info">
-          <p>안녕하세요, {userName}님!</p>
-        </div>
-        <div className="room-page">
-          <h1>게임 방 목록</h1>
-          <div className="room-list">
-            {rooms.map((room) => (
-              <RoomCard
-                key={room.id}
-                roomName={room.title}
-                currentPlayers={room.currentPlayers}
-                maxPlayers={room.maxPlayers}
-                isPlaying={room.status}
-                onJoin={() => handleJoinRoom(room)}
-              />
-            ))}
-            <img
-              src="/assets/pluscircle.png"
-              className="room-creater-go"
-              alt="Room Creater"
-              onClick={() => setRoomCreaterOpen(true)}
-            />
-          </div>
-        </div>
-        <StompChat />
-        
-        <Modal isOpen={isQRCodeOpen} onClose={() => setQRCodeOpen(false)}>
-          <QRcode qrdata={qrData} />
-            <button
-              onClick={(event) =>
-                navigateSafely(event, `/rooms/ready?roomId=${roomIdForNavigation}`)
-              }
-            >
-              바로가기
-            </button>
-          </Modal>
-        <Modal isOpen={isRoomCreaterOpen} onClose={() => setRoomCreaterOpen(false)}>
-          <RoomCreater />
-        </Modal>
+    <div className="room-container" {...swipeHandlers}>
+      <div className="room-user-info">
+        <p>안녕하세요, {userName}님!</p>
       </div>
-    </>
+      <div className="room-page">
+        <h1>게임 방 목록</h1>
+        <div className="room-list">
+          {currentRooms.map((room) => (
+            <RoomCard
+              key={room.id}
+              roomName={room.title}
+              currentPlayers={room.currentPlayers}
+              maxPlayers={room.maxPlayers}
+              isPlaying={room.status}
+              onJoin={() => handleJoinRoom(room)}
+            />
+          ))}
+          <img
+            src="/assets/pluscircle.png"
+            className="room-creater-go"
+            alt="Room Creater"
+            onClick={() => setRoomCreaterOpen(true)}
+          />
+        </div>
+        <div className="pagination-controls">
+          <button onClick={handlePrevPage}>이전</button>
+          <span>
+            {currentPage} / {totalPages}
+          </span>
+          <button onClick={handleNextPage}>다음</button>
+        </div>
+      </div>
+      <StompChat />
+      <Modal isOpen={isQRCodeOpen} onClose={() => setQRCodeOpen(false)}>
+        <QRcode qrdata={qrData} />
+        <button
+          onClick={(event) =>
+            navigateSafely(event, `/rooms/ready?roomId=${roomIdForNavigation}`)
+          }
+        >
+          바로가기
+        </button>
+      </Modal>
+      <Modal isOpen={isRoomCreaterOpen} onClose={() => setRoomCreaterOpen(false)}>
+        <RoomCreater />
+      </Modal>
+    </div>
   );
 };
 

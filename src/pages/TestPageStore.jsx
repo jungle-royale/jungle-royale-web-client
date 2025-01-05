@@ -1,26 +1,27 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { TextureLoader } from "three";
+// import { TextureLoader } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { Sky } from "three/examples/jsm/objects/Sky";
+// import { Sky } from "three/examples/jsm/objects/Sky";
 import "./mypage/MyPage.css";
 
 const loadModelWithTexture = (scene, modelRef) => {
   const loader = new GLTFLoader();
-  const textureLoader = new TextureLoader();
+  // const textureLoader = new TextureLoader();
 
   // 텍스처 로드
-  const texture = textureLoader.load('/assets/RW_LP_Texture_00.jpg'); // 경로 확인 필요
+  // const texture = textureLoader.load('/assets/RW_LP_Texture_00.jpg'); // 경로 확인 필요
 
   loader.load(
     '/assets/RW_LP_CP_Character_SnowMan.001.gltf', // 모델 경로
     (gltf) => {
       const model = gltf.scene;
+      console.log(model);
 
       // 텍스처 적용
       model.traverse((child) => {
         if (child.isMesh) {
-          child.material.map = texture;
+          // child.material.map = texture;
           child.material.needsUpdate = true; // 변경 사항 반영
         }
       });
@@ -68,34 +69,34 @@ const TestPageStore = () => {
     camera.lookAt(0, 0, 0);
 
     // 조명 추가
-    const ambientLight = new THREE.AmbientLight(0xffffff, -1); // 부드러운 환경 조명
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1); //부드러운 환경 조명
     scene.add(ambientLight);
-    // const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8); // 강한 방향 조명
-    // directionalLight.position.set(-5, 5, -5);
-    // directionalLight.target.position.set(0, 1, 0);
-    // scene.add(directionalLight);
-    // scene.add(directionalLight.target);
-    // const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1);
-    // scene.add(directionalLightHelper);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // 강한 방향 조명
+    directionalLight.position.set(-5, 5, -5);
+    directionalLight.target.position.set(0, 1, 0);
+    scene.add(directionalLight);
+    scene.add(directionalLight.target);
+    const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1);
+    scene.add(directionalLightHelper);
 
     loadModelWithTexture(scene, modelRef);
 
     ///////////////////////////////////////////////////////////////////
     // 빙하 느낌의 하늘 설정
-    const sky = new Sky();
-    sky.scale.setScalar(1000);
-    scene.add(sky);
+    // const sky = new Sky();
+    // sky.scale.setScalar(1000);
+    // scene.add(sky);
 
-    const sun = new THREE.Vector3();
-    const pmremGenerator = new THREE.PMREMGenerator(renderer);
-    const sunPhi = THREE.MathUtils.degToRad(90-20); // 태양 고도
-    const sunTheta = THREE.MathUtils.degToRad(45); // 태양 방위각
+    // const sun = new THREE.Vector3();
+    // // const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    // const sunPhi = THREE.MathUtils.degToRad(90-20); // 태양 고도
+    // const sunTheta = THREE.MathUtils.degToRad(45); // 태양 방위각
 
-    sun.setFromSphericalCoords(1, sunPhi, sunTheta);
-    sky.material.uniforms["sunPosition"].value.copy(sun);
+    // sun.setFromSphericalCoords(1, sunPhi, sunTheta);
+    // sky.material.uniforms["sunPosition"].value.copy(sun);
 
-    const environmentMap = pmremGenerator.fromScene(sky).texture;
-    scene.environment = environmentMap;
+    // const environmentMap = pmremGenerator.fromScene(sky).texture;
+    // scene.environment = environmentMap;
     ///////////////////////////////////////////////////////////////////
 
     // 이동 관련 변수
@@ -215,7 +216,6 @@ const TestPageStore = () => {
       if (moveDirection.left) model.position.x -= moveSpeed;
       if (moveDirection.right) model.position.x += moveSpeed;
     };
-
 
     // 애니메이션 루프
     const animate = () => {
