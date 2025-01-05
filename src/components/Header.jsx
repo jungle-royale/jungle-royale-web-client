@@ -18,7 +18,7 @@ const Header = () => {
         <a href="/" onClick={(e) => navigateSafely(e, "/")}>
           <img src="/assets/headercon.png" alt="Eternal Snowman" />
         </a>        
-        <AudioPlayer src="/assets/audio/background-music.mp3" loop={true} />
+        <AudioPlayer src="/assets/BackgroundBGM.wav" loop={true} />
       </div>
       <nav>
       {import.meta.env.VITE_SHOW_DEV_PAGE === 'true' && (
