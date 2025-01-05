@@ -92,8 +92,6 @@ const PostBox = () => {
     }
   };
   
-  
-  
   return (
     <div>
       <div
@@ -101,9 +99,10 @@ const PostBox = () => {
         className={`post-container ${isSticky ? "sticky" : ""}`}
         onClick={handleScrollToTop} // PostBox를 클릭하면 함수 실행
       >
-
+      <div className="post-container-header">
         <h1>게시판</h1>
         <h3>소중한 의견을 남겨주세요!</h3>
+        {isSticky && <button>홈으로</button>}
         {isLogin && (
           <button
             onClick={(e) => navigateSafely(e, "/post-creator")}
@@ -112,6 +111,7 @@ const PostBox = () => {
             글쓰기
           </button>
         )}
+      </div>
         {posts.length > 0 ? (
           <ul className="post-list">
             <li className="post-header">
@@ -131,8 +131,8 @@ const PostBox = () => {
                       {post.title}
                     </div>
                     <div className="post-author-date-container">
-                      <div className="post-author">{post.username}</div>
-                      <div className="post-date">{formatDate(post.createdAt)}</div>
+                      <div className="post-author">{post.username} | {formatDate(post.createdAt)}</div>
+                      {/* <div className="post-date">{formatDate(post.createdAt)}</div> */}
                     </div>
                   </div>
                 </li>

@@ -8,12 +8,12 @@ const RoomCard = ({ roomName, currentPlayers, maxPlayers, isPlaying, onJoin }) =
     <div className="room-card">
       <div className={`indicator ${ isJoinable ? "available" : "unavailable" }`}></div>
       <h2>{roomName}</h2>
-      <p>
+      {/* <p>
         상태: {
           isPlaying === "WAITING" ? "대기 중" : 
           isPlaying === "RUNNING" ? "게임 중" : "완료"
         }
-      </p>
+      </p> */}
       <p>
         {currentPlayers} / {maxPlayers}
       </p>

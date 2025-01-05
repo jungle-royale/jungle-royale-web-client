@@ -40,11 +40,11 @@ const RoomList = () => {
   
 
   return (
-    <div className="room-list-container">
-      <div className="room-user-info">
-        <p>안녕하세요, {userName}님!</p>
-      </div>
-      <div className="room-chat-container">
+    <>
+      <div className="room-container">
+        <div className="room-user-info">
+          <p>안녕하세요, {userName}님!</p>
+        </div>
         <div className="room-page">
           <h1>게임 방 목록</h1>
           <div className="room-list">
@@ -67,21 +67,22 @@ const RoomList = () => {
           </div>
         </div>
         <StompChat />
-      </div>
-      <Modal isOpen={isQRCodeOpen} onClose={() => setQRCodeOpen(false)}>
-        <QRcode qrdata={qrData} />
-          <button
-            onClick={(event) =>
-              navigateSafely(event, `/rooms/ready?roomId=${roomIdForNavigation}`)
-            }
-          >
-            바로가기
-          </button>
+        
+        <Modal isOpen={isQRCodeOpen} onClose={() => setQRCodeOpen(false)}>
+          <QRcode qrdata={qrData} />
+            <button
+              onClick={(event) =>
+                navigateSafely(event, `/rooms/ready?roomId=${roomIdForNavigation}`)
+              }
+            >
+              바로가기
+            </button>
+          </Modal>
+        <Modal isOpen={isRoomCreaterOpen} onClose={() => setRoomCreaterOpen(false)}>
+          <RoomCreater />
         </Modal>
-      <Modal isOpen={isRoomCreaterOpen} onClose={() => setRoomCreaterOpen(false)}>
-        <RoomCreater />
-      </Modal>
-    </div>
+      </div>
+    </>
   );
 };
 
