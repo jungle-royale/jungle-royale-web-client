@@ -3,7 +3,6 @@ import './StompChat.css'; // CSS 파일 불러오기
 
 const StompChat = () => {
   const SERVER_URL = import.meta.env.VITE_WS_SERVER;
-  console.log(SERVER_URL);
 
   const [wsClient, setWsClient] = useState(null);
   const [messages, setMessages] = useState([]); // 메시지 배열
