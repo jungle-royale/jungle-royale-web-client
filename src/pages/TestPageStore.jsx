@@ -252,10 +252,10 @@ const TestPageStore = () => {
     };
   }, []);
 
-  if (  import.meta.env.VITE_API_BASE_URL !== 'true') {
+  if (  import.meta.env.VITE_SHOW_DEV_PAGE !== 'true') {
     return null; // 개발 환경이 아니면 아무것도 렌더링하지 않음
   }
-  
+
   return <div ref={mountRef} className="mypage-canvas" />;
 };
 
