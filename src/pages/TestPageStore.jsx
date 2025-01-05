@@ -39,7 +39,7 @@ const loadModelWithTexture = (scene, modelRef) => {
   );
 };
 
-const TestPageStore = () => {
+const TestPageStore = () => {  
   const mountRef = useRef(null); // 캔버스를 렌더링할 DOM 요소 참조
   const modelRef = useRef(null); // 로드된 모델 참조
 
@@ -252,6 +252,10 @@ const TestPageStore = () => {
     };
   }, []);
 
+  if (  import.meta.env.VITE_API_BASE_URL !== 'true') {
+    return null; // 개발 환경이 아니면 아무것도 렌더링하지 않음
+  }
+  
   return <div ref={mountRef} className="mypage-canvas" />;
 };
 

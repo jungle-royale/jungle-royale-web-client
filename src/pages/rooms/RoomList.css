@@ -189,8 +189,7 @@
   }
 
   .room-creater-go {
-    position: absolute;
-    top: 10px;
+    top: 100px;
     right: 10px;
     width: 40px;
     height: 40px;

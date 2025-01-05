@@ -17,7 +17,10 @@ const Header = () => {
         </a>        
       </div>
       <nav>
+      {import.meta.env.VITE_API_BASE_URL && (
       <a href="/test" onClick={(e) => navigateSafely(e, "/test")}>test</a>
+      )}
+  
       {isLogin && (
         <a href="/store" onClick={(e) => navigateSafely(e, "/store")}>상점</a>
       )}

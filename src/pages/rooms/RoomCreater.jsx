@@ -10,8 +10,8 @@ const RoomCreater = () => {
   const [maxPlayers, setMaxPlayers] = useState('');
   const [minPlayers, setMinPlayers] = useState('');
   const [maxGameTime, setMaxGameTime] = useState('');
-  const [isSecret, setIsSecret] = useState(false);
-  const [map, setMap] = useState('');
+  // const [isSecret, setIsSecret] = useState(false);
+  // const [map, setMap] = useState('');
   const { isLocked, lock, unlock } = useClickLock();
 
   // const navigate = useNavigate();
@@ -51,19 +51,19 @@ const RoomCreater = () => {
       unlock(); // 잠금 해제
       return;
     }
-    if (!map) {
-      alert("맵을 선택해주세요.");
-      unlock(); // 잠금 해제
-      return;
-    }
+    // if (!map) {
+    //   alert("맵을 선택해주세요.");
+    //   unlock(); // 잠금 해제
+    //   return;
+    // }
       
     const roomDetails = {
       title: roomName || defaultRoomName, // 입력값 없으면 랜덤 제목 사용
       maxPlayers: parseInt(maxPlayers, 10),
       minPlayers: parseInt(minPlayers, 10),
       maxGameTime: parseInt(maxGameTime, 10),
-      secret: isSecret,
-      map,
+      // secret: isSecret,
+      // map,
     };
   
     try {
@@ -120,7 +120,7 @@ const RoomCreater = () => {
             min="1"
             max="10"
           />
-          <div style={{ marginBottom: '10px' }}>
+          {/* <div style={{ marginBottom: '10px' }}>
             <label style={{ display: 'block', marginBottom: '5px' }}>맵 선택</label>
             <select
               value={map}
@@ -137,8 +137,8 @@ const RoomCreater = () => {
             <option value="forest">숲</option>
             <option value="city">도시</option>
           </select>
-        </div>
-        <div style={{ marginBottom: '10px' }}>
+        </div> */}
+        {/* <div style={{ marginBottom: '10px' }}>
           <label style={{ display: 'block', marginBottom: '5px' }}>비공개 여부</label>
           <input
             type="checkbox"
@@ -149,7 +149,7 @@ const RoomCreater = () => {
               margin: '10px',
             }}
           />
-        </div>
+        </div> */}
         <button onClick={() => {
             if (!isLocked) {
               lock();
