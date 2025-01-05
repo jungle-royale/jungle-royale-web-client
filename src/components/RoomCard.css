@@ -6,7 +6,6 @@
   margin-right: 10px; /* 오른쪽 여백 유지 */
 }
 
-
 .indicator.available {
   background-color: #00d67a; /* 입장 가능: 초록색 */
 }
@@ -60,3 +59,4 @@
   font-weight: bold;
   color: #333;
 }
+
