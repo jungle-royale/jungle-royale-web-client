@@ -63,11 +63,11 @@ const RoomList = () => {
   });
 
   return (
-    <div className="room-container" {...swipeHandlers}>
+    <div className="room-container">
       <div className="room-user-info">
         <p>안녕하세요, {userName}님!</p>
       </div>
-      <div className="room-page">
+      <div className="room-page" {...swipeHandlers}>
         <h1>게임 방 목록</h1>
         <div className="room-list">
           {currentRooms.map((room) => (
