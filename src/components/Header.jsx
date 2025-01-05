@@ -17,7 +17,7 @@ const Header = () => {
         </a>        
       </div>
       <nav>
-      {import.meta.env.VITE_SHOW_DEV_PAGE && (
+      {import.meta.env.VITE_SHOW_DEV_PAGE === 'true' && (
       <a href="/test" onClick={(e) => navigateSafely(e, "/test")}>test</a>
       )}
   
