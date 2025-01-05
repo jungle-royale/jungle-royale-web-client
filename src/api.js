@@ -6,11 +6,12 @@ export const loginWithKakao = async (authCode) => {
     const response = await apiClient.post("/api/auth/kakao/login",
       { code: authCode },
     );
-    if(response.data && response.data.jwtToken && response.data.refreshToken){
+    console.log(response);
+    if(response.data && response.data.jwtToken && response.data.kakaoRefreshToken){
       localStorage.setItem("isLogin", "true");
       localStorage.setItem("jwt_token", response.data.jwtToken);
       // localStorage.setItem("access_token", response.data.accessToken);
-      localStorage.setItem("refresh_token", response.data.refreshToken);
+      localStorage.setItem("refresh_token", response.data.kakaoRefreshToken);
       // localStorage.setItem("expires_in", response.data.expiresIn);
     }else{
       console.error("토큰 정보가 누락되었습니다.");
@@ -99,10 +100,8 @@ export const myPageEdit = async (username) => {
 // 게시물 목록 가져오기 api
 export const fetchPosts = async ({ page = 1, limit = 10 }) => {
   return apiClient.get("/api/posts/list", {
-    params: {
-      page, // 현재 페이지 번호
-      limit,
-    }
+    params: { page, limit },
+    skipAuth: true, // 인터셉터에서 인증 건너뛰기
   });
 };
 

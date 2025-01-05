@@ -36,15 +36,16 @@ const refreshAccessToken = async () => {
 // 요청 인터셉터
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("jwt_token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    // config.skipAuth가 true인 경우 Authorization 헤더 추가하지 않음
+    if (!config.skipAuth) {
+      const token = localStorage.getItem("jwt_token");
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 // 응답 인터셉터
