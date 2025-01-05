@@ -1,10 +1,14 @@
 import { useEffect } from "react";
 import {refreshAccessToken} from "../api";
+import useJwtField from "./useJwtField.jsx";
 
 const useTokenRefresh = () => {
+  const jwtToken = localStorage.getItem("jwt_token");
+  const exp = useJwtField(jwtToken, "exp");
+
   useEffect(() => {
     const refreshInterval = () => {
-      const expiresIn = parseInt(localStorage.getItem("expires_in"), 10);
+      const expiresIn = parseInt(exp, 10);
       console.log(`expiresIn: ${expiresIn}`); // 만료 시간 확인
 
       if (expiresIn) {

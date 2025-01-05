@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useSafeNavigation from "../../hooks/useSafeNavigation.jsx";
 import { deletePost, getPost } from "../../api.js";
 import "./PostViewer.css";
-import useJwtSub from "../../hooks/useJwtSub.jsx";
+import useJwtField from "../../hooks/useJwtField.jsx";
 // import { useLoginContext } from "../contexts/LoginContext";
 
 const PostViewer = () => {
@@ -14,7 +14,7 @@ const PostViewer = () => {
 
   // const { jwtToken } = useLoginContext();
   const jwtToken = localStorage.getItem("jwt_token");
-  const sub = useJwtSub(jwtToken);
+  const sub = useJwtField(jwtToken, "sub");
 
   useEffect(() => {
     if (sub === null) {
