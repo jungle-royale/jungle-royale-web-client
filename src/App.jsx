@@ -22,7 +22,7 @@ import Ranking from "./pages/Ranking";
 import TestPageStore from "./pages/TestPageStore";
 
 // Initialize loglevel
-if (import.meta.env.NODE_ENV === 'production') {
+if (import.meta.env.VITE_NODE_ENV === 'production') {
   log.setLevel('silent');
 } else {
   log.setLevel('debug');
