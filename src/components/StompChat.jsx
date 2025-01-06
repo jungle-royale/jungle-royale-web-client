@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import './StompChat.css'; // CSS 파일 불러오기
+import PropTypes from 'prop-types';
 import log from 'loglevel';
 
 
-const StompChat = () => {
+const StompChat = ({ nickname }) => {
   const SERVER_URL = import.meta.env.VITE_WS_SERVER;
 
   const [wsClient, setWsClient] = useState(null);
@@ -81,7 +82,7 @@ const StompChat = () => {
 
   const sendMessage = () => {
     if (wsClient && message.trim()) {
-      const newMessage = { content: message, sender: 'User', id: Date.now() };
+      const newMessage = { content: message, sender: nickname, id: Date.now() };
       
       // 메시지를 WebSocket을 통해 전송
       wsClient.send(JSON.stringify(newMessage));
@@ -103,7 +104,7 @@ const StompChat = () => {
     <div className="chat-container">
       <div className="chat-messages" ref={chatMessagesRef} onScroll={handleScroll}>
         {messages.map((msg, index) => (
-          <p key={index} className={msg.sender === 'User' ? 'message-user' : 'message-other'}>
+          <p key={index} className={msg.sender === nickname ? 'message-user' : 'message-other'}>
             <strong>{msg.sender}:</strong> {msg.content}
           </p>
         ))}
@@ -127,6 +128,10 @@ const StompChat = () => {
       </div>
     </div>
   );
+};
+
+StompChat.propTypes = {
+  nickname: PropTypes.string.isRequired, // nickname is a required string
 };
 
 export default StompChat;

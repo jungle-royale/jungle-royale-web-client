@@ -113,7 +113,7 @@ const RoomList = () => {
           <button onClick={handleNextPage}>다음</button>
         </div>
       </div>
-      <StompChat />
+      <StompChat nickname={userName} />
       <Modal isOpen={isQRCodeOpen} onClose={() => setQRCodeOpen(false)}>
         <QRcode qrdata={qrData} />
         <button
