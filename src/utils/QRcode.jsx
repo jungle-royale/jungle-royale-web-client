@@ -5,7 +5,7 @@ const QRcode = ({ qrdata }) => {
 
   return (
     <>
-      <QRCodeCanvas value={qrdata} className="qrcode"/>
+      <QRCodeCanvas value={qrdata} size={300} />
     </>
   );
 };

@@ -8,7 +8,7 @@ const Modal = ({ children, isOpen, onClose }) => {
     <div className="modal-overlay">
       <div className="modal-content">
         <button onClick={onClose} className="modal-close">
-          닫기
+          &times; {/* HTML 특수 문자 X */}
         </button>
         {children}
       </div>

@@ -1,7 +1,0 @@
-.qrcode {
-  display: block; /* 중앙 정렬을 위한 블록 요소로 설정 */
-  margin: 20px auto; /* 수평 중앙 정렬 */
-  border: 1px solid #ccc; /* 테두리 추가 */
-  border-radius: 8px; /* 모서리를 둥글게 */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
-}

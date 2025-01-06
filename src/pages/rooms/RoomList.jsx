@@ -102,6 +102,7 @@ const RoomList = () => {
           onClick={(event) =>
             navigateSafely(event, `/room/ready?roomId=${roomIdForNavigation}`)
           }
+          className="modal-button"
         >
           바로가기
         </button>
