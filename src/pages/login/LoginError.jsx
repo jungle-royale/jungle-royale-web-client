@@ -1,7 +1,7 @@
 import { useClickLock } from '../../contexts/ClickLockContext';
 import "./Login.css";
 
-const Login = () => {
+const LoginError = () => {
   const { isLocked, lock } = useClickLock();
 
   const Rest_api_key = 'e8304b2a6b5aeb5020ef6abeb405115b';
@@ -20,7 +20,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h1>로그인 화면</h1>
+        <h1>로그인 실패</h1>
         <img
           src="/assets/kakaologinwide.png"
           className="kakao-button"
@@ -32,4 +32,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginError;

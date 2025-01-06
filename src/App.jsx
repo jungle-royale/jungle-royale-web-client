@@ -20,7 +20,6 @@ import Ranking from "./pages/Ranking";
 import TestPageStore from "./pages/TestPageStore";
 
 function App() {
-  // useTokenRefresh(); // 자동 토큰 갱신 로직
 
   return (
     <>
