@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { createPost } from "../../api";
 import { useClickLock } from "../../contexts/ClickLockContext";
 import "./PostCreator.css"; 
+import log from 'loglevel';
+
 
 const PostCreator = () => {
   const [title, setTitle] = useState("");
@@ -45,7 +47,7 @@ const PostCreator = () => {
 
     try {
       const data = await createPost(formData);
-      console.log("게시 성공:", data);
+      log.info("게시 성공:", data);
       alert("게시물이 성공적으로 등록되었습니다.");
       navigate("/");
     } catch (error) {

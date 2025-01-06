@@ -1,4 +1,6 @@
 import apiClient from "./axiosClient";
+import log from 'loglevel';
+
 
 //카카오 로그인 구현 api
 export const loginWithKakao = async (authCode) => {
@@ -30,7 +32,7 @@ export const loginGuest = async (authCode) => {
     localStorage.setItem("isLogin", "true");
     localStorage.setItem("jwt_token", response.data.jwtToken);
     localStorage.setItem("jwt_refresh", response.data.refreshToken);
-    console.log(response);
+    log.info(response);
     // if(response.data && response.data.jwtToken && response.data.refreshToken){
     // } else {
     //   console.error("토큰 정보가 누락되었습니다.");
@@ -49,10 +51,10 @@ export const logout = async () => {
     const response = await apiClient.post("/api/auth/logout",
       { refreshToken : localStorage.getItem("jwt_refresh")}, 
       );
-    console.log(response);
+    log.info(response);
     if (response.data.success) {
       localStorage.clear();
-      console.log("로그아웃 성공");
+      log.info("로그아웃 성공");
     } else {
       console.error("로그아웃 실패:", response.data.message);
     }
@@ -181,7 +183,7 @@ export const fetchStoreData = async () => {
 export const purchaseItem = async (itemCode) => {
   try {
     const response = await apiClient.post(`/api/shops/purchase?itemCode=${itemCode}`, {});
-    console.log("Response: ", response)
+    log.info("Response: ", response)
     return response.data;
   } catch (error) {
     console.error("아이템 구매 중 오류 발생:", error.response?.data || error.message);

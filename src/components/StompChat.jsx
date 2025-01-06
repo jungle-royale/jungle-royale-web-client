@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import './StompChat.css'; // CSS 파일 불러오기
+import log from 'loglevel';
+
 
 const StompChat = () => {
   const SERVER_URL = import.meta.env.VITE_WS_SERVER;
@@ -16,7 +18,7 @@ const StompChat = () => {
     const client = new WebSocket(SERVER_URL);
 
     client.onopen = () => {
-      console.log('WebSocket connection established');
+      log.info('WebSocket connection established');
       setWsClient(client);
     };
 
@@ -40,7 +42,7 @@ const StompChat = () => {
     };
 
     client.onclose = () => {
-      console.log('WebSocket connection closed');
+      log.info('WebSocket connection closed');
       setWsClient(null);
     };
 

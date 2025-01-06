@@ -3,6 +3,8 @@ import { LoginProvider } from "./contexts/LoginContext";
 import { RoomsProvider } from "./contexts/RoomsContext";
 import { ClickLockProvider } from "./contexts/ClickLockContext";
 import './App.css';
+import log from 'loglevel';
+
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import LoginError from "./pages/login/LoginError"
@@ -10,7 +12,6 @@ import RoomList from "./pages/rooms/RoomList";
 import RoomReady from "./pages/rooms/RoomReady";
 import MyPage from "./pages/mypage/MyPage"
 import GameTemp from "./pages/GameTemp"
-// import useTokenRefresh from "./hooks/useTokenRefresh";
 import Header from "./components/Header";
 import ScrollToTop from "./utils/ScrollToTop";
 import PostViewer from "./pages/posts/PostViewer";
@@ -19,6 +20,15 @@ import PostEditor from "./pages/posts/PostEditor";
 import Store from "./pages/store/Store";
 import Ranking from "./pages/Ranking";
 import TestPageStore from "./pages/TestPageStore";
+
+// Initialize loglevel
+if (import.meta.env.NODE_ENV === 'production') {
+  log.setLevel('silent');
+} else {
+  log.setLevel('debug');
+}
+
+log.info("Application started");
 
 function App() {
 
