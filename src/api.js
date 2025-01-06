@@ -10,7 +10,8 @@ export const loginWithKakao = async (authCode) => {
       localStorage.setItem("isLogin", "true");
       localStorage.setItem("jwt_token", response.data.jwtToken);
       // localStorage.setItem("access_token", response.data.accessToken);
-      localStorage.setItem("refresh_token", response.data.kakaoRefreshToken);
+      localStorage.setItem("jwt_refresh", response.data.jwtRefreshToken);
+      localStorage.setItem("auth_refresh", response.data.authRefreshToken);
       // localStorage.setItem("expires_in", response.data.expiresIn);
     }else{
       console.error("토큰 정보가 누락되었습니다.");
@@ -32,7 +33,7 @@ export const loginGuest = async (authCode) => {
     if(response.data && response.data.jwtToken && response.data.refreshToken){
       localStorage.setItem("isLogin", "true");
       localStorage.setItem("jwt_token", response.data.jwtToken);
-      localStorage.setItem("refresh_token", response.data.refreshToken);
+      localStorage.setItem("jwt_refresh", response.data.refreshToken);
     } else {
       console.error("토큰 정보가 누락되었습니다.");
       throw new Error("Incomplete token response");
@@ -48,7 +49,7 @@ export const loginGuest = async (authCode) => {
 export const logout = async () => {
   try {
     const response = await apiClient.post("/api/auth/logout",
-      { refreshToken : localStorage.getItem("refresh_token")}, 
+      { refreshToken : localStorage.getItem("jwt_refresh")}, 
       { headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,},
     });
