@@ -3,10 +3,9 @@ import { fetchPosts } from "../api.js";
 import useSafeNavigation from "../hooks/useSafeNavigation.jsx";
 import { useLoginContext } from "../contexts/LoginContext.jsx";
 import { formatDistanceToNowStrict, parseISO } from "date-fns";
-import { ko } from "date-fns/locale"; // 한국어 로케일
+import { ko } from "date-fns/locale";
 import "./PostBox.css";
-import log from 'loglevel';
-
+// import log from "loglevel";
 
 const PostBox = () => {
   const [posts, setPosts] = useState([]);
@@ -62,38 +61,35 @@ const PostBox = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (containerRef.current) {
+      if (containerRef.current && !isSticky) {
         const rect = containerRef.current.getBoundingClientRect();
-        setIsSticky(rect.top <= 50); // 특정 위치에서 고정
+        if (rect.top <= 50) {
+          setIsSticky(true); // 특정 위치에서 고정
+        }
         setIsVisible(rect.top < window.innerHeight && rect.bottom > 0); // 박스가 화면에 보이는지 확인
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isSticky]);
+
+  const handleHomeClick = () => {
+    setIsSticky(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const handleScrollToTop = () => {
     if (containerRef.current && isVisible) {
       const containerScrollTop = containerRef.current.scrollTop;
-      log.info(containerRef.current);  
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        log.info('rect.top:', rect.top); // 추가
-        log.info('rect.bottom:', rect.bottom); // 추가
-        setIsSticky(rect.top <= 50);
-        setIsVisible(rect.top < window.innerHeight && rect.bottom > 0);
-      }
       if (containerScrollTop === 0) {
-        // PostBox를 배경 이미지가 보이도록 초기 위치로 복원
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
-        // PostBox 내부 스크롤이 있을 경우 맨 위로 스크롤
         containerRef.current.scrollTo({ top: 0, behavior: "smooth" });
       }
     }
   };
-  
+
   return (
     <div>
       <div
@@ -101,19 +97,23 @@ const PostBox = () => {
         className={`post-container ${isSticky ? "sticky" : ""}`}
         onClick={handleScrollToTop} // PostBox를 클릭하면 함수 실행
       >
-      <div className="post-container-header">
-        <h1>게시판</h1>
-        <h3>소중한 의견을 남겨주세요!</h3>
-        {isSticky && <button>홈으로</button>}
-        {isLogin && (
-          <button
-            onClick={(e) => navigateSafely(e, "/post-creator")}
-            className="post-write-button"
-          >
-            글쓰기
-          </button>
-        )}
-      </div>
+        <div className="post-container-header">
+          <h1>게시판</h1>
+          <h3>소중한 의견을 남겨주세요!</h3>
+          {isSticky && (
+            <button onClick={handleHomeClick} className="home-button">
+              홈으로
+            </button>
+          )}
+          {isLogin && (
+            <button
+              onClick={(e) => navigateSafely(e, "/post-creator")}
+              className="post-write-button"
+            >
+              글쓰기
+            </button>
+          )}
+        </div>
         {posts.length > 0 ? (
           <ul className="post-list">
             <li className="post-header">
@@ -133,8 +133,9 @@ const PostBox = () => {
                       {post.title}
                     </div>
                     <div className="post-author-date-container">
-                      <div className="post-author">{post.username} | {formatDate(post.createdAt)}</div>
-                      {/* <div className="post-date">{formatDate(post.createdAt)}</div> */}
+                      <div className="post-author">
+                        {post.username} | {formatDate(post.createdAt)}
+                      </div>
                     </div>
                   </div>
                 </li>
