@@ -16,11 +16,11 @@ const refreshAccessToken = async () => {
   }
 
   const response = await axios.post(
-    `${BASE_URL}/api/auth/refresh-token`,
+    `${BASE_URL}/api/auth/refresh`,
     {},
     {
       headers: {
-        authorization_refresh: `Bearer ${refreshToken}`,
+        Authorization: `Bearer ${refreshToken}`,
       },
     }
   );
@@ -53,9 +53,8 @@ apiClient.interceptors.response.use(
   (response) => response, // 성공 응답은 그대로 반환
   async (error) => {
     const originalRequest = error.config;
-
     // 만료 토큰 오류 처리
-    if (error.response?.errorCode === "EXPIRED_TOKEN" && !originalRequest._retry) {
+    if (error.response?.data.errorCode === "EXPIRED_TOKEN" && !originalRequest._retry) {
       originalRequest._retry = true; // 무한 루프 방지
       try {
         const newToken = await refreshAccessToken(); // 토큰 갱신
@@ -64,6 +63,7 @@ apiClient.interceptors.response.use(
       } catch (refreshError) {
         console.error("토큰 갱신 실패:", refreshError.message);
         localStorage.clear(); // 로컬 스토리지 초기화
+        alert("재로그인이 필요합니다.");
         window.location.href = "/login"; // 로그인 페이지로 리다이렉트
         return Promise.reject(refreshError); // 최종 실패 반환
       }

@@ -6,7 +6,6 @@ export const loginWithKakao = async (authCode) => {
     const response = await apiClient.post("/api/auth/kakao/login",
       { code: authCode },
     );
-    console.log(response);
     if(response.data && response.data.jwtToken && response.data.kakaoRefreshToken){
       localStorage.setItem("isLogin", "true");
       localStorage.setItem("jwt_token", response.data.jwtToken);
@@ -107,7 +106,9 @@ export const fetchPosts = async ({ page = 1, limit = 10 }) => {
 
 // 게시물 하나 가져오기 api
 export const getPost = async (postId) => {
-  return apiClient.get(`/api/posts/${postId}`);
+  return apiClient.get(`/api/posts/${postId}`, {
+    skipAuth: true, // 인터셉터에서 인증 건너뛰기
+  });
 };
 
 // 게시물 올리기 api
