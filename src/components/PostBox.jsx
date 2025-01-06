@@ -101,7 +101,7 @@ const PostBox = () => {
           <h1>게시판</h1>
           <h3>소중한 의견을 남겨주세요!</h3>
           {isSticky && (
-            <button onClick={handleHomeClick} className="home-button">
+            <button onClick={handleHomeClick} className="go-home-button">
               홈으로
             </button>
           )}
