@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import log from 'loglevel';
 
 // Context 생성
 const LoginContext = createContext();
@@ -22,23 +23,23 @@ export const LoginProvider = ({ children }) => {
   // isLogin 상태와 localStorage 동기화
   useEffect(() => {
     localStorage.setItem("isLogin", isLogin.toString());
-    console.debug("isLogin 상태 동기화됨:", isLogin);
+    log.debug("isLogin 상태 동기화됨:", isLogin);
   }, [isLogin]);
 
   // userRole 상태와 localStorage 동기화
   useEffect(() => {
     localStorage.setItem("userRole", userRole);
-    console.debug("userRole 상태 동기화됨:", userRole);
+    log.debug("userRole 상태 동기화됨:", userRole);
   }, [userRole]);
 
   // jwtToken 상태와 localStorage 동기화
   useEffect(() => {
     if (jwtToken) {
       localStorage.setItem("jwt_token", jwtToken);
-      console.debug("JWT Token 상태 동기화됨:", jwtToken);
+      log.debug("JWT Token 상태 동기화됨:", jwtToken);
     } else {
       localStorage.removeItem("jwt_token"); // 로그아웃 시 제거
-      console.debug("JWT Token이 제거됨");
+      log.debug("JWT Token이 제거됨");
     }
   }, [jwtToken]);
 
