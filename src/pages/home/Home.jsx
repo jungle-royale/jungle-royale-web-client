@@ -1,23 +1,42 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import PropTypes from 'prop-types';
 import { loginGuest, fetchPosts } from "../../api.js";
 import { useLoginContext } from "../../contexts/LoginContext.jsx";
 import { useClickLock } from '../../contexts/ClickLockContext.jsx';
 import Snowfall from "../../utils/SnowFall.jsx"; // Snowfall 경로 맞추기
 import PostBox from "../../components/PostBox.jsx"; // PostBox 컴포넌트 가져오기
+import LoadingSpinner from "../../components/LoadingSpinner";
 import SendAuthCode from "../../utils/SendAuthCode.jsx"; // 인증 코드 처리 컴포넌트 가져오기
-import LoadingSpinner from "../../components/LoadingSpinner"; // 로딩 스피너 컴포넌트 가져오기
 
 import "./Home.css";
 import log from 'loglevel';
 
+const ActionButton = ({ handleClick, label }) => {
+  return (
+    <button className="home-button-room-list" onClick={handleClick}>
+      {label}
+    </button>
+  );
+};
+
 const Home = () => {
   const { isLogin, setIsLogin, setUserRole } = useLoginContext(); // 로그인 상태 확인
   const { isLocked, lock, unlock } = useClickLock();
-  const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState([]);
+  const location = useLocation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const redirecting = params.get("redirecting") === "true";
+
+    if (redirecting) {
+      setIsLoading(true); // 로딩 시작
+    }
+  }, [location]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,10 +49,7 @@ const Home = () => {
         console.error("데이터 로딩 실패:", error);
         alert("데이터를 불러오는 중 문제가 발생했습니다.");
       } finally {
-        // 인위적으로 2초 동안 로딩 스피너 유지
-        setIsLoading(false); // 로딩 완료
-        // setTimeout(() => {
-        // }, 2000);
+        setIsLoading(false); // 로딩 종료
       }
     };
 
@@ -80,19 +96,27 @@ const Home = () => {
       <SendAuthCode /> {/* 인증 코드 처리 컴포넌트 */}
 
       <div className="home-image-container">
-        <button className="home-button-room-list" onClick={handleButtonClick}>
-          {isLogin ? "GAME START" : "LOGIN"}
-        </button>
+        <ActionButton
+          handleClick={handleButtonClick}
+          label={isLogin ? "GAME START" : "LOGIN"}
+        />
         {!isLogin && (
-          <button className="home-button-room-list" onClick={isLogin ? handleButtonClick : handleLoginGuest}>
-            비회원 로그인
-          </button>
+          <ActionButton
+            handleClick={handleLoginGuest}
+            label="비회원 로그인"
+          />
         )}
       </div>
+
 
       <PostBox posts={posts} /> {/* 게시물 */}
     </div>
   );
+};
+
+ActionButton.propTypes = {
+  handleClick: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
 };
 
 export default Home;

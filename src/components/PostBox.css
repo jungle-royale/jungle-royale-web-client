@@ -1,5 +1,4 @@
 /* 전체 컨테이너 스타일 */
-
 body {
   background-size: cover; 
   background-attachment: fixed; 
@@ -23,7 +22,6 @@ body {
   top: 100%; /* 화면 아래 */
 }
 
-
 /* 스크롤로 고정 */
 .post-container.sticky {
   position: fixed;
@@ -34,7 +32,7 @@ body {
   z-index: 1000;
 }
 
-/* 스크롤 스타일 (선택 사항) */
+/* 스크롤 스타일 */
 .post-container::-webkit-scrollbar {
   width: 10px;
 }
@@ -59,7 +57,7 @@ body {
 .post-write-button {
   position: absolute;
   top: 10px;
-  right: 10px;
+  left: 10px;
   background-color: #67b3ff;
   color: white;
   border: none;
@@ -73,6 +71,22 @@ body {
   background: #2b44ff;
 }
 
+.go-home-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #67b3ff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.go-home-button:hover {
+  background: #2b44ff;
+}
 /* 리스트 컨테이너 */
 .post-list {
   list-style: none;
