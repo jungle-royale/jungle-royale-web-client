@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginGuest } from "../../api.js";
 import { useLoginContext } from "../../contexts/LoginContext.jsx";
@@ -12,6 +13,7 @@ import log from 'loglevel';
 
 const Home = () => {
   const { isLogin, setIsLogin, setUserRole } = useLoginContext(); // 로그인 상태 확인
+  const [ isLoading, setIsLoading ] = useState(true);
   const { isLocked, lock, unlock } = useClickLock();
   
   const navigate = useNavigate();
@@ -45,6 +47,10 @@ const Home = () => {
       unlock();
     }
   };
+
+  if (isLogin === null) {
+    return <div>Loading...</div>; // 로딩 화면
+  }
 
   return (
     <div>
