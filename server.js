@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import log from 'loglevel';
+import process from 'process';
 
 
 const app = express();
@@ -19,7 +20,7 @@ app.get('*', (req, res) => {
 });
 
 // 서버 포트 설정
-const PORT = import.meta.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   log.info(`Server is running on http://localhost:${PORT}`);
 });
