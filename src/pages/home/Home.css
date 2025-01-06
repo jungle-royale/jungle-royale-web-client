@@ -114,10 +114,6 @@
     transform: scale(1.02);
   }
 
-  .home-button-room-list:active {
-    transform: scale(0.98);
-  }
-
   .home-button-room-list.secondary {
     background: #ff6b6b;
   }

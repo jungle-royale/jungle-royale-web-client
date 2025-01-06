@@ -4,6 +4,8 @@ import { useLoginContext } from "../../contexts/LoginContext.jsx";
 import { useClickLock } from '../../contexts/ClickLockContext.jsx';
 import Snowfall from "../../utils/SnowFall.jsx"; // Snowfall 경로 맞추기
 import PostBox from "../../components/PostBox.jsx"; // PostBox 컴포넌트 가져오기
+import SendAuthCode from "../../utils/SendAuthCode.jsx"; // 인증 코드 처리 컴포넌트 가져오기
+
 
 import "./Home.css";
 
@@ -46,6 +48,8 @@ const Home = () => {
   return (
     <div>
       <Snowfall /> {/* 눈 효과 추가 */}
+      <SendAuthCode /> {/* 인증 코드 처리 컴포넌트 */}
+
       <div className="home-image-container">
         <button className="home-button-room-list" onClick={handleButtonClick}>
           {isLogin ? "GAME START" : "LOGIN"}
