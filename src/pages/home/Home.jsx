@@ -1,22 +1,44 @@
-// import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginGuest } from "../../api.js";
+import { loginGuest, fetchPosts } from "../../api.js";
 import { useLoginContext } from "../../contexts/LoginContext.jsx";
 import { useClickLock } from '../../contexts/ClickLockContext.jsx';
 import Snowfall from "../../utils/SnowFall.jsx"; // Snowfall 경로 맞추기
 import PostBox from "../../components/PostBox.jsx"; // PostBox 컴포넌트 가져오기
 import SendAuthCode from "../../utils/SendAuthCode.jsx"; // 인증 코드 처리 컴포넌트 가져오기
+import LoadingSpinner from "../../components/LoadingSpinner"; // 로딩 스피너 컴포넌트 가져오기
 
 import "./Home.css";
 import log from 'loglevel';
 
-
 const Home = () => {
   const { isLogin, setIsLogin, setUserRole } = useLoginContext(); // 로그인 상태 확인
-  // const [ isLoading, setIsLoading ] = useState(true);
   const { isLocked, lock, unlock } = useClickLock();
-  
+  const [isLoading, setIsLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const postsData = await Promise.all([
+          fetchPosts({ page: 1, limit: 10 }), // 게시물 리스트 가져오기
+        ]);
+        setPosts(postsData.data || []);
+      } catch (error) {
+        console.error("데이터 로딩 실패:", error);
+        alert("데이터를 불러오는 중 문제가 발생했습니다.");
+      } finally {
+        // 인위적으로 2초 동안 로딩 스피너 유지
+        setIsLoading(false); // 로딩 완료
+        // setTimeout(() => {
+        // }, 2000);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleButtonClick = () => {
     if (isLocked) return; // 중복 클릭 방지
@@ -29,14 +51,14 @@ const Home = () => {
     }
   };
 
-  //비회원 로그인 시
+  // 비회원 로그인 시
   const handleLoginGuest = async () => {
     if (isLocked) return; // 중복 클릭 방지
     lock();
-      try {
+    try {
       const response = await loginGuest(); // 서버와 통신하여 토큰 수신
       setIsLogin(true); // 로그인 상태 업데이트
-      setUserRole(response.role)
+      setUserRole(response.role);
       log.info("비회원 Login 성공:", response);
       alert("비회원으로 로그인되었습니다.");
       navigate("/"); // 홈 화면으로 이동
@@ -48,8 +70,8 @@ const Home = () => {
     }
   };
 
-  if (isLogin === null) {
-    return <div>Loading...</div>; // 로딩 화면
+  if (isLoading) {
+    return <LoadingSpinner />; // 로딩 중에는 로딩 스피너 표시
   }
 
   return (
@@ -62,13 +84,13 @@ const Home = () => {
           {isLogin ? "GAME START" : "LOGIN"}
         </button>
         {!isLogin && (
-          <button className="home-button-room-list" onClick={isLogin ? handleButtonClick : handleLoginGuest }>
+          <button className="home-button-room-list" onClick={isLogin ? handleButtonClick : handleLoginGuest}>
             비회원 로그인
           </button>
         )}
-      </div> 
-      <PostBox />
-  
+      </div>
+
+      <PostBox posts={posts} /> {/* 게시물 */}
     </div>
   );
 };

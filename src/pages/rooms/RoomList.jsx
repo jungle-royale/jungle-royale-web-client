@@ -16,6 +16,7 @@ const RoomList = () => {
   const [qrData, setQRData] = useState("");
   const [roomIdForNavigation, setRoomIdForNavigation] = useState("");
   const [isRoomCreaterOpen, setRoomCreaterOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { navigateSafely } = useSafeNavigation();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,11 +31,14 @@ const RoomList = () => {
   useEffect(() => {
     const loadRooms = async () => {
       try {
+        setIsLoading(true);
         const response = await fetchRooms();
         setRooms(response.data.gameRooms);
         setUserName(response.data.userInfo.username);
       } catch (error) {
         console.error("방 목록을 불러오는 중 오류 발생:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     loadRooms();
@@ -76,7 +80,20 @@ const RoomList = () => {
           onClick={() => setRoomCreaterOpen(true)}
         />
         <div className="room-list">
-          {currentRooms.map((room) => (
+          {isLoading
+            ? Array(6).fill(null).map((_, index) => (
+              <RoomCard
+              key={index}
+              roomName="Loading..."
+              currentPlayers={0}
+              maxPlayers={0}
+              isPlaying=""
+              onJoin={() => {}}
+              isLoading={true}
+            />
+            ))
+          :
+          currentRooms.map((room) => (
             <RoomCard
               key={room.id}
               roomName={room.title}
@@ -84,6 +101,7 @@ const RoomList = () => {
               maxPlayers={room.maxPlayers}
               isPlaying={room.status}
               onJoin={() => handleJoinRoom(room)}
+              isLoading={isLoading}
             />
           ))}
         </div>
