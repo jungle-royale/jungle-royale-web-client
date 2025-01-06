@@ -5,9 +5,6 @@ export default defineConfig(({ mode }) => {
   // 환경 변수 로드
   const env = loadEnv(mode, './');
 
-  console.log("Loaded VITE_API_BASE_URL:", env.VITE_API_BASE_URL); // 디버깅용 출력
-  console.log("Loaded VITE_KAKAO_REDIRECT_URL", env.VITE_KAKAO_REDIRECT_URL)
-
   return {
     plugins: [react()],
     publicDir: 'public', // 기본 설정

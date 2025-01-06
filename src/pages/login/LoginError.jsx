@@ -1,32 +1,17 @@
-import { useClickLock } from '../../contexts/ClickLockContext';
 import "./Login.css";
+import useSafeNavigation from "../../hooks/useSafeNavigation";
 
 const LoginError = () => {
-  const { isLocked, lock } = useClickLock();
-
-  const Rest_api_key = 'e8304b2a6b5aeb5020ef6abeb405115b';
-  const redirect_uri = `${import.meta.env.VITE_KAKAO_REDIRECT_URL}`;
-  console.log("Redirect URI:", redirect_uri);
-
-
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
-
-  const handleLoginKakao = () => {
-    if (isLocked) return; // 중복 클릭 방지
-    lock();
-    window.location.href = kakaoURL; // 리다이렉트
-  };
+const {navigateSafely} = useSafeNavigation();
 
   return (
     <div className="login-container">
       <div className="login-box">
         <h1>로그인 실패</h1>
-        <img
-          src="/assets/kakaologinwide.png"
-          className="kakao-button"
-          alt="카카오 로그인 버튼"
-          onClick={handleLoginKakao}
-        />
+        <p>로그인에 실패했습니다. 다시 시도해주세요.</p>
+        <button className="retry-button" onClick={(e) => navigateSafely(e, "/")}>
+          재로그인하기
+        </button>
       </div>
     </div>
   );
