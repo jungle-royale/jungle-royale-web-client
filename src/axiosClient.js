@@ -10,7 +10,7 @@ const apiClient = axios.create({
 
 //토큰 재발급 요청 api
 const refreshAccessToken = async () => {
-  const refreshToken = localStorage.getItem("refresh_token");
+  const refreshToken = localStorage.getItem("jwt_refresh");
   if (!refreshToken) {
     throw new Error("No refresh token available");
   }
@@ -27,7 +27,7 @@ const refreshAccessToken = async () => {
 
   // 새로운 토큰 저장
   localStorage.setItem("jwt_token", response.data.jwtToken);
-  localStorage.setItem("refresh_token", response.data.refreshToken);
+  localStorage.setItem("jwt_refresh", response.data.refreshToken);
 
   return response.data.jwtToken;
 };
