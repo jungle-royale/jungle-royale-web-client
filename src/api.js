@@ -27,14 +27,15 @@ export const loginGuest = async (authCode) => {
     const response = await apiClient.post("/api/auth/guest/login",
       { code: authCode },
     );
-    if(response.data && response.data.jwtToken && response.data.refreshToken){
-      localStorage.setItem("isLogin", "true");
-      localStorage.setItem("jwt_token", response.data.jwtToken);
-      localStorage.setItem("jwt_refresh", response.data.refreshToken);
-    } else {
-      console.error("토큰 정보가 누락되었습니다.");
-      throw new Error("Incomplete token response");
-    }
+    localStorage.setItem("isLogin", "true");
+    localStorage.setItem("jwt_token", response.data.jwtToken);
+    localStorage.setItem("jwt_refresh", response.data.refreshToken);
+    console.log(response);
+    // if(response.data && response.data.jwtToken && response.data.refreshToken){
+    // } else {
+    //   console.error("토큰 정보가 누락되었습니다.");
+    //   throw new Error("Incomplete token response");
+    // }
     return response.data;
   } catch (error) {
     console.error("Login 실패:", error.message);

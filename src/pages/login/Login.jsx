@@ -6,8 +6,6 @@ const Login = () => {
 
   const Rest_api_key = 'e8304b2a6b5aeb5020ef6abeb405115b';
   const redirect_uri = `${import.meta.env.VITE_KAKAO_REDIRECT_URL}`;
-  console.log("Redirect URI:", redirect_uri);
-
 
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
 

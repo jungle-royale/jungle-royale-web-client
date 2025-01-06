@@ -5,6 +5,7 @@ import { ClickLockProvider } from "./contexts/ClickLockContext";
 import './App.css';
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
+import LoginError from "./pages/login/LoginError"
 import RoomList from "./pages/rooms/RoomList";
 import RoomReady from "./pages/rooms/RoomReady";
 import MyPage from "./pages/mypage/MyPage"
@@ -31,6 +32,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/loginerror" element={<LoginError />} />
               <Route path="/room" element={<RoomList />} />
               <Route path="/room/ready" element={<RoomReady />} />
               <Route path="/mypage" element={<MyPage />}/>
