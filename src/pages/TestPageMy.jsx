@@ -4,6 +4,8 @@ import { TextureLoader } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Sky } from "three/examples/jsm/objects/Sky";
 import "./mypage/MyPage.css";
+import log from 'loglevel';
+
 
 const loadModelWithTexture = (scene, modelRef) => {
   const loader = new GLTFLoader();
@@ -209,7 +211,7 @@ const TestPageMy = () => {
     const updateObjectPosition = () => {
       const model = modelRef.current;
       if (!model) return;
-      console.log("객체 이동 확인");
+      log.info("객체 이동 확인");
       if (moveDirection.forward) model.position.z -= moveSpeed;
       if (moveDirection.backward) model.position.z += moveSpeed;
       if (moveDirection.left) model.position.x -= moveSpeed;

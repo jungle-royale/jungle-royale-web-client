@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { fetchStoreData, purchaseItem } from "../../api";
 //import ThreeCanvas from "../components/ThreeCanvas";
 import "./Store.css";
+import log from 'loglevel';
+
 
 const Store = () => {
   const [userData, setUserData] = useState({ username: "", gameMoney: 0, inventory: [] });
@@ -14,7 +16,7 @@ const Store = () => {
       // 서버에서 구매 요청 처리
       const updatedUserData = await purchaseItem(itemCode);
       alert("구매가 완료되었습니다!");
-      console.log(updatedUserData);
+      log.info(updatedUserData);
       // 상태 업데이트
       setUserData((prev) => ({
         ...prev,

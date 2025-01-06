@@ -4,6 +4,8 @@ import useSafeNavigation from "../../hooks/useSafeNavigation.jsx";
 import { deletePost, getPost } from "../../api.js";
 import "./PostViewer.css";
 import useJwtField from "../../hooks/useJwtField.jsx";
+import log from 'loglevel';
+
 // import { useLoginContext } from "../contexts/LoginContext";
 
 const PostViewer = () => {
@@ -18,15 +20,15 @@ const PostViewer = () => {
 
   useEffect(() => {
     if (sub === null) {
-      console.log("sub 값이 null이므로 fetchPost를 호출하지 않음");
+      log.info("sub 값이 null이므로 fetchPost를 호출하지 않음");
       return;
     }
 
     const fetchPost = async () => {
       try {
         const response = await getPost(id);
-        console.log("Fetched Post Data:", response.data);
-        console.log("Decoded sub from JWT:", sub);
+        log.info("Fetched Post Data:", response.data);
+        log.info("Decoded sub from JWT:", sub);
 
         setPost(response.data);
         setIsOwner(response.data.writerId === parseInt(sub, 10));

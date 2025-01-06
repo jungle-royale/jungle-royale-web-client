@@ -4,6 +4,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Sky } from "three/examples/jsm/objects/Sky";
 import "./mypage/MyPage.css";
+import log from 'loglevel';
 
 const loadModelWithTexture = (scene, modelRef) => {
   const loader = new GLTFLoader();
@@ -16,7 +17,7 @@ const loadModelWithTexture = (scene, modelRef) => {
     '/assets/RW_LP_CP_Character_SnowMan.001.gltf', // 모델 경로
     (gltf) => {
       const model = gltf.scene;
-      console.log(model);
+      log.info(model);
 
       // 텍스처 적용
       model.traverse((child) => {
@@ -210,7 +211,7 @@ const TestPageStore = () => {
     const updateObjectPosition = () => {
       const model = modelRef.current;
       if (!model) return;
-      console.log("객체 이동 확인");
+      log.info("객체 이동 확인");
       if (moveDirection.forward) model.position.z -= moveSpeed;
       if (moveDirection.backward) model.position.z += moveSpeed;
       if (moveDirection.left) model.position.x -= moveSpeed;

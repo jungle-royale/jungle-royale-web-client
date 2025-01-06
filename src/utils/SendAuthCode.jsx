@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useClickLock } from '../contexts/ClickLockContext';
 import { useLoginContext } from "../contexts/LoginContext";
 import { loginWithKakao } from "../api";
+import log from 'loglevel';
+
 
 
 const SendAuthCode = () => {
@@ -25,7 +27,7 @@ const SendAuthCode = () => {
   useEffect(() => {
     const url = new URL(window.location.href);
     const code = url.searchParams.get("code");
-    console.log("Authorization Code:", code);
+    log.info("Authorization Code:", code);
     if (code) {
       sendCodeToServer(code).finally(() => {
         // URL에서 code 제거

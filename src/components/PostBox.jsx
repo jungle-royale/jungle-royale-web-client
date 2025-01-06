@@ -5,6 +5,8 @@ import { useLoginContext } from "../contexts/LoginContext.jsx";
 import { formatDistanceToNowStrict, parseISO } from "date-fns";
 import { ko } from "date-fns/locale"; // 한국어 로케일
 import "./PostBox.css";
+import log from 'loglevel';
+
 
 const PostBox = () => {
   const [posts, setPosts] = useState([]);
@@ -74,11 +76,11 @@ const PostBox = () => {
   const handleScrollToTop = () => {
     if (containerRef.current && isVisible) {
       const containerScrollTop = containerRef.current.scrollTop;
-      console.log(containerRef.current);  
+      log.info(containerRef.current);  
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
-        console.log('rect.top:', rect.top); // 추가
-        console.log('rect.bottom:', rect.bottom); // 추가
+        log.info('rect.top:', rect.top); // 추가
+        log.info('rect.bottom:', rect.bottom); // 추가
         setIsSticky(rect.top <= 50);
         setIsVisible(rect.top < window.innerHeight && rect.bottom > 0);
       }

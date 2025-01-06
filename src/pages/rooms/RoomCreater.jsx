@@ -4,6 +4,8 @@ import { createRoom } from "../../api";
 import { useClickLock } from '../../contexts/ClickLockContext';
 import Input from "../../components/Input";
 import "./RoomCreater.css"
+import log from 'loglevel';
+
 
 const RoomCreater = () => {
   const [roomName, setRoomName] = useState('');
@@ -68,7 +70,7 @@ const RoomCreater = () => {
   
     try {
       const response = await createRoom(roomDetails); // API 요청
-      console.log("create 성공:", response);
+      log.info("create 성공:", response);
       const roomId = response.data.roomId;
       const clientId = response.data.clientId;
       alert("방이 성공적으로 생성되었습니다!");

@@ -4,6 +4,8 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import Input from "../../components/Input.jsx"; 
 import { fetchMyPage, myPageEdit } from '../../api.js';
 import "./MyPage.css";
+import log from 'loglevel';
+
 
 const MyPage = () => {
   const [nickname, setNickname] = useState('');
@@ -70,7 +72,7 @@ const MyPage = () => {
         scene.add(model);
       },
       (xhr) => {
-        console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+        log.info((xhr.loaded / xhr.total) * 100 + "% loaded");
       },
       (error) => {
         console.error("An error occurred while loading the GLB model:", error);
