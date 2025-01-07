@@ -76,7 +76,7 @@ export const fetchRooms = async () => {
 //방 입장 가능 여부 확인 api
 export const joinRoomAvailability = async (roomId) => {
   const response = await apiClient.post(`/api/rooms/${roomId}/join`, {});
-  return response.data; // 예: { isAvailable: true, message: "방 입장 가능" }
+  return response.data; 
 };
 
 //마이 페이지 불러오기 api

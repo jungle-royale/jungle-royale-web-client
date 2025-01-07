@@ -22,6 +22,7 @@
   align-items: center;
   gap: 10px;
   padding: 10px;
+  /* bottom: 0px; */
   background-color: #f8f9fa; /* 입력창 배경색 */
   border-top: 1px solid #d9d9d9; /* 상단 구분선 */
 }
