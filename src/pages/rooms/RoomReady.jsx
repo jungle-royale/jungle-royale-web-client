@@ -1,11 +1,14 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 // import useSafeNavigation from "../../hooks/useSafeNavigation";
+import { useLoginContext } from "../../contexts/LoginContext";
 import { joinRoomAvailability } from "../../api"; // 방 입장 가능 여부 API
 
 const RoomReady = () => {
   const [searchParams] = useSearchParams();
   const roomId = searchParams.get("roomId");
+    const { isLogin, jwtToken } = useLoginContext(); // 로그인 상태 확인
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,18 +16,25 @@ const RoomReady = () => {
       try {
         // 방 입장 가능 여부 확인
         const response = await joinRoomAvailability(roomId);
-        if (response.isAvailable) {
+        if (response) {
           // 방 입장이 가능하면 게임 URL로 리다이렉트
           const gameUrl = `http://game.eternalsnowman.com/room?roomId=${response.roomId}&clientId=${response.clientId}`;
           window.location.href = gameUrl; // 브라우저에서 외부 URL로 이동
         } else {
           alert(response.message || "방 입장이 불가능합니다.");
-          navigate("/room"); // 방 목록으로 리다이렉트
+          if(isLogin && jwtToken){
+            navigate("/room"); // 방 목록으로 리다이렉트
+          } else {
+            navigate("/")
+          }
         }
       } catch (error) {
-        console.error("방 입장 확인 중 오류 발생:", error);
-        alert("방 입장 여부를 확인할 수 없습니다. 다시 시도해주세요.");
-        navigate("/room"); // 오류 발생 시 방 목록으로 리다이렉트
+        alert(error.response.data.message || "방 입장 여부를 확인할 수 없습니다. 다시 시도해주세요.");
+        if(isLogin && jwtToken){
+          navigate("/room"); // 방 목록으로 리다이렉트
+        } else {
+          navigate("/")
+        }
       }
     };
 
