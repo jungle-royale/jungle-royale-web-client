@@ -2,7 +2,7 @@ import { useLoginContext } from "../contexts/LoginContext";
 import useAuthHandlers from "../hooks/useAuthHandlers";
 import "./Header.css";
 import useSafeNavigation from "../hooks/useSafeNavigation";
-import AudioPlayer from "../utils/AudioPlayer"; // AudioPlayer 컴포넌트 임포트
+// import AudioPlayer from "../utils/AudioPlayer"; // AudioPlayer 컴포넌트 임포트
 
 
 const Header = () => {
@@ -18,7 +18,7 @@ const Header = () => {
         <a href="/" onClick={(e) => navigateSafely(e, "/")}>
           <img src="/assets/headercon.png" alt="Eternal Snowman" />
         </a>        
-        <AudioPlayer src="/assets/BackgroundBGM.wav" loop={true} />
+        {/* <AudioPlayer src="/assets/BackgroundBGM.wav" loop={true} /> */}
       </div>
       <nav>
       {import.meta.env.VITE_SHOW_DEV_PAGE === 'true' && (

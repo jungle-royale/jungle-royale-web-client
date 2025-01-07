@@ -12,7 +12,8 @@
   padding: 20px; /* Modal의 padding과 동일하게 설정 */
   border-radius: 8px; /* Modal의 border-radius와 동일 */
   box-sizing: border-box; /* 패딩 포함 크기 계산 */
-  overflow: hidden; /* 내용이 영역 밖으로 나가지 않도록 */
+  overflow-y: auto; /* 세로 스크롤 표시 */
+  overflow-x: hidden; /* 가로 스크롤 제거 */
   margin: 0 auto;
 }
 

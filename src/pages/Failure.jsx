@@ -18,8 +18,6 @@ const Failure = () => {
   // const errorMessage = errorMessages[code] || errorMessages["UNKNOWN_ERROR"];
   const errorMessage = code || "UNKNOWN_ERROR";
 
-
-
   return (
     <div className="failure-container">
       <div className="failure-box">

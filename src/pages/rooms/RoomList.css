@@ -217,7 +217,7 @@
     position: absolute !important; /* 부모 요소 기준으로 절대 위치 지정 */
     top: 45px !important; /* 원하는 상단 위치 */
     right: 10px !important; /* 부모 요소의 오른쪽 끝에 배치 */
-    width: 40px !important; /* 아이콘 크기 */
+    width: 80px !important; /* 아이콘 크기 */
     height: 40px !important; /* 동일한 크기 */
     cursor: pointer;
   }

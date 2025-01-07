@@ -79,6 +79,12 @@ export const joinRoomAvailability = async (roomId) => {
   return response.data; 
 };
 
+//방 돌아가기 api
+export const returnRoom = async () => {
+  const response = await apiClient.post(`/api/game/return`, {});
+  return response.data; 
+};
+
 //마이 페이지 불러오기 api
 export const fetchMyPage = () => {
   return apiClient.get(`/api/users/mypage`);
@@ -161,23 +167,6 @@ export const fetchStoreData = async () => {
     throw error;
   }
 };
-//임시 서버
-// export const fetchStoreData = async () => {
-//   return new Promise((resolve) => {
-//     setTimeout(() => {
-//       resolve({
-//         nickname: "테스트유저",
-//         gameMoney: 10000,
-//         items: [
-//           { name: "아이템1", price: 500 },
-//           { name: "아이템2", price: 1500 },
-//           { name: "아이템3", price: 2500 },
-//         ],
-//       });
-//     }, 500); // 테스트를 위해 500ms 지연
-//   });
-// };
-
 
 //상점 아이템 구매 api
 export const purchaseItem = async (itemCode) => {

@@ -3,8 +3,8 @@ import PropTypes from "prop-types"
 import Skeleton from "./Skeleton.jsx";
 
 
-const RoomCard = ({ roomName, currentPlayers, maxPlayers, isPlaying, onJoin, isLoading }) => {
-  const isJoinable = (isPlaying === "WAITING") && (currentPlayers < maxPlayers);
+const RoomCard = ({ roomName, minPlayers, maxPlayers, isPlaying, onJoin, isLoading }) => {
+  const isJoinable = (isPlaying === "WAITING") && (minPlayers < maxPlayers);
   if (isLoading) {
     return (
       <div className="room-card">
@@ -23,7 +23,7 @@ const RoomCard = ({ roomName, currentPlayers, maxPlayers, isPlaying, onJoin, isL
       <div className={`indicator ${ isJoinable ? "available" : "unavailable" }`}></div>
       <h2>{roomName}</h2>
       <p>
-        {currentPlayers} / {maxPlayers}
+        {minPlayers} ~ {maxPlayers}
       </p>
       <button className="join-button" onClick={onJoin} disabled={!isJoinable}>
         {isJoinable ? "입장하기" : "입장 불가"}
@@ -35,7 +35,7 @@ const RoomCard = ({ roomName, currentPlayers, maxPlayers, isPlaying, onJoin, isL
 // PropTypes 정의
 RoomCard.propTypes = {
   roomName: PropTypes.string.isRequired, // roomName은 필수이며 문자열
-  currentPlayers: PropTypes.number.isRequired, // currentPlayers는 필수이며 숫자
+  minPlayers: PropTypes.number.isRequired, // minPlayers는 필수이며 숫자
   maxPlayers: PropTypes.number.isRequired, // maxPlayers는 필수이며 숫자
   isPlaying: PropTypes.string.isRequired, // isPlaying은 필수이며 문자열
   onJoin: PropTypes.func.isRequired, // onJoin은 필수이며 함수
