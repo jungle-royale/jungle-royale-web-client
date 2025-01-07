@@ -16,6 +16,7 @@
     "env-cmd": "^10.1.0",
     "express": "^4.21.2",
     "jwt-decode": "^4.0.0",
+    "lodash": "^4.17.21",
     "loglevel": "^1.9.2",
     "msw": "^2.7.0",
     "prop-types": "^15.8.1",

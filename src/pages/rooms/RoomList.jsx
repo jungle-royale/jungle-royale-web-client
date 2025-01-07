@@ -5,8 +5,10 @@ import useSafeNavigation from "../../hooks/useSafeNavigation";
 import Modal from "../../components/Modal";
 import RoomCard from "../../components/RoomCard";
 // import StompChat from "../../components/StompChat";
+import isEqual from "lodash/isEqual"; // lodash를 사용하는 경우
 import QRcode from "../../utils/QRcode";
 import "./RoomList.css";
+
 
 const RoomList = () => {
   const [rooms, setRooms] = useState([]);
@@ -27,26 +29,36 @@ const RoomList = () => {
   const totalPages = Math.max(1, Math.ceil(rooms.length / itemsPerPage));
 
   useEffect(() => {
+    let previousRooms = [];
     const loadRooms = async () => {
       try {
-        setIsLoading(true);
         const response = await fetchRooms();
-        setRooms(response.data.gameRooms);
-        setUserName(response.data.userInfo.username);
+        const newRooms = response.data.gameRooms;
+        const newUserName = response.data.userInfo.username;
+
+        // 변경 사항이 있는 경우만 업데이트
+        if (!isEqual(previousRooms, newRooms)) {
+          console.log("Update 방 목록");
+          setRooms(newRooms);
+          previousRooms = newRooms;
+        }
+        setUserName(newUserName);
       } catch (error) {
         console.error("방 목록을 불러오는 중 오류 발생:", error);
       } finally {
         setIsLoading(false);
       }
     };
+
+    // 초기 로드
     loadRooms();
 
-    //   // 10초마다 방 목록 업데이트
-    // const interval = setInterval(() => {
-    //   loadRooms();
-    // }, 10000);
+    // 10초마다 방 목록 업데이트
+    const interval = setInterval(() => {
+      loadRooms();
+    }, 10000);
 
-    // return () => clearInterval(interval);
+    return () => clearInterval(interval);
   }, []);
 
   const handleReturn = async() => {
