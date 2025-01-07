@@ -11,6 +11,7 @@ const RoomReady = () => {
   
   const navigate = useNavigate();
 
+  //api 자동 호출
   useEffect(() => {
     const checkRoomAvailability = async () => {
       try {

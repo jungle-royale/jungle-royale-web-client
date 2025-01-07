@@ -7,9 +7,10 @@ import log from 'loglevel';
 
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
-import LoginError from "./pages/login/LoginError"
+import LoginError from "./pages/Failure"
 import RoomList from "./pages/rooms/RoomList";
 import RoomReady from "./pages/rooms/RoomReady";
+import Failure from "./pages/Failure";
 import MyPage from "./pages/mypage/MyPage"
 import GameTemp from "./pages/GameTemp"
 import Header from "./components/Header";
@@ -45,6 +46,7 @@ function App() {
               <Route path="/loginerror" element={<LoginError />} />
               <Route path="/room" element={<RoomList />} />
               <Route path="/room/ready" element={<RoomReady />} />
+              <Route path="/failure" element={<Failure />} /> {/* 입장 실패 페이지 */}
               <Route path="/mypage" element={<MyPage />}/>
               <Route path="/game" element={<GameTemp />}/>
               <Route path="/posts/:id" element={<PostViewer />} /> {/* 동적 경로 */}
