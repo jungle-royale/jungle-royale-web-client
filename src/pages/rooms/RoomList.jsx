@@ -3,9 +3,8 @@ import { useSwipeable } from "react-swipeable";
 import { fetchRooms, returnRoom } from "../../api";
 import useSafeNavigation from "../../hooks/useSafeNavigation";
 import Modal from "../../components/Modal";
-import RoomCreater from "./RoomCreater";
 import RoomCard from "../../components/RoomCard";
-import StompChat from "../../components/StompChat";
+// import StompChat from "../../components/StompChat";
 import QRcode from "../../utils/QRcode";
 import "./RoomList.css";
 
@@ -15,7 +14,6 @@ const RoomList = () => {
   const [isQRCodeOpen, setQRCodeOpen] = useState(false);
   const [qrData, setQRData] = useState("");
   const [roomIdForNavigation, setRoomIdForNavigation] = useState("");
-  const [isRoomCreaterOpen, setRoomCreaterOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const { navigateSafely } = useSafeNavigation();
 
@@ -33,7 +31,6 @@ const RoomList = () => {
       try {
         setIsLoading(true);
         const response = await fetchRooms();
-        console.log(response)
         setRooms(response.data.gameRooms);
         setUserName(response.data.userInfo.username);
       } catch (error) {
@@ -43,6 +40,13 @@ const RoomList = () => {
       }
     };
     loadRooms();
+
+    //   // 10초마다 방 목록 업데이트
+    // const interval = setInterval(() => {
+    //   loadRooms();
+    // }, 10000);
+
+    // return () => clearInterval(interval);
   }, []);
 
   const handleReturn = async() => {
@@ -78,13 +82,12 @@ const RoomList = () => {
       <div className="room-user-info">
         <p>안녕하세요, {userName}님!</p>
         <button onClick={handleReturn}>돌아가기</button>
+        <button className="room-creater-go" onClick={(e) => navigateSafely(e, '/room/create')}>
+          🛠 방 생성
+        </button>
       </div>
       <div className="room-page" {...swipeHandlers}>
         <h1>게임 방 목록</h1>
-        <button className="room-creater-go" onClick={() => setRoomCreaterOpen(true)}>
-          🛠 방 생성
-        </button>
-
         <div className="room-list">
           {isLoading
             ? Array(6).fill(null).map((_, index) => (
@@ -119,7 +122,7 @@ const RoomList = () => {
           <button onClick={handleNextPage}>다음</button>
         </div>
       </div>
-      <StompChat nickname={userName} />
+      {/* <StompChat nickname={userName} /> */}
       <Modal isOpen={isQRCodeOpen} onClose={() => setQRCodeOpen(false)}>
         <QRcode qrdata={qrData} />
         <button
@@ -130,9 +133,6 @@ const RoomList = () => {
         >
           바로가기
         </button>
-      </Modal>
-      <Modal isOpen={isRoomCreaterOpen} onClose={() => setRoomCreaterOpen(false)}>
-        <RoomCreater />
       </Modal>
     </div>
   );

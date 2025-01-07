@@ -2,13 +2,18 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; /* 기본 폰트 설정 - 사용자 OS 및 웹폰트를 고려한 우선순위 */
   line-height: 1.5; /* 텍스트 줄 간격 */
   font-weight: 400; /* 일반 텍스트에 사용되는 기본 두께 설정 */
-  color: #213547; /* 텍스트 색상 - 라이트 모드에서 어두운 색상으로 설정 */
-  background-color: #a9bfc7; /* 배경색 - 라이트 모드에서 밝은 색상으로 변경 */
+  color: #213547; /* 텍스트 색상 */
   font-synthesis: none; /* 자동 글꼴 스타일링 비활성화 (기울임꼴, 굵은 글꼴 등) */
   text-rendering: optimizeLegibility; /* 텍스트 가독성을 최적화하도록 브라우저에 요청 */
   -webkit-font-smoothing: antialiased; /* 웹킷 브라우저의 글꼴 렌더링 부드럽게 처리 */
   -moz-osx-font-smoothing: grayscale; /* macOS 브라우저에서 글꼴 렌더링 최적화 */
+}
 
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 a {
@@ -17,12 +22,3 @@ a {
   text-decoration: inherit;
 }
 
-body {
-  width: 100%;
-  overflow: visible; /* 스크롤바를 추가로 생성하지 않음 */
-}
-
-html {
-  overflow-y: scroll;
-  display: flex;
-}
