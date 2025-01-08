@@ -73,6 +73,7 @@ export const fetchRooms = async () => {
   return apiClient.get("/api/rooms/list");
 };
 
+
 //방 입장 가능 여부 확인 api
 export const joinRoomAvailability = async (roomId) => {
   const response = await apiClient.post(`/api/rooms/${roomId}/join`, {});
