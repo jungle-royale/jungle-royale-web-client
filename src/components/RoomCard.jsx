@@ -3,16 +3,6 @@ import PropTypes from "prop-types";
 import Skeleton from "./Skeleton.jsx";
 
 const RoomCard = ({ roomName, minPlayers, maxPlayers, isPlaying, onJoin, isLoading, isPlaceholder }) => {
-
-    // 상태 로그 추가
-    console.log("RoomCard Rendered:", {
-      roomName,
-      minPlayers,
-      maxPlayers,
-      isPlaying,
-      isLoading,
-      isPlaceholder,
-    });
   // Skeleton UI 처리
   if (isLoading) {
     return (

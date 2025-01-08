@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSwipeable } from "react-swipeable";
 import { fetchRooms, returnRoom } from "../../api";
 import useSafeNavigation from "../../hooks/useSafeNavigation";
@@ -10,6 +10,7 @@ import "./RoomList.css";
 
 const RoomList = () => {
   const [rooms, setRooms] = useState([]);
+  const roomsRef = useRef([]); // rooms 데이터를 useRef로 관리
   const [userName, setUserName] = useState("");
   const [isLoading, setIsLoading] = useState(true); // 서버 통신 상태 추가
   const [isQRCodeOpen, setQRCodeOpen] = useState(false);
@@ -40,6 +41,7 @@ const RoomList = () => {
     : getPaddedRooms(currentRooms, itemsPerPage);
 
   useEffect(() => {
+    
     const loadRooms = async () => {
       setIsLoading(true); // 로딩 상태 시작
       try {
@@ -47,8 +49,14 @@ const RoomList = () => {
         const newRooms = response.data.gameRooms;
         const newUserName = response.data.userInfo.username;
 
-        setRooms((prevRooms) => (!isEqual(prevRooms, newRooms) ? newRooms : prevRooms));
         setUserName(newUserName);
+
+        // 이전 rooms와 비교하여 변경된 경우에만 업데이트
+        if (!isEqual(roomsRef.current, newRooms)) {
+          roomsRef.current = newRooms; // useRef에 새 데이터 저장
+          setRooms(newRooms); // 렌더링 상태 업데이트
+        }
+
       } catch (error) {
         console.error("방 목록을 불러오는 중 오류 발생:", error);
       } finally {
@@ -57,8 +65,8 @@ const RoomList = () => {
     };
 
     loadRooms();
-    const interval = setInterval(loadRooms, 10000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(loadRooms, 500000);
+    // return () => clearInterval(interval);
   }, []);
 
   const handleReturn = async () => {
