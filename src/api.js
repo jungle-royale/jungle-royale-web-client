@@ -69,9 +69,27 @@ export const createRoom = async (roomDetails) => {
 };
 
 //방 list 생성 api(list + player 객체)
+// export const fetchRooms = async () => {
+//   return apiClient.get("/api/rooms/list");
+// };
 export const fetchRooms = async () => {
-  return apiClient.get("/api/rooms/list");
+  // 서버가 없을 때 임의의 데이터 반환
+  const dummyRooms = Array.from({ length: 10 }, (_, index) => ({
+    id: `room-${index + 1}`,
+    title: `Dummy Room ${index + 1}`,
+    minPlayers: Math.floor(Math.random() * 5) + 1, // 최소 1 ~ 최대 5
+    maxPlayers: Math.floor(Math.random() * 10) + 6, // 최소 6 ~ 최대 15
+    status: index % 2 === 0 ? "WAITING" : "PLAYING", // 대기 중 또는 플레이 중
+  }));
+
+  return {
+    data: {
+      gameRooms: dummyRooms,
+      userInfo: { username: "TestUser" }, // 임의 사용자 정보
+    },
+  };
 };
+
 
 //방 입장 가능 여부 확인 api
 export const joinRoomAvailability = async (roomId) => {
