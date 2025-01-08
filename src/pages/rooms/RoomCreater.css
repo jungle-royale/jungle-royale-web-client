@@ -1,19 +1,26 @@
 .room-creater-container {
-  width: 100%;
-  max-width: 900px; /* Modal의 max-width보다 약간 작게 설정 */
-  height: 90%; /* 모달의 높이와 동일하게 설정 */
-  max-height: 700px; /* Modal의 max-height와 일치 */
+  height: 80%;
+  width: 80%; /* 원하는 너비 설정 */
   background-color: #ffffff; /* 배경색 */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px; /* Modal의 padding과 동일하게 설정 */
-  border-radius: 8px; /* Modal의 border-radius와 동일 */
-  box-sizing: border-box; /* 패딩 포함 크기 계산 */
-  overflow: hidden; /* 내용이 영역 밖으로 나가지 않도록 */
+  position: absolute; /* 절대 위치 지정 */
+  top: 50%; /* 화면 세로 중앙 */
+  left: 50%; /* 화면 가로 중앙 */
+  transform: translate(-50%, -50%); /* 중앙 정렬 */
+  overflow-y: auto; /* 세로 스크롤 표시 */
+  overflow-x: hidden; /* 가로 스크롤 제거 */
   margin: 0 auto;
+  padding: 20px; /* 내부 여백 */
+  box-sizing: border-box; /* 패딩 포함 크기 계산 */
+}
+
+
+.room-input {
+  width: 50%;
 }
 
 .room-input input,
@@ -26,7 +33,6 @@
   font-size: 1rem; /* 폰트 크기 */
   box-sizing: border-box; /* 패딩 포함 크기 계산 */
   outline: none; /* 포커스 시 외곽선 제거 */
-  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* 포커스 시 효과 */
 }
 
 .room-input input:focus,
@@ -43,7 +49,26 @@
   font-weight: 500; /* 라벨 강조 */
 }
 
-.room-input button {
+.room-input-valid {
+  border-color: blue !important; /* 올바른 입력일 때 테두리를 파란색으로 변경 */
+  box-shadow: 0 0 8px rgba(0, 0, 255, 0.5); /* 파란색 그림자 효과 */
+}
+
+.room-input-error {
+  border-color: red !important; /* 입력 필드 테두리를 빨간색으로 변경 */
+  box-shadow: 0 0 8px rgba(255, 0, 0, 0.5); /* 빨간색 그림자 효과 */
+}
+
+.room-error-message {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: -15px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+
+.room-create-button {
   width: 100%;
   max-width: 200px; /* 버튼 크기 제한 */
   padding: 12px; /* 버튼 크기 조정 */

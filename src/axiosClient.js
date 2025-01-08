@@ -32,7 +32,6 @@ const refreshAccessToken = async () => {
   return response.data.jwtToken;
 };
 
-
 // 요청 인터셉터
 apiClient.interceptors.request.use(
   (config) => {

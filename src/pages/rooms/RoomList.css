@@ -1,26 +1,35 @@
 .room-container {
-  position: fixed; /* 고정 위치 설정 */
-  top: 70px; /* header 높이 */
+  position: relative; /* 부모(main)에 상대적으로 배치 */
+  top: 0;
   left: 0;
-  width: 100%; /* 화면 너비 채우기 */
-  height: 100%; /* 화면 높이 채우기 */
-  min-height: unset; /* min-height 속성 제거 */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .room-user-info {
-  position: static;
+  position: relative;
   width: 100%;
-  height: 40px;
+  height: 10%;
   background-color: #f8f9fa;
   display: flex; /* Flexbox 사용 */
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
 }
 
+.room-user-info button{
+  right: 0px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 .room-page {
   width: 100%; /* 화면 너비에 맞게 설정 */
-  max-width: 1400px; /* 최대 너비 제한 */
-  height: 600px;
+  height: 90%;
   background-color: #d9d9d9; /* 배경색 */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
   display: flex;
@@ -31,9 +40,7 @@
 }
 
 .room-list {
-  width: 90%; /* TV 화면 내 여백 확보 */
-  max-width: 1100px; /* 최대 너비 설정 */
-  height: auto; /* 높이 유동적 */
+  height: 90%; /* 높이 유동적 */
   display: flex;
   flex-direction: column; /* 세로 정렬 */
   gap: 20px; /* 카드 간 간격 */
@@ -46,6 +53,10 @@
   overflow-y: auto; /* 세로 스크롤 활성화 */
   overflow-x: hidden; /* 가로 스크롤 제거 */
 }
+/* 스크롤바를 숨기기 위한 스타일 */
+.room-list::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨김 */
+}
 
 .room-list-container {
   display: flex;
@@ -56,6 +67,10 @@
 }
 
 .room-creater-go {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
 }
 
@@ -87,7 +102,6 @@
   gap: 10px;
   margin-top: 10px;
   margin-bottom: 10px; /* 아래쪽 마진 추가 */
-
 }
 
 .pagination-controls button {
@@ -108,146 +122,4 @@
 .pagination-controls span {
   font-size: 1rem;
   font-weight: bold;
-}
-
-
-/* 모바일에서만 적용 */
-@media (max-width: 768px) {
-  .room-container {
-    display: flex;
-    flex-direction: column;
-    height: calc(100% - 70px); /* 헤더 제외한 전체 높이 */
-  }
-
-  .room-page {
-    height: 450px;
-    width: 100%;
-    background-color: #d9d9d9;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    overflow: hidden;
-    border-bottom: 1px solid #d9d9d9;
-    
-  }
-
-  .room-page h1 {
-    margin-bottom: 10px;
-    font-size: 1.2rem;
-    text-align: center;
-  }
-
-  .room-list {
-    width: 100%;
-    height: auto; /* 높이 유동적 */
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 15px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 10px;
-  }
-
-  .room-card {
-    width: 95%; /* 가로로 꽉 채움 */
-    max-width: 600px; /* 최대 너비 제한 */
-    padding: 10px 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* 요소를 좌우로 배치 */
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #f7f7f7;
-  }
-
-  .room-card .indicator {
-    flex: 0 0 auto; /* 고정 크기 */
-    width: 10px; /* 크기 축소 */
-    height: 10px; /* 크기 축소 */
-    border-radius: 50%;
-    margin-right: 10px; /* 오른쪽 간격 */
-  }
-
-  .room-card .room-info {
-    display: flex;
-    flex-direction: column; /* 제목과 인원을 세로 정렬 */
-    gap: 5px;
-    flex: 1; /* 가로 공간 채움 */
-  }
-
-  .room-card h2 {
-    font-size: 1rem;
-    margin: 0;
-    text-align: left; /* 왼쪽 정렬 */
-    width: 50%; /* 텍스트가 전체 너비를 차지하도록 설정 */
-  }
-  
-  .room-card p {
-    font-size: 0.85rem;
-    margin: 0;
-    color: #666; /* 보조 텍스트 색상 */
-  }
-
-  .join-button {
-    width: auto;
-    padding: 8px 12px;
-    font-size: 0.85rem;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-  }
-
-  .join-button:hover {
-    background-color: #0056b3;
-  }
-
-  .join-button:disabled {
-    background-color: #ccc;
-    color: #666;
-    cursor: not-allowed;
-  }
-
-  .room-creater-go {
-    position: absolute !important; /* 부모 요소 기준으로 절대 위치 지정 */
-    top: 45px !important; /* 원하는 상단 위치 */
-    right: 10px !important; /* 부모 요소의 오른쪽 끝에 배치 */
-    width: 40px !important; /* 아이콘 크기 */
-    height: 40px !important; /* 동일한 크기 */
-    cursor: pointer;
-  }
-  
-  .modal-content {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .modal-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .modal-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .modal-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
 }
