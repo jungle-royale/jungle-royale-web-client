@@ -2,6 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLoginContext } from "../../contexts/LoginContext";
 import { joinRoomAvailability } from "../../api"; // 방 입장 가능 여부 API
+import "./RoomReady.css"
 
 const RoomReady = () => {
   const [searchParams] = useSearchParams();
@@ -54,7 +55,7 @@ const RoomReady = () => {
   // 로딩 상태 중 대기 화면 유지
   if (loading) {
     return (
-      <div>
+      <div className="room-ready-main">
         <h1>대기 페이지</h1>
         <p>{roomId}번 방 입장 여부를 확인 중입니다...</p>
       </div>
@@ -64,7 +65,7 @@ const RoomReady = () => {
   // 에러 발생 시 에러 메시지 표시
   if (error) {
     return (
-      <div>
+      <div className="room-ready-main">
         <h1>에러 발생</h1>
         <p>{error}</p>
         <button onClick={() => (window.location.href = "/room")}>방 목록으로 돌아가기</button>
@@ -74,7 +75,7 @@ const RoomReady = () => {
 
   // 성공적으로 처리되면 대기 화면 유지 (일반적으로 여기까지는 도달하지 않음)
   return (
-    <div>
+    <div className="room-ready-main">
       <h1>대기 페이지</h1>
       <p>게임으로 이동 중입니다...</p>
     </div>

@@ -92,6 +92,7 @@ const RoomCreater = () => {
       log.info("방 생성 성공:", response);
       const { roomId, clientId } = response.data;
       alert("방이 성공적으로 생성되었습니다!");
+      window.history.pushState({ from: "RoomCreater" }, "", "/room");
       window.location.href = `http://game.eternalsnowman.com/room?roomId=${roomId}&clientId=${clientId}`;
     } catch (error) {
       console.error("방 생성 중 오류 발생:", error.response?.data || error.message);
@@ -102,61 +103,63 @@ const RoomCreater = () => {
   };
 
   return (
-    <div className='room-creater-container'>
-      <h1>방 만들기</h1>
-        <div className='room-input'>
-          <Input
-            label="방 이름"
-            type="text"
-            value={roomName}
-            onChange={(e) => setRoomName(e.target.value)}
-            placeholder="방 이름을 입력하세요(미입력시 랜덤)"
-          />
-          <Input
-            label="최소 인원"
-            type="number"
-            value={minPlayers}
-            onChange={(e) => handleChange("minPlayers", e.target.value)}
-            placeholder="최소 인원을 입력하세요(2~100)"
-            className={`room-input ${
-              errors.minPlayers ? "room-input-error" : minPlayers ? "room-input-valid" : ""
-            }`}
-          />
-          {errors.minPlayers && <div className="room-error-message">{errors.minPlayers}</div>}
+    <div className='room-creater-main'>
+      <div className='room-creater-container'>
+        <h1>방 만들기</h1>
+          <div className='room-input'>
+            <Input
+              label="방 이름"
+              type="text"
+              value={roomName}
+              onChange={(e) => setRoomName(e.target.value)}
+              placeholder="방 이름을 입력하세요(미입력시 랜덤)"
+            />
+            <Input
+              label="최소 인원"
+              type="number"
+              value={minPlayers}
+              onChange={(e) => handleChange("minPlayers", e.target.value)}
+              placeholder="최소 인원을 입력하세요(2~100)"
+              className={`room-input ${
+                errors.minPlayers ? "room-input-error" : minPlayers ? "room-input-valid" : ""
+              }`}
+            />
+            {errors.minPlayers && <div className="room-error-message">{errors.minPlayers}</div>}
 
-          <Input
-            label="최대 인원"
-            type="number"
-            value={maxPlayers}
-            onChange={(e) => handleChange("maxPlayers", e.target.value)}
-            placeholder="최대 인원을 입력하세요(2~100)"
-            className={`room-input ${
-              errors.maxPlayers ? "room-input-error" : maxPlayers ? "room-input-valid" : ""
-            }`}          />
-          {errors.maxPlayers && <div className="room-error-message">{errors.maxPlayers}</div>}
+            <Input
+              label="최대 인원"
+              type="number"
+              value={maxPlayers}
+              onChange={(e) => handleChange("maxPlayers", e.target.value)}
+              placeholder="최대 인원을 입력하세요(2~100)"
+              className={`room-input ${
+                errors.maxPlayers ? "room-input-error" : maxPlayers ? "room-input-valid" : ""
+              }`}          />
+            {errors.maxPlayers && <div className="room-error-message">{errors.maxPlayers}</div>}
 
-          <Input
-            label="게임 소요 시간 (분)"
-            type="number"
-            value={maxGameTime}
-            onChange={(e) => handleChange("maxGameTime", e.target.value)}
-            placeholder="게임 소요 시간을 입력하세요(1~10)"
-            className={`room-input ${
-              errors.maxGameTime ? "room-input-error" : maxGameTime ? "room-input-valid" : ""
-            }`}          />
-          {errors.maxGameTime && <div className="room-error-message">{errors.maxGameTime}</div>}
+            <Input
+              label="게임 소요 시간 (분)"
+              type="number"
+              value={maxGameTime}
+              onChange={(e) => handleChange("maxGameTime", e.target.value)}
+              placeholder="게임 소요 시간을 입력하세요(1~10)"
+              className={`room-input ${
+                errors.maxGameTime ? "room-input-error" : maxGameTime ? "room-input-valid" : ""
+              }`}          />
+            {errors.maxGameTime && <div className="room-error-message">{errors.maxGameTime}</div>}
+        </div>
+        <button
+          className='room-create-button'
+          onClick={() => {
+              if (!isLocked) {
+                lock();
+                handleCreateRoom();
+              }
+            }} disabled={isLocked}
+          >
+          {isLocked ? "방 생성" : "방 생성"}
+        </button>
       </div>
-      <button
-        className='room-create-button'
-        onClick={() => {
-            if (!isLocked) {
-              lock();
-              handleCreateRoom();
-            }
-          }} disabled={isLocked}
-        >
-        {isLocked ? "생성 중..." : "방 생성"}
-      </button>
     </div>
   );
 };

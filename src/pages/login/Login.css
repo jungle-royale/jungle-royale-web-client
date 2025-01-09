@@ -1,6 +1,7 @@
 .login-container {
   justify-content: center;
   align-items: center;
+  margin-top: 35px;
   min-height: 100vh; /* 화면 전체 높이 */
   background-color: #f7f9fc; /* 배경색 */
 }

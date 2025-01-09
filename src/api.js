@@ -72,6 +72,39 @@ export const createRoom = async (roomDetails) => {
 export const fetchRooms = async () => {
   return apiClient.get("/api/rooms/list");
 };
+// 방 목록 가져오기 (임시 데이터 사용)
+// export const fetchRooms = async () => {
+  // 임시 데이터 생성
+//   const totalRooms = 15; // 총 방 개수
+//   const dummyRooms = Array.from({ length: totalRooms }, (_, index) => ({
+//     id: index + 1,
+//     title: `임시 방 ${index + 1}`,
+//     minPlayers: 2, // 최소 플레이어 수
+//     maxPlayers: 10, // 최대 플레이어 수
+//     currentPlayers: Math.floor(Math.random() * 10), // 현재 플레이어 수 (0 ~ 9)
+//     status: index % 2 === 0 ? "playing" : "WAITING", // 방 상태 (게임 중 or 대기 중)
+//     createdAt: new Date().toISOString(), // 생성 시간
+//   }));
+
+//   // 들어갈 수 있는 방의 상태를 "waiting"으로 설정하고 currentPlayers가 minPlayers보다 적은 방으로 필터링
+//   const updatedRooms = dummyRooms.map((room) => ({
+//     ...room,
+//     status: room.currentPlayers < room.minPlayers ? "waiting" : room.status,
+//   }));
+
+//   const dummyUserInfo = {
+//     username: "테스트유저", // 사용자 이름
+//   };
+
+//   // 임시 데이터 반환
+//   return {
+//     data: {
+//       gameRooms: updatedRooms,
+//       userInfo: dummyUserInfo,
+//     },
+//   };
+// };
+
 
 
 //방 입장 가능 여부 확인 api
@@ -109,11 +142,36 @@ export const fetchPosts = async ({ page = 1, limit = 10 }) => {
     skipAuth: true, // 인터셉터에서 인증 건너뛰기
   });
 };
+// 게시물 목록 가져오기 (임시 데이터 사용)
+// export const fetchPosts = async ({ page = 1, limit = 10 }) => {
+  // 임시 데이터 생성
+//   const totalPosts = 15; // 총 게시물 수
+//   const dummyPosts = Array.from({ length: totalPosts }, (_, index) => ({
+//     id: index + 1,
+//     title: `임시 게시물 ${index + 1}`,
+//     username: `사용자${index + 1}`,
+//     createdAt: new Date().toISOString(),
+//   }));
+
+//   // 페이지네이션 로직
+//   const startIndex = (page - 1) * limit;
+//   const endIndex = startIndex + limit;
+//   const paginatedPosts = dummyPosts.slice(startIndex, endIndex);
+
+//   // 임시 데이터 반환
+//   return {
+//     data: {
+//       data: paginatedPosts,
+//       total: totalPosts,
+//     },
+//   };
+// };
+
 
 // 게시물 하나 가져오기 api
 export const getPost = async (postId) => {
   return apiClient.get(`/api/posts/${postId}`, {
-    skipAuth: true, // 인터셉터에서 인증 건너뛰기
+    // skipAuth: true, // 인터셉터에서 인증 건너뛰기
   });
 };
 

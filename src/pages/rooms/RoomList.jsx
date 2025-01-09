@@ -90,48 +90,75 @@ const RoomList = () => {
   });
 
   return (
-    <div className="room-container">
-      <div className="room-user-info">
-        <p>안녕하세요, {userName}님!</p>
-        <button onClick={handleReturn}>돌아가기</button>
-        <button className="room-creater-go" onClick={(e) => navigateSafely(e, "/room/create")}>
-          🛠 방 생성
-        </button>
-      </div>
-      <div className="room-page" {...swipeHandlers}>
-        <h1>게임 방 목록</h1>
-        <div className="room-wrapper">
-          <div className="room-list">
-            {paddedRooms.map((room) =>
-              room.isLoading ? (
-                <RoomCard key={room.id} isLoading={true} />
-              ) : room.isPlaceholder ? (
-                <RoomCard key={room.id} isPlaceholder={true} />
-              ) : (
-                <RoomCard
-                  key={room.id}
-                  roomName={room.title}
-                  minPlayers={room.minPlayers}
-                  maxPlayers={room.maxPlayers}
-                  isPlaying={room.status}
-                  onJoin={() => handleJoinRoom(room)}
-                />
-              )
-            )}
+    <div className="room-main">
+      <div className="room-container">
+        <div className="room-user-info">
+          <p>{userName}님</p>
+          <div className="room-user-info-buttons">
+            <button
+              data-tooltip="이 버튼을 클릭하면 이전 페이지로 돌아갑니다." 
+              onClick={handleReturn}
+            >
+              돌아가기
+            </button>
+            <button
+              onClick={(e) => navigateSafely(e, "/room/create")}
+              >
+              🛠 방 생성
+            </button>
           </div>
         </div>
+        <div className="room-wrap">
+          <div className="room-page" {...swipeHandlers}>
+            {/* <div className="room-wrapper"> */}
+              <div className="room-list">
+                {paddedRooms.map((room) =>
+                  room.isLoading ? (
+                    <RoomCard key={room.id} isLoading={true} />
+                  ) : room.isPlaceholder ? (
+                    <RoomCard key={room.id} isPlaceholder={true} />
+                  ) : (
+                    <RoomCard
+                      key={room.id}
+                      roomName={room.title}
+                      minPlayers={room.minPlayers}
+                      maxPlayers={room.maxPlayers}
+                      isPlaying={room.status}
+                      onJoin={() => handleJoinRoom(room)}
+                    />
+                  )
+                )}
+              {/* </div> */}
+            </div>
+          </div>
+        </div>
+        <Modal isOpen={isQRCodeOpen} onClose={() => setQRCodeOpen(false)}>
+          <div className="modal-component">
+            <div className="qr-code">
+              <QRcode qrdata={qrData} />
+            </div>
+            <div className="modal-buttons">
+              <button
+                className="modal-button"
+                onClick={(event) =>
+                  navigateSafely(
+                    event,
+                    `/room/ready?roomId=${roomIdForNavigation}`
+                  )
+                }
+              >
+                바로가기
+              </button>
+              <button
+                className="modal-back-button"
+                onClick={() => setQRCodeOpen(false)}
+              >
+                뒤로가기
+              </button>
+            </div>
+          </div>
+        </Modal>
       </div>
-      <Modal isOpen={isQRCodeOpen} onClose={() => setQRCodeOpen(false)}>
-        <QRcode qrdata={qrData} />
-        <button
-          onClick={(event) =>
-            navigateSafely(event, `/room/ready?roomId=${roomIdForNavigation}`)
-          }
-          className="modal-button"
-        >
-          바로가기
-        </button>
-      </Modal>
     </div>
   );
 };

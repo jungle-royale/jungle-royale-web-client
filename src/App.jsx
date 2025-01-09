@@ -13,7 +13,6 @@ import RoomList from "./pages/rooms/RoomList";
 import RoomReady from "./pages/rooms/RoomReady";
 import Failure from "./pages/Failure";
 import MyPage from "./pages/mypage/MyPage"
-import GameTemp from "./pages/GameTemp"
 import ScrollToTop from "./utils/ScrollToTop";
 import PostViewer from "./pages/posts/PostViewer";
 import PostCreator from "./pages/posts/PostCreator";
@@ -51,7 +50,6 @@ function App() {
                 <Route path="/room/ready" element={<RoomReady />} />
                 <Route path="/failure" element={<Failure />} /> {/* 입장 실패 페이지 */}
                 <Route path="/mypage" element={<MyPage />}/>
-                <Route path="/game" element={<GameTemp />}/>
                 <Route path="/posts/:id" element={<PostViewer />} /> {/* 동적 경로 */}
                 <Route path="/post-creator" element={<PostCreator />}/>
                 <Route path="/posts/:id/update" element={<PostEditor />}/>
