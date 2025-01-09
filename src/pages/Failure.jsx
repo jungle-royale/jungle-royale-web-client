@@ -1,4 +1,4 @@
-// import "./Failure.css";
+import "./Failure.css";
 import { useSearchParams } from "react-router-dom";
 import useSafeNavigation from "../hooks/useSafeNavigation";
 

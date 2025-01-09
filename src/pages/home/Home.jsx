@@ -94,22 +94,25 @@ const Home = () => {
     <div>
       <Snowfall /> {/* 눈 효과 추가 */}
       <SendAuthCode /> {/* 인증 코드 처리 컴포넌트 */}
-
-      <div className="home-image-container">
-        <ActionButton
-          handleClick={handleButtonClick}
-          label={isLogin ? "GAME START" : "LOGIN"}
-        />
-        {!isLogin && (
-          <ActionButton
-            handleClick={handleLoginGuest}
-            label="비회원 로그인"
-          />
-        )}
+      <div className="home-main">
+        <div className="home-image-container">
+          <div className="home-button-wrap">
+            <ActionButton
+              handleClick={handleButtonClick}
+              label={isLogin ? "GAME START" : "LOGIN"}
+            />
+            {!isLogin && (
+              <ActionButton
+                handleClick={handleLoginGuest}
+                label="비회원 로그인"
+              />
+            )}
+          </div>
+        </div>
+        <div className="home-post-container">
+          <PostBox posts={posts} /> {/* 게시물 */}
+        </div>
       </div>
-
-
-      <PostBox posts={posts} /> {/* 게시물 */}
     </div>
   );
 };

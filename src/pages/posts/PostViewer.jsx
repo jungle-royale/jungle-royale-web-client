@@ -6,32 +6,29 @@ import "./PostViewer.css";
 import useJwtField from "../../hooks/useJwtField.jsx";
 import log from 'loglevel';
 
-// import { useLoginContext } from "../contexts/LoginContext";
-
 const PostViewer = () => {
   const { id } = useParams();
   const { navigateSafely } = useSafeNavigation();
   const [post, setPost] = useState(null);
   const [isOwner, setIsOwner] = useState(false);
 
-  // const { jwtToken } = useLoginContext();
   const jwtToken = localStorage.getItem("jwt_token");
   const sub = useJwtField(jwtToken, "sub");
 
   useEffect(() => {
-    if (sub === null) {
-      log.info("sub 값이 null이므로 fetchPost를 호출하지 않음");
-      return;
-    }
-
     const fetchPost = async () => {
       try {
         const response = await getPost(id);
         log.info("Fetched Post Data:", response.data);
-        log.info("Decoded sub from JWT:", sub);
 
         setPost(response.data);
-        setIsOwner(response.data.writerId === parseInt(sub, 10));
+        
+        // JWT가 없거나, JWT의 sub와 writerId가 다르면 isOwner를 false로 설정
+        if (sub && response.data.writerId === parseInt(sub, 10)) {
+          setIsOwner(true);
+        } else {
+          setIsOwner(false);
+        }
       } catch (error) {
         console.error("게시물을 불러오는 중 오류 발생:", error.message);
       }

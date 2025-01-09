@@ -1,58 +1,86 @@
-.room-container {
-  position: relative; /* 부모(main)에 상대적으로 배치 */
-  top: 0;
-  left: 0;
+.room-main {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* 수직 가운데 정렬 */
+}
+.room-container {
+  width: 100%;
+  max-width: 800px;
+  height: 88%;
+  max-height: 515px;
+  background: linear-gradient(135deg, #d8ecf3, #b3d9f7); /* 연한 하늘색 그라데이션 */
 }
 
 .room-user-info {
-  position: relative;
   width: 100%;
   height: 10%;
-  background-color: #f8f9fa;
+  background: linear-gradient(135deg, #ffffff, #e6f7ff); /* 흰색에서 파란빛으로 */
+  color: #004080;
   display: flex; /* Flexbox 사용 */
-  justify-content: center; /* 수평 가운데 정렬 */
+  justify-content: space-between; /* 양쪽 끝으로 정렬 */
+  padding: 0 10px; /* 좌우 여백 추가 */
   align-items: center; /* 수직 가운데 정렬 */
+  font-size: 1rem;
+  border-bottom: 2px solid #b3d9f7; /* 파란 테두리 */
 }
 
-.room-user-info button{
-  right: 0px;
-  background-color: #007bff;
+.room-user-info-buttons {
+  display: flex;
+  gap: 8px; /* 버튼 간격 */
+}
+
+.room-user-info button {
+  margin-left: 10px;
+  padding: 8px 16px;
+  background-color: #82cfff; /* 부드러운 파란색 */
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 20px; /* 둥근 버튼 */
   cursor: pointer;
+  font-family: 'Arial', sans-serif;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 부드러운 그림자 */
+}
+
+.room-user-info button:hover {
+  background-color: #5abaff; /* 더 진한 파란색 */
+  transform: scale(1.05); /* 확대 효과 */
+}
+
+.room-user-info button:active {
+  background-color: #4299e6; /* 클릭 시 진한 파란색 */
+  transform: scale(0.95); /* 눌림 효과 */
+}
+/**************************************************************************/
+.room-wrap{
+  width: 100%;
+  height: 90%; /* 100%에서 30px을 뺀 높이 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .room-page {
-  width: 100%; /* 화면 너비에 맞게 설정 */
-  height: 90%;
-  background-color: #d9d9d9; /* 배경색 */
+  width: 90%; /* 화면 너비에 맞게 설정 */
+  height: 95%;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* 위쪽에서부터 정렬 */
-  align-items: center;
+  flex-direction: column; /* 세로 정렬 */
+  /* 수직 중앙 정렬 */
+  /* justify-content: center;  */
+  align-items: center; /* 수평 중앙 정렬 */
   overflow: hidden; /* 내용이 영역 밖으로 나가지 않도록 */
-}
-
-.room-page h1{
-  margin: 0;
-  padding: 10px 0; /* 상하 패딩 추가 */
-  font-size: 1.5rem;
-  text-align: center;
+  background: linear-gradient(135deg, #d8ecf3, #b3d9f7); /* 연한 하늘색 그라데이션 */
+  color: #004080; /* 차분한 파란색 텍스트 */
 }
 
 .room-wrapper {
-  width: 80%; /* 부모 요소 너비를 채움 */
-  height: 90%;
-  display: flex;
-  justify-content: center; /* 가운데 정렬 */
-  align-items: center; /* 수직 가운데 정렬 */
-  margin-bottom: 10px;
+  width: 80%; 
+  height: calc(100%-50px);
+  align-items: center;
 }
 
 .room-list {
@@ -61,23 +89,14 @@
   display: flex;
   flex-direction: column; /* 세로 정렬 */
   gap: 10px; /* 카드 간 간격 */
-  background-color: #ffffff; /* 배경색 */
+  background-color: #f0f8ff; /* 아주 연한 파란색 */
   border-radius: 8px; /* 모서리 둥글게 */
   box-shadow: inset 0px 2px 6px rgba(0, 0, 0, 0.1); /* 내부 그림자 추가 */
   justify-content: space-between; /* 간격 균등 분배 */
   align-items: center; /* 수평 가운데 정렬 */
-  overflow: hidden; /* 세로 스크롤 허용 */
 }
 
-.room-creater-go {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.modal-button {
+/* .modal-button {
   margin: 20px;
   padding: 10px 20px;
   font-size: 1rem;
@@ -96,33 +115,92 @@
 .modal-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+} */
+
+
+/* QR 코드 스타일 */
+.modal-content .qr-code {
+  margin: 15px 0; /* 상하 여백 */
+  background: none; /* 배경 제거 */
+  padding: 0; /* 내부 여백 제거 */
+  box-shadow: none; /* 그림자 제거 */
+  transform: scale(0.9); /* 크기 약간 축소 */
 }
 
-.pagination-controls {
+/* 버튼 컨테이너 */
+.modal-buttons {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px; /* 아래쪽 마진 추가 */
+  gap: 20px; /* 버튼 간 간격 */
+  margin-top: 15px; /* 버튼 그룹 상단 여백 */
 }
 
-.pagination-controls button {
-  padding: 5px 10px;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.85rem; /* 폰트 크기 */
-}
-
-.pagination-controls button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.pagination-controls span {
+/* 공통 버튼 스타일 */
+.modal-button,
+.modal-back-button {
+  background: linear-gradient(135deg, #82cfff, #5abaff); /* 밝은 파란색 그라데이션 */
+  color: white; /* 텍스트 색상 */
   font-size: 1rem;
   font-weight: bold;
+  padding: 10px 20px; /* 버튼 크기 조정 */
+  border: none;
+  border-radius: 20px; /* 둥근 버튼 */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* 버튼 그림자 */
+}
+
+/* 바로가기 버튼 */
+.modal-button:hover {
+  background: linear-gradient(135deg, #5abaff, #4299e6); /* 호버 시 색상 변경 */
+  transform: translateY(-2px); /* 살짝 올라감 */
+}
+
+.modal-button:active {
+  background: linear-gradient(135deg, #4299e6, #356ac3); /* 클릭 시 더 진한 파란색 */
+  transform: translateY(1px); /* 눌림 효과 */
+}
+
+/* 뒤로가기 버튼 */
+.modal-back-button {
+  background: linear-gradient(135deg, #ffd1a9, #ffab76); /* 따뜻한 살구색 그라데이션 */
+}
+
+.modal-back-button:hover {
+  background: linear-gradient(135deg, #ffab76, #ff8c52); /* 더 진한 살구색 */
+  transform: translateY(-2px);
+}
+
+.modal-back-button:active {
+  background: linear-gradient(135deg, #e68050, #d66a3b); /* 클릭 시 어두운 살구색 */
+  transform: translateY(1px);
+}
+
+/* 닫기 버튼 */
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #004080; /* 진한 파란색 */
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+  color: #5abaff; /* 밝은 파란색 */
+}
+
+/* 페이드 인 애니메이션 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

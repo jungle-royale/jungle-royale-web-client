@@ -1,54 +1,55 @@
-/* 게시판 컨테이너 */
+.post-container-main {
+  width: 100%;
+  height: auto; /* 높이를 부모에 맞추지 않음 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  background-color: rgba(255, 255, 255, 0.8); /* 투명도 80% */
+}
+
 .post-container {
-  position: relative;
-  margin: 0 auto;
-  width: 90%;
-  height: 80%;
+  width: 100%;
+  max-width: 1200px;
+  height: auto; /* 부모 높이에 맞추지 않고 자동 */
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 10px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-  overflow-y: auto;
-  padding: 20px;
-  transition: top 0.3s ease-in-out;
-  top: 100%; /* 화면 아래 */
+  overflow: hidden; /* 스크롤 제거 */
+  margin: 10px auto; /* 가운데 정렬 */
 }
 
-/* 스크롤로 고정 */
-.post-container.sticky {
-  position: fixed;
-  top: 10%; /* 화면 중앙으로 고정 */
-  left: 50%;
-  transform: translateX(-50%);
-  height: 80%;
-  z-index: 1000;
-}
-
-/* 스크롤 스타일 */
-.post-container::-webkit-scrollbar {
-  width: 10px;
-}
-
-.post-container::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 5px;
-}
-
-.post-container::-webkit-scrollbar-thumb:hover {
-  background: #999;
-}
-/*************************************/
 /* 제목 스타일 */
-.post-container h1,
-.post-container h3 {
+.post-container-header h1 {
+  text-align: center;
+}
+.post-container-header h3 {
   text-align: center;
   margin-bottom: 20px;
 }
 
+.post-container-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 가운데 정렬 */
+  justify-content: space-between; /* 상하 공간 분배 */
+}
+
+.post-container-header h1,
+.post-container-header h3 {
+  margin: 0;
+}
+
+.post-write-button {
+  align-self: flex-end; /* 버튼을 오른쪽으로 정렬 */
+  margin-right: 10px;
+  margin-bottom: 10px;
+  margin-top: auto; /* 아래쪽에 간격 확보 */
+}
+
+
 /* 글쓰기 버튼 */
 .post-write-button {
-  position: absolute;
-  top: 10px;
-  left: 10px;
   background-color: #67b3ff;
   color: white;
   border: none;
@@ -60,29 +61,7 @@
 
 .post-write-button:hover {
   background: #2b44ff;
-}
-
-.go-home-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #67b3ff;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.go-home-button:hover {
-  background: #2b44ff;
-}
-/* 리스트 컨테이너 */
-.post-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  transform: scale(1.05); /* 클릭 시 시각적 효과 */
 }
 
 /* 헤더 스타일 */
@@ -93,6 +72,7 @@
   background-color: #f1f1f1;
   padding: 10px;
   border-bottom: 1px solid #ccc;
+  gap: 10px;
 }
 
 .post-header-num {
@@ -113,6 +93,7 @@
   border-bottom: 1px solid #eaeaea;
   background-color: #ffffff;
   gap: 10px;
+  transition: background-color 0.2s ease;
 }
 
 .post-item:hover {
@@ -139,6 +120,11 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+.post-title:hover {
+  color: #6cb6ff; /* 제목에 색상 변화 추가 */
 }
 
 .post-author-date-container {
@@ -160,75 +146,26 @@
   display: flex;
   justify-content: center;
   margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .post-page-button {
   margin: 0 5px;
   padding: 5px 10px;
-  border: 1px solid #ccc;
-  background-color: #ffffff;
+  background-color: transparent; /* 배경색 제거 */
+  border: none; /* 테두리 제거 */
+  color: #2b44ff; /* 기본 글자 색상 */
   cursor: pointer;
-  border-radius: 5px;
   font-size: 14px;
+  font-weight: normal; /* 기본 글씨 굵기 */
+  transition: font-weight 0.3s ease; /* hover 시 글씨 굵기 변화 */
 }
 
 .post-page-button:hover {
-  background-color: #f0f0f0;
+  font-weight: bold; /* hover 시 글씨 굵어짐 */
 }
 
 .post-page-button.active {
-  background-color: #6cb6ff;
-  color: white;
-  font-weight: bold;
-}
-
-/* 미디어 쿼리 */
-@media (max-width: 768px) {
-  .post-container {
-    width: 95%;
-    height: 90%;
-    top: 5%;
-    padding: 15px;
-  }
-
-  .post-header {
-    flex-direction: column;
-    gap: 5px;
-    font-size: 0.9rem;
-    padding: 8px;
-  }
-
-  .post-header-num,
-  .post-header-title {
-    flex: none;
-    width: 100%;
-    text-align: left;
-  }
-
-  .post-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-    padding: 10px;
-  }
-
-  .post-num,
-  .post-content {
-    width: 100%;
-    text-align: left;
-  }
-
-  .post-content {
-    gap: 8px;
-  }
-
-  .post-title {
-    font-size: 1rem;
-  }
-
-  .post-author-date-container {
-    font-size: 0.8rem;
-    justify-content: flex-start;
-    gap: 10px;
-  }
+  color: #2b44ff; /* 활성화된 버튼의 색상 유지 */
+  font-weight: bold; /* 활성화된 버튼은 굵게 */
 }
