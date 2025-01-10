@@ -23,7 +23,6 @@ body, html, #root {
 }
 
 main {
-  margin-top: 35px;
   height: 100%;
   overflow-y: auto;
   background-color: #b3daec; /* 배경색 */
@@ -38,3 +37,10 @@ main::-webkit-scrollbar {
     padding: 0 10px;
   }
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+

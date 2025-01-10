@@ -1,61 +1,58 @@
-import { useState, useEffect } from "react";
-import { fetchRooms, returnRoom } from "../../api";
-import useSafeNavigation from "../../hooks/useSafeNavigation";
-import SendAuthCode from "../../utils/SendAuthCode.jsx";
-import Modal from "../../components/Modal";
-import RoomCard from "../../components/RoomCard";
-import QRcode from "../../utils/QRcode";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { fetchRooms, returnRoom } from "./api";
+import useSafeNavigation from "./hooks/useSafeNavigation";
+import Modal from "./components/Modal";
+import RoomCard from "./components/RoomCard";
 import isEqual from "lodash/isEqual";
-import FloatingButton from "../../components/FloatingButton";
-import LogoutIcon from "../../components/LogoutIcon";
+import QRcode from "./utils/QRcode";
+import FloatingButton from "./components/FloatingButton"; // 플로팅 버튼 임포트
+import LogoutIcon from "./components/LogoutIcon";
 
-const RoomList = () => {
+const TestHome = () => {
   const [rooms, setRooms] = useState([]);
+  const roomsRef = useRef([]); // rooms 데이터를 useRef로 관리
   const [userName, setUserName] = useState("");
+  const [isLoading, setIsLoading] = useState(true); // 서버 통신 상태 추가
   const [isQRCodeOpen, setQRCodeOpen] = useState(false);
   const [qrData, setQRData] = useState("");
   const [roomIdForNavigation, setRoomIdForNavigation] = useState("");
   const { navigateSafely } = useSafeNavigation();
+  const [hasMore, setHasMore] = useState(true); // 추가 로드 가능 여부
 
-  useEffect(() => {
-    let previousRooms = [];
-    const loadRooms = async () => {
+  const observer = useRef();
+
+  const loadRooms = useCallback(
+    async (page = 1) => {
+      setIsLoading(true);
       try {
-        const response = await fetchRooms();
+        const response = await fetchRooms({ page });
         const newRooms = response.data.gameRooms;
         const newUserName = response.data.userInfo.username;
 
-        // 변경된 데이터만 업데이트
-        if (!isEqual(previousRooms, newRooms)) {
-          setRooms((prevRooms) => {
-            // 변경된 방만 추가
-            const updatedRooms = newRooms.map((newRoom) => {
-              const existingRoom = prevRooms.find(
-                (room) => room.id === newRoom.id
-              );
-              return existingRoom ? { ...existingRoom, ...newRoom } : newRoom;
-            });
-
-            return updatedRooms;
-          });
-          previousRooms = newRooms;
-        }
         setUserName(newUserName);
+
+        // 중복 데이터 확인 후 추가
+        if (!isEqual(roomsRef.current, [...roomsRef.current, ...newRooms])) {
+          roomsRef.current = [...roomsRef.current, ...newRooms];
+          setRooms(roomsRef.current);
+        }
+
+        // 더 이상 로드할 데이터가 없을 경우
+        if (newRooms.length === 0) {
+          setHasMore(false);
+        }
       } catch (error) {
         console.error("방 목록을 불러오는 중 오류 발생:", error);
+      } finally {
+        setIsLoading(false);
       }
-    };
+    },
+    [roomsRef]
+  );
 
-    // 초기 데이터 로드
-    loadRooms();
-
-    // 10초마다 데이터 갱신
-    const interval = setInterval(() => {
-      loadRooms();
-    }, 10000);
-
-    return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 제거
-  }, []);
+  useEffect(() => {
+    loadRooms(1); // 초기 데이터 로드
+  }, [loadRooms]);
 
   const handleReturn = async () => {
     const response = await returnRoom();
@@ -70,16 +67,30 @@ const RoomList = () => {
     setQRCodeOpen(true);
   };
 
+  const lastRoomRef = useCallback(
+    (node) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          loadRooms(Math.ceil(roomsRef.current.length / 6) + 1); // 다음 페이지 로드
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasMore, loadRooms]
+  );
+
   return (
     <div className="flex flex-col items-center min-h-screen bg-blue-50 text-gray-800">
-            <SendAuthCode />
-
       <div className="w-full max-w-5xl p-6 relative">
         {/* 로그아웃 아이콘 */}
         <div className="absolute -top-6 right-4">
           <LogoutIcon />
         </div>
-
+  
         <div className="flex flex-col sm:flex-row items-start sm:items-center mb-6 p-6 bg-blue-100 rounded-lg shadow-lg h-auto">
           {/* 프로필 이미지 */}
           <img
@@ -90,7 +101,7 @@ const RoomList = () => {
           {/* 사용자 정보 */}
           <div className="flex-1 mb-4 sm:mb-0">
             <p className="text-3xl font-bold text-blue-900">{userName}님</p>
-            <p className="text-lg text-gray-700">현재 랭킹: 123위</p>
+            <p className="text-lg text-gray-700">현재 랭킹: 123위</p> {/* 임시 랭킹 텍스트 */}
           </div>
           {/* 버튼 영역 */}
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full sm:w-auto">
@@ -109,21 +120,48 @@ const RoomList = () => {
           </div>
         </div>
 
+
+  
+        {/* 최대 인원 안내 문구 */}
+        <p className="text-sm text-gray-500 mb-2">
+          * 최대 인원은 100명입니다.
+        </p>
+  
         {/* 방 목록 */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {rooms.map((room) => (
-            <RoomCard
-              key={room.id}
-              roomName={room.title}
-              minPlayers={room.minPlayers}
-              maxPlayers={room.maxPlayers}
-              isPlaying={room.status}
-              onJoin={() => handleJoinRoom(room)}
-            />
-          ))}
+          {rooms.map((room, index) => {
+            if (rooms.length === index + 1) {
+              // 마지막 요소에 ref 연결
+              return (
+                <RoomCard
+                  key={room.id}
+                  ref={lastRoomRef}
+                  roomName={room.title}
+                  minPlayers={room.minPlayers}
+                  maxPlayers={room.maxPlayers}
+                  isPlaying={room.status}
+                  onJoin={() => handleJoinRoom(room)}
+                />
+              );
+            }
+            return (
+              <RoomCard
+                key={room.id}
+                roomName={room.title}
+                minPlayers={room.minPlayers}
+                maxPlayers={room.maxPlayers}
+                isPlaying={room.status}
+                onJoin={() => handleJoinRoom(room)}
+              />
+            );
+          })}
+          {isLoading &&
+            Array.from({ length: 6 }).map((_, index) => (
+              <RoomCard key={`loading-${index}`} isLoading={true} />
+            ))}
         </div>
       </div>
-
+  
       {/* 모달 */}
       <Modal isOpen={isQRCodeOpen} onClose={() => setQRCodeOpen(false)}>
         <div className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
@@ -151,11 +189,12 @@ const RoomList = () => {
           </div>
         </div>
       </Modal>
-
+  
       {/* 플로팅 버튼 */}
       <FloatingButton />
     </div>
   );
+  
 };
 
-export default RoomList;
+export default TestHome;

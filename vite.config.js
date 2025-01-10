@@ -7,6 +7,9 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
+    css: {
+      postcss: './postcss.config.cjs', // PostCSS 설정 파일 경로
+    },
     publicDir: 'public', // 기본 설정
     server: {
       host: '0.0.0.0',

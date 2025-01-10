@@ -30,13 +30,13 @@ const RoomCreater = () => {
         error = "최소 인원은 2에서 100 사이의 값이어야 합니다.";
       }
     }
-    if (name === "maxPlayers") {
-      if (!value || parseInt(value, 10) < 2 || parseInt(value, 10) > 100) {
-        error = "최대 인원은 2에서 100 사이의 값이어야 합니다.";
-      } else if (parseInt(value, 10) < parseInt(minPlayers, 10)) {
-        error = "최대 인원은 최소 인원보다 커야 합니다.";
-      }
-    }
+    // if (name === "maxPlayers") {
+    //   if (!value || parseInt(value, 10) < 2 || parseInt(value, 10) > 100) {
+    //     error = "최대 인원은 2에서 100 사이의 값이어야 합니다.";
+    //   } else if (parseInt(value, 10) < parseInt(minPlayers, 10)) {
+    //     error = "최대 인원은 최소 인원보다 커야 합니다.";
+    //   }
+    // }
     if (name === "maxGameTime") {
       if (!value || parseInt(value, 10) < 1 || parseInt(value, 10) > 10) {
         error = "게임 소요 시간은 1에서 10 사이의 값이어야 합니다.";
@@ -82,7 +82,7 @@ const RoomCreater = () => {
   
     const roomDetails = {
       title: roomName || defaultRoomName, // 입력값 없으면 랜덤 제목 사용
-      maxPlayers: parseInt(maxPlayers, 10),
+      maxPlayers: 100,
       minPlayers: parseInt(minPlayers, 10),
       maxGameTime: parseInt(maxGameTime, 10),
     };
@@ -126,7 +126,7 @@ const RoomCreater = () => {
             />
             {errors.minPlayers && <div className="room-error-message">{errors.minPlayers}</div>}
 
-            <Input
+            {/* <Input
               label="최대 인원"
               type="number"
               value={maxPlayers}
@@ -135,7 +135,7 @@ const RoomCreater = () => {
               className={`room-input ${
                 errors.maxPlayers ? "room-input-error" : maxPlayers ? "room-input-valid" : ""
               }`}          />
-            {errors.maxPlayers && <div className="room-error-message">{errors.maxPlayers}</div>}
+            {errors.maxPlayers && <div className="room-error-message">{errors.maxPlayers}</div>} */}
 
             <Input
               label="게임 소요 시간 (분)"

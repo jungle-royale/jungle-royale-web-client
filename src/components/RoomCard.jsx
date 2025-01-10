@@ -1,46 +1,61 @@
-import "./RoomCard.css";
 import PropTypes from "prop-types";
 import Skeleton from "./Skeleton.jsx";
 
-const RoomCard = ({ roomName, minPlayers, maxPlayers, isPlaying, onJoin, isLoading, isPlaceholder }) => {
-  // Skeleton UI 처리
+const RoomCard = ({
+  roomName,
+  minPlayers,
+  maxPlayers,
+  isPlaying,
+  onJoin,
+  isLoading,
+  isPlaceholder,
+  className,
+}) => {
   if (isLoading) {
     return (
-      <div className="room-card">
-        <Skeleton type="circle" width="30px" height="30px" circle={true} />
-        <div style={{ flex: 1 }}>
-          <Skeleton width="60%" height="20px" />
-          <Skeleton width="40%" height="15px" />
+      <div
+        className={`p-4 bg-gradient-to-b from-blue-300 to-blue-100 rounded-3xl shadow-lg flex items-center justify-center ${className}`}
+      >
+        <Skeleton type="circle" width="40px" height="40px" circle={true} />
+        <div className="flex-1 ml-4">
+          <Skeleton width="70%" height="20px" />
+          <Skeleton width="50%" height="15px" className="mt-2" />
         </div>
-        <Skeleton width="20%" height="20px" />
       </div>
     );
   }
 
-  // isPlaceholder 상태 처리
   if (isPlaceholder) {
-    return <div className="room-card-placeholder"></div>; // 플레이스홀더 상태일 경우 렌더링
+    return <div className={`p-4 bg-gray-200 rounded-3xl shadow-lg ${className}`}></div>;
   }
 
-
-  // 기본 렌더링 처리
   const isJoinable = isPlaying === "WAITING" && minPlayers < maxPlayers;
 
   return (
     <div
-      className={`room-card ${isJoinable ? "clickable" : "not-clickable"}`}
-      onClick={isJoinable ? onJoin : undefined} // 클릭 가능 여부에 따라 onJoin 실행
+      className={`p-6 bg-gradient-to-br from-blue-300 via-blue-200 to-blue-100 rounded-3xl shadow-xl transform hover:scale-105 transition duration-200 ${
+        isJoinable ? "cursor-pointer hover:shadow-2xl" : "opacity-60 cursor-not-allowed"
+      } ${className}`}
+      onClick={isJoinable ? onJoin : undefined}
     >
-      <div className={`indicator ${isJoinable ? "available" : "unavailable"}`}></div>
-      <h2>{roomName}</h2>
-      <p>
-        {minPlayers} ~ {maxPlayers}
+      {/* 상태 표시 */}
+      <div
+        className={`w-6 h-6 mb-4 rounded-full ${
+          isJoinable ? "bg-green-500 animate-pulse" : "bg-red-400"
+        }`}
+      ></div>
+
+      {/* 방 이름 */}
+      <h2 className="text-lg font-bold font-game text-gray-800">{roomName}</h2>
+
+      {/* 플레이어 정보 */}
+      <p className="mt-2 text-sm font-game text-gray-600">
+        {minPlayers}인방
       </p>
     </div>
   );
 };
 
-// PropTypes 정의
 RoomCard.propTypes = {
   roomName: PropTypes.string,
   minPlayers: PropTypes.number,
@@ -49,6 +64,7 @@ RoomCard.propTypes = {
   onJoin: PropTypes.func,
   isLoading: PropTypes.bool,
   isPlaceholder: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default RoomCard;
