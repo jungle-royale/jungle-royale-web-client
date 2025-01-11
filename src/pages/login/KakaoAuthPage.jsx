@@ -27,7 +27,7 @@ const KakaoAuthPage = () => {
     };
 
     handleAuth();
-  }, [loginWithKakaoContext, navigate]);
+  }, []);
 
   if (status === "processing") {
     return (

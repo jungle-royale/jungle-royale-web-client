@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { fetchRooms, returnRoom } from "../../api";
 import useSafeNavigation from "../../hooks/useSafeNavigation";
-import SendAuthCode from "../../utils/SendAuthCode.jsx";
+// import SendAuthCode from "../../utils/SendAuthCode.jsx";
 import Modal from "../../components/Modal";
 import RoomCard from "../../components/RoomCard";
 import QRcode from "../../utils/QRcode";
@@ -116,7 +116,7 @@ const RoomList = () => {
     >
       <div className="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
 
-      <SendAuthCode />
+      {/* <SendAuthCode /> */}
 
       <div className="relative z-10 w-full max-w-5xl p-6">
         <div className="absolute -top-6 right-4">
