@@ -40,10 +40,10 @@ function useAuthHandlers() {
       await logout();
       localStorage.clear(); // 로컬 스토리지 초기화
       navigate("/"); // 로그아웃 후 메인 화면으로 이동
-      alert("로그아웃되었습니다.");
+      window.location.reload(); // 전체 페이지 리로드
     } catch (error) {
       log.error("로그아웃 실패:", error.message);
-      alert("로그아웃 중 문제가 발생했습니다.");
+      window.location.reload(); // 전체 페이지 리로드
     } finally {
       unlock();
     }
