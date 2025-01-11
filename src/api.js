@@ -48,39 +48,39 @@ export const createRoom = async (roomDetails) => {
 };
 
 //방 list 생성 api(list + player 객체)
-// export const fetchRooms = async () => {
-//   return apiClient.get("/api/rooms/list");
-// };
-// 방 목록 가져오기 (임시 데이터 사용)
 export const fetchRooms = async () => {
-  const totalRooms = 150; // 총 방 개수
-  const dummyRooms = Array.from({ length: totalRooms }, (_, index) => ({
-    id: index + 1,
-    title: `임시 방 ${index + 1}`,
-    minPlayers: 2, // 최소 플레이어 수
-    maxPlayers: 10, // 최대 플레이어 수
-    currentPlayers: Math.floor(Math.random() * 10), // 현재 플레이어 수 (0 ~ 9)
-    status: index % 2 === 0 ? "playing" : "WAITING", // 방 상태 (게임 중 or 대기 중)
-    createdAt: new Date().toISOString(), // 생성 시간
-  }));
-
-  const updatedRooms = dummyRooms.map((room) => ({
-    ...room,
-    status: room.currentPlayers < room.minPlayers ? "waiting" : room.status,
-  }));
-
-  const dummyUserInfo = {
-    username: "테스트유저", // 사용자 이름
-    userStatus: "WAITING",
-  };
-
-  return {
-    data: {
-      gameRooms: updatedRooms,
-      userInfo: dummyUserInfo,
-    },
-  };
+  return apiClient.get("/api/rooms/list");
 };
+// 방 목록 가져오기 (임시 데이터 사용)
+// export const fetchRooms = async () => {
+//   const totalRooms = 150; // 총 방 개수
+//   const dummyRooms = Array.from({ length: totalRooms }, (_, index) => ({
+//     id: index + 1,
+//     title: `임시 방 ${index + 1}`,
+//     minPlayers: 2, // 최소 플레이어 수
+//     maxPlayers: 10, // 최대 플레이어 수
+//     currentPlayers: Math.floor(Math.random() * 10), // 현재 플레이어 수 (0 ~ 9)
+//     status: index % 2 === 0 ? "playing" : "WAITING", // 방 상태 (게임 중 or 대기 중)
+//     createdAt: new Date().toISOString(), // 생성 시간
+//   }));
+
+//   const updatedRooms = dummyRooms.map((room) => ({
+//     ...room,
+//     status: room.currentPlayers < room.minPlayers ? "waiting" : room.status,
+//   }));
+
+//   const dummyUserInfo = {
+//     username: "테스트유저", // 사용자 이름
+//     userStatus: "WAITING",
+//   };
+
+//   return {
+//     data: {
+//       gameRooms: updatedRooms,
+//       userInfo: dummyUserInfo,
+//     },
+//   };
+// };
 
 
 
@@ -113,35 +113,35 @@ export const myPageEdit = async (username) => {
 };
 
 // 게시물 목록 가져오기 api
-// export const fetchPosts = async ({ page = 1, limit = 10 }) => {
-//   return apiClient.get("/api/posts/list", {
-//     params: { page, limit },
-//     skipAuth: true, // 인터셉터에서 인증 건너뛰기
-//   });
-// };
-// 게시물 목록 가져오기 (임시 데이터 사용)
 export const fetchPosts = async ({ page = 1, limit = 10 }) => {
-  const totalPosts = 15; // 총 게시물 수
-  const dummyPosts = Array.from({ length: totalPosts }, (_, index) => ({
-    id: index + 1,
-    title: `임시 게시물 ${index + 1}`,
-    username: `사용자${index + 1}`,
-    createdAt: new Date().toISOString(),
-  }));
-
-  // 페이지네이션 로직
-  const startIndex = (page - 1) * limit;
-  const endIndex = startIndex + limit;
-  const paginatedPosts = dummyPosts.slice(startIndex, endIndex);
-
-  // 임시 데이터 반환
-  return {
-    data: {
-      data: paginatedPosts,
-      total: totalPosts,
-    },
-  };
+  return apiClient.get("/api/posts/list", {
+    params: { page, limit },
+    skipAuth: true, // 인터셉터에서 인증 건너뛰기
+  });
 };
+// 게시물 목록 가져오기 (임시 데이터 사용)
+// export const fetchPosts = async ({ page = 1, limit = 10 }) => {
+//   const totalPosts = 15; // 총 게시물 수
+//   const dummyPosts = Array.from({ length: totalPosts }, (_, index) => ({
+//     id: index + 1,
+//     title: `임시 게시물 ${index + 1}`,
+//     username: `사용자${index + 1}`,
+//     createdAt: new Date().toISOString(),
+//   }));
+
+//   // 페이지네이션 로직
+//   const startIndex = (page - 1) * limit;
+//   const endIndex = startIndex + limit;
+//   const paginatedPosts = dummyPosts.slice(startIndex, endIndex);
+
+//   // 임시 데이터 반환
+//   return {
+//     data: {
+//       data: paginatedPosts,
+//       total: totalPosts,
+//     },
+//   };
+// };
 
 
 // 게시물 하나 가져오기 api
