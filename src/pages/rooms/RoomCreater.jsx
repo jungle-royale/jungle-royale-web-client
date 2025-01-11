@@ -74,7 +74,6 @@ const RoomCreater = () => {
       const response = await createRoom(roomDetails);
       log.info("방 생성 성공:", response);
       const { roomId, clientId } = response.data;
-      alert("방이 성공적으로 생성되었습니다!");
       window.history.pushState({ from: "RoomCreater" }, "", "/room");
       window.location.href = `http://game.eternalsnowman.com/room?roomId=${roomId}&clientId=${clientId}`;
     } catch (error) {

@@ -1,4 +1,5 @@
 import axios from "axios";
+import log from "loglevel";
 
 const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`;
 

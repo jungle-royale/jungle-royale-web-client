@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getPost, updatePost } from "../../api";
 import { useClickLock } from "../../contexts/ClickLockContext";
 import "./PostEditor.css";
+import log from "loglevel";
 
 const PostEditor = () => {
   const { id } = useParams();
@@ -58,7 +59,6 @@ const PostEditor = () => {
 
     try {
       await updatePost(id, formData);
-      alert("수정되었습니다.");
       navigate(`/posts/${id}`);
     } catch (error) {
       log.error("수정 실패:", error.message);
