@@ -9,19 +9,17 @@ import Home from "./pages/home/Home";
 import Header from "./components/Header";
 import Login from "./pages/login/Login";
 import LoginError from "./pages/Failure"
+import KakaoAuthPage from "./pages/login/KakaoAuthPage"
 import RoomList from "./pages/rooms/RoomList";
 import RoomReady from "./pages/rooms/RoomReady";
-// import Failure from "./pages/Failure";
 import MyPage from "./pages/mypage/MyPage"
 import ScrollToTop from "./utils/ScrollToTop";
+import Post from "./pages/posts/Post";
 import PostViewer from "./pages/posts/PostViewer";
 import PostCreator from "./pages/posts/PostCreator";
 import PostEditor from "./pages/posts/PostEditor";
-// import Store from "./pages/store/Store";
-// import Ranking from "./pages/Ranking";
 import RoomCreater from "./pages/rooms/RoomCreater";
-// import TestPageStore from "./pages/TestPageStore";
-import TestHome from "./TestHome"
+
 
 // Initialize loglevel
 if (import.meta.env.VITE_NODE_ENV === 'production') {
@@ -41,23 +39,20 @@ function App() {
         <LoginProvider>
           <RoomsProvider>
             <Header />
-            <main className="pt-16">
+            <main>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/loginerror" element={<LoginError />} />
+                <Route path="/login/auth" element={<KakaoAuthPage />} />
                 <Route path="/room" element={<RoomList />} />
                 <Route path="room/create" element={<RoomCreater />} />
                 <Route path="/room/ready" element={<RoomReady />} />
-                {/* <Route path="/failure" element={<Failure />} /> 입장 실패 페이지 */}
                 <Route path="/mypage" element={<MyPage />}/>
+                <Route path="/posts" element={<Post />} />
                 <Route path="/posts/:id" element={<PostViewer />} /> {/* 동적 경로 */}
                 <Route path="/post-creator" element={<PostCreator />}/>
-                <Route path="/posts/:id/update" element={<PostEditor />}/>
-                {/* <Route path="/store" element={<Store />} /> */}
-                {/* <Route path="/ranking" element={<Ranking />} /> */}
-                {/* <Route path="/test" element={<TestPageStore />}/> 삭제 예정 */}
-                <Route path="/testhome" element={<TestHome />}/> {/* 삭제 예정 */}
+                <Route path="/posts/:id/update" element={<PostEditor />}/> {/* 동적 경로 */}
               </Routes>
             </main>
           </RoomsProvider>

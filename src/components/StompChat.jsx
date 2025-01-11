@@ -39,7 +39,7 @@ const StompChat = ({ nickname }) => {
     };
 
     client.onerror = (error) => {
-      console.error('WebSocket error:', error);
+      log.error('WebSocket error:', error);
     };
 
     client.onclose = () => {

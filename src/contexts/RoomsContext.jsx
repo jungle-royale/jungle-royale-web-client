@@ -8,7 +8,7 @@ export const RoomsProvider = ({ children }) => {
 
   const addRoom = (newRoom) => {
     if (!newRoom.title) {
-      console.error("방 이름이 누락되었습니다:", newRoom);
+      log.error("방 이름이 누락되었습니다:", newRoom);
       return;
     }
 

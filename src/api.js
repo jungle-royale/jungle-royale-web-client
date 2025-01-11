@@ -5,20 +5,10 @@ import log from 'loglevel';
 //카카오 로그인 구현 api
 export const loginWithKakao = async (authCode) => {
   try {
-    const response = await apiClient.post("/api/auth/kakao/login",
-      { code: authCode },
-    );
-    if(response.data && response.data.jwtToken && response.data.refreshToken){
-      localStorage.setItem("isLogin", "true");
-      localStorage.setItem("jwt_token", response.data.jwtToken);
-      localStorage.setItem("jwt_refresh", response.data.refreshToken);
-    }else{
-      console.error("토큰 정보가 누락되었습니다.");
-      throw new Error("Incomplete token response");
-    }
+    const response = await apiClient.post("/api/auth/kakao/login", { code: authCode });
     return response.data;
   } catch (error) {
-    console.error("Login 실패:", error.message);
+    log.error("카카오 로그인 실패:", error.message);
     throw error;
   }
 };
@@ -26,21 +16,10 @@ export const loginWithKakao = async (authCode) => {
 //비회원 로그인 구현 api
 export const loginGuest = async (authCode) => {
   try {
-    const response = await apiClient.post("/api/auth/guest/login",
-      { code: authCode },
-    );
-    localStorage.setItem("isLogin", "true");
-    localStorage.setItem("jwt_token", response.data.jwtToken);
-    localStorage.setItem("jwt_refresh", response.data.refreshToken);
-    log.info(response);
-    // if(response.data && response.data.jwtToken && response.data.refreshToken){
-    // } else {
-    //   console.error("토큰 정보가 누락되었습니다.");
-    //   throw new Error("Incomplete token response");
-    // }
-    return response.data;
+    const response = await apiClient.post("/api/auth/guest/login", { code: authCode });
+    return response.data; 
   } catch (error) {
-    console.error("Login 실패:", error.message);
+    log.error("비회원 로그인 실패:", error.message);
     throw error;
   }
 };
@@ -56,10 +35,10 @@ export const logout = async () => {
       localStorage.clear();
       log.info("로그아웃 성공");
     } else {
-      console.error("로그아웃 실패:", response.data.message);
+      log.error("로그아웃 실패:", response.data.message);
     }
   } catch (error) {
-    console.error("로그아웃 중 오류 발생:", error.message);
+    log.error("로그아웃 중 오류 발생:", error.message);
   }
 };
 
@@ -92,6 +71,7 @@ export const fetchRooms = async () => {
 
   const dummyUserInfo = {
     username: "테스트유저", // 사용자 이름
+    userStatus: "WAITING",
   };
 
   return {
@@ -127,7 +107,7 @@ export const myPageEdit = async (username) => {
     const response = await apiClient.put(`/api/users/mypage`,username);
     return response.data;
   } catch (error) {
-    console.error("닉네임 수정 중 오류:", error);
+    log.error("닉네임 수정 중 오류:", error);
     throw error; // 호출한 곳에서 에러 처리
   }
 };
@@ -181,7 +161,7 @@ export const createPost = async (formData) => {
     });
     return response.data; // 성공한 데이터를 반환
   } catch (error) {
-    console.error("게시물 생성 중 오류:", error);
+    log.error("게시물 생성 중 오류:", error);
     throw error; 
   }
 };
@@ -192,7 +172,7 @@ export const deletePost = async (postId) => {
     const response = await apiClient.delete(`/api/posts/${postId}`);
     return response.data;
   } catch (error) {
-    console.error("게시물 삭제 중 오류:", error);
+    log.error("게시물 삭제 중 오류:", error);
     throw error; // 호출한 곳에서 에러 처리
   }
 };
@@ -207,7 +187,7 @@ export const updatePost = async (postId, updatedData) => {
     });
     return response.data;
   } catch (error) {
-    console.error("게시물 수정 중 오류:", error);
+    log.error("게시물 수정 중 오류:", error);
     throw error; // 호출한 곳에서 에러 처리
   }
 };
@@ -218,7 +198,7 @@ export const fetchStoreData = async () => {
     const response = await apiClient.get("/api/shops/items");
     return response.data;
   } catch (error) {
-    console.error("API 호출 중 오류 발생:", error.response?.data || error.message);
+    log.error("API 호출 중 오류 발생:", error.response?.data || error.message);
     throw error;
   }
 };
@@ -230,7 +210,7 @@ export const purchaseItem = async (itemCode) => {
     log.info("Response: ", response)
     return response.data;
   } catch (error) {
-    console.error("아이템 구매 중 오류 발생:", error.response?.data || error.message);
+    log.error("아이템 구매 중 오류 발생:", error.response?.data || error.message);
     throw error;
   }
 };

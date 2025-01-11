@@ -25,7 +25,7 @@ body, html, #root {
 main {
   height: 100%;
   overflow-y: auto;
-  background-color: #b3daec; /* 배경색 */
+  background-image: url("/assets/background_with_overlay.png");
 }
 
 main::-webkit-scrollbar {

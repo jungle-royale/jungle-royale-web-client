@@ -1,118 +1,66 @@
-import { useEffect, useRef, useState } from "react";
-import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { useEffect, useState } from "react";
 import Input from "../../components/Input.jsx"; 
-import { fetchMyPage, myPageEdit } from '../../api.js';
-import "./MyPage.css";
 import log from 'loglevel';
-
+import { fetchMyPage, myPageEdit } from "../../api.js";
 
 const MyPage = () => {
-  const [nickname, setNickname] = useState('');
-  const mountRef = useRef(null); // 캔버스를 렌더링할 DOM 요소 참조
-  
+  const [nickname, setNickname] = useState("");
+
   const handleNicknameChange = (e) => {
     setNickname(e.target.value);
   };
-  
+
   const handleSaveNickname = async () => {
     try {
-      await myPageEdit(nickname); // 닉네임 업데이트
-      alert('닉네임이 성공적으로 변경되었습니다.'); // 성공 메시지 경고창으로 표시
+      await myPageEdit(nickname); // Update nickname
+      alert("닉네임이 성공적으로 변경되었습니다."); // Success alert
       const response = await fetchMyPage();
-      setNickname(response.data.username || ''); // 닉네임 업데이트
-      window.location.reload();
+      setNickname(response.data.username || ""); // Update nickname
     } catch (error) {
-      alert('닉네임 변경 중 오류가 발생했습니다.');
-      console.error(error);
+      alert("닉네임 변경 중 오류가 발생했습니다.");
+      log.error(error);
     }
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetchMyPage();
-        setNickname(response.data.username || '');
+        setNickname(response.data.username || "");
       } catch (error) {
-        console.error('마이페이지 데이터를 불러오는 중 오류 발생:', error);
+        log.error("마이페이지 데이터를 불러오는 중 오류 발생:", error);
       }
     };
 
-    fetchData(); // 초기 데이터를 가져옴
-
-    if (!mountRef.current) return;
-
-    // Three.js 기본 설정
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      mountRef.current.clientWidth / mountRef.current.clientHeight,
-      0.1,
-      1000
-    );
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    mountRef.current.appendChild(renderer.domElement);
-
-    // 축 헬퍼 추가
-    const axesHelper = new THREE.AxesHelper(5);
-    scene.add(axesHelper);
-
-    camera.position.z = 5;
-
-    // GLTFLoader로 모델 로드
-    const loader = new GLTFLoader();
-    loader.load(
-      "/assets/RW_Snowman01.glb", // glTF 파일 경로
-      (gltf) => {
-        const model = gltf.scene;
-        model.scale.set(1, 1, 1); // 스케일 조정
-        model.position.y = -1; // 바닥 위치 조정
-        scene.add(model);
-      },
-      (xhr) => {
-        log.info((xhr.loaded / xhr.total) * 100 + "% loaded");
-      },
-      (error) => {
-        console.error("An error occurred while loading the GLB model:", error);
-      }
-    );
-
-    const handleResize = () => {
-      if (!mountRef.current) return;
-      camera.aspect = mountRef.current.clientWidth / mountRef.current.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
-    };
-
-    // 애니메이션 루프
-    const animate = () => {
-      requestAnimationFrame(animate);
-      renderer.render(scene, camera);
-    };
-
-    // 이벤트 리스너 등록
-    window.addEventListener("resize", handleResize);
-
-    animate();
-
-    // 클린업 함수
-    return () => {
-      if (mountRef.current) {
-        mountRef.current.removeChild(renderer.domElement);
-      }
-      window.removeEventListener("resize", handleResize);
-    };
+    fetchData();
   }, []);
 
   return (
-    <div className="mypage-container">
-      <div ref={mountRef} className="mypage-canvas" />
-      <div className="mypage-form">
-        <h2>닉네임 정보</h2>
-        <Input label="닉네임" type="text" value={nickname} onChange={handleNicknameChange} placeholder="닉네임 입력" />
-        <button onClick={handleSaveNickname}>닉네임 저장</button>
+    <div
+      className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center relative pt-20 pb-20"
+      style={{
+        backgroundImage: `url(/assets/snowy_background.png)`,
+      }}
+    >
+      {/* 어두운 오버레이 */}
+      <div className="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
+
+      <div className="bg-white bg-opacity-90 shadow-lg rounded-lg p-6 w-full max-w-md z-10">
+        <h2 className="text-xl font-semibold text-gray-800 mb-4">닉네임 정보</h2>
+        <Input
+          label="닉네임"
+          type="text"
+          value={nickname}
+          onChange={handleNicknameChange}
+          placeholder="닉네임 입력"
+          className="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <button
+          onClick={handleSaveNickname}
+          className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
+        >
+          닉네임 저장
+        </button>
       </div>
     </div>
   );

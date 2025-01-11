@@ -22,7 +22,7 @@ const PostEditor = () => {
           image: null,
         });
       } catch (error) {
-        console.error("게시물 로드 오류:", error.message);
+        log.error("게시물 로드 오류:", error.message);
         alert("게시물을 불러오는 데 실패했습니다.");
       }
     };
@@ -61,7 +61,7 @@ const PostEditor = () => {
       alert("수정되었습니다.");
       navigate(`/posts/${id}`);
     } catch (error) {
-      console.error("수정 실패:", error.message);
+      log.error("수정 실패:", error.message);
       alert("수정 중 오류가 발생했습니다.");
     } finally {
       setIsSubmitting(false);

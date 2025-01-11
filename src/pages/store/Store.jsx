@@ -31,7 +31,7 @@ const Store = () => {
       );
     } catch (error) {
       alert("구매 중 오류가 발생했습니다.");
-      console.error(error);
+      log.error(error);
     } finally {
       setIsLoading(false); // 로딩 상태 비활성화
     }
@@ -54,7 +54,7 @@ const Store = () => {
           isOwned: inventory.some((inv) => inv.itemCode === item.itemCode),
         })));
       } catch (error) {
-        console.error("데이터를 가져오는 중 오류 발생:", error);
+        log.error("데이터를 가져오는 중 오류 발생:", error);
         setItems([]);
       }
     };

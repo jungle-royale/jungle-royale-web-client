@@ -14,7 +14,7 @@ const useJwtField  = (token, field) => {
         log.info("Decoded JWT Token:", decodedToken); // 디버깅 로그
         setValue(decodedToken[field] || null);
       } catch (error) {
-        console.error("JWT 디코딩 오류:", error.message);
+        log.error("JWT 디코딩 오류:", error.message);
         setValue(null); // 오류 시 `value`을 null로 설정
       }
     } else {

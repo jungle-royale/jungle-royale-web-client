@@ -16,7 +16,7 @@ const useSafeNavigation = () => {
       navigate(href); // React Router를 사용한 이동
       // 잠금을 페이지 이동 후에 해제하도록 딜레이를 추가할 수도 있음
     } catch (error) {
-      console.error("Navigation error:", error);
+      log.error("Navigation error:", error);
     } finally {
       setTimeout(unlock, 500); // 잠금 해제를 일정 시간 딜레이
     }
