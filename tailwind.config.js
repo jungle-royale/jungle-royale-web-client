@@ -1,0 +1,25 @@
+import forms from '@tailwindcss/forms';
+// import typography from '@tailwindcss/typography';
+// import aspectRatio from '@tailwindcss/aspect-ratio';
+
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        game: ['"VT323"', 'monospace'], // 픽셀 스타일 폰트
+      },
+      colors: {
+        gradientStart: "#1e3a8a", // 어두운 파란색
+        gradientEnd: "#60a5fa", // 밝은 파란색
+      },
+    },
+  },
+  plugins: [
+    forms, // 플러그인 추가
+  ],
+};

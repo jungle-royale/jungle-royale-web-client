@@ -10,7 +10,7 @@ const AudioPlayer = ({ src, loop = true }) => {
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play().catch((err) => console.error("Audio play error:", err));
+      audioRef.current.play().catch((err) => log.error("Audio play error:", err));
     }
     setIsPlaying(!isPlaying);
   };

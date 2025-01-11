@@ -30,7 +30,7 @@ const PostViewer = () => {
           setIsOwner(false);
         }
       } catch (error) {
-        console.error("게시물을 불러오는 중 오류 발생:", error.message);
+        log.error("게시물을 불러오는 중 오류 발생:", error.message);
       }
     };
 
@@ -49,7 +49,7 @@ const PostViewer = () => {
         await deletePost(id);
         navigateSafely(e, "/");
       } catch (error) {
-        console.error("게시물 삭제 중 오류 발생:", error.message);
+        log.error("게시물 삭제 중 오류 발생:", error.message);
         alert("게시물 삭제에 실패했습니다. 다시 시도해주세요.");
       }
     }

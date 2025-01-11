@@ -60,7 +60,7 @@ apiClient.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newToken}`; // 갱신된 토큰으로 재요청
         return apiClient(originalRequest);
       } catch (refreshError) {
-        console.error("토큰 갱신 실패:", refreshError.message);
+        log.error("토큰 갱신 실패:", refreshError.message);
         localStorage.clear(); // 로컬 스토리지 초기화
         alert("재로그인이 필요합니다.");
         window.location.href = "/login"; // 로그인 페이지로 리다이렉트

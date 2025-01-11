@@ -18,7 +18,7 @@ const SendAuthCode = () => {
       setIsLogin(true); // 로그인 상태 업데이트
       setUserRole(response.role);
     } catch (error) {
-      console.error("서버 응답:", error.response?.data || error.message);
+      log.error("서버 응답:", error.response?.data || error.message);
     } finally {
       unlock();
       setIsProcessingAuthCode(false); // 처리 완료

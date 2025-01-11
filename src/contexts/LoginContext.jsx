@@ -20,6 +20,11 @@ export const LoginProvider = ({ children }) => {
     return localStorage.getItem("jwt_token") || null; // JWT 초기화
   });
 
+  const [refreshToken, setRefreshToken] = useState(() => {
+    return localStorage.getItem("jwt_refresh") || null; //refresh 초기화
+
+  });
+
   // isLogin 상태와 localStorage 동기화
   useEffect(() => {
     localStorage.setItem("isLogin", isLogin.toString());
@@ -63,7 +68,7 @@ export const LoginProvider = ({ children }) => {
   }, []);
 
   return (
-    <LoginContext.Provider value={{ isLogin, setIsLogin, userRole, setUserRole, jwtToken, setJwtToken }}>
+    <LoginContext.Provider value={{ isLogin, setIsLogin, userRole, setUserRole, jwtToken, setJwtToken, refreshToken, setRefreshToken }}>
       {children}
     </LoginContext.Provider>
   );

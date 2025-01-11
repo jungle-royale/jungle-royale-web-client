@@ -51,7 +51,7 @@ const PostCreator = () => {
       alert("게시물이 성공적으로 등록되었습니다.");
       navigate("/");
     } catch (error) {
-      console.error("게시 실패:", error.response?.data || error.message);
+      log.error("게시 실패:", error.response?.data || error.message);
       alert("게시 중 오류가 발생했습니다.");
     } finally {
       setIsSubmitting(false);

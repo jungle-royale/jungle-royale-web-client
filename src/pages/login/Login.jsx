@@ -1,30 +1,43 @@
 import { useClickLock } from '../../contexts/ClickLockContext';
-import "./Login.css";
+import useAuthHandlers from '../../hooks/useAuthHandlers';
 
 const Login = () => {
   const { isLocked, lock } = useClickLock();
-
-  const Rest_api_key = 'e8304b2a6b5aeb5020ef6abeb405115b';
-  const redirect_uri = `${import.meta.env.VITE_KAKAO_REDIRECT_URL}`;
-
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
-
-  const handleLoginKakao = () => {
-    if (isLocked) return; // 중복 클릭 방지
-    lock();
-    window.location.href = kakaoURL; // 리다이렉트
-  };
+  const { handleLoginKakao, handleLoginGuest } = useAuthHandlers();
 
   return (
-    <div className="login-container">
-      <div className="login-box">
-        <h1>로그인 화면</h1>
-        <img
-          src="/assets/kakaologinwide.png"
-          className="kakao-button"
-          alt="카카오 로그인 버튼"
-          onClick={handleLoginKakao}
-        />
+    <div
+      className="bg-cover bg-center bg-fixed min-h-screen"
+      style={{
+        backgroundImage: `url(/assets/background.png)`,
+      }}
+    >
+      <div className="flex items-center justify-center min-h-screen bg-black bg-opacity-50">
+        <div className="bg-white p-8 rounded shadow-md text-center space-y-6">
+          <h1 className="text-2xl font-bold text-gray-800">로그인 화면</h1>
+          <img
+            src="/assets/kakaologinwide.png"
+            className="cursor-pointer w-full max-w-xs mx-auto"
+            alt="카카오 로그인 버튼"
+            onClick={() => {
+              if (!isLocked) {
+                lock();
+                handleLoginKakao();
+              }
+            }}
+          />
+          <button
+            onClick={() => {
+              if (!isLocked) {
+                lock();
+                handleLoginGuest();
+              }
+            }}
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+            비회원 로그인
+          </button>
+        </div>
       </div>
     </div>
   );
