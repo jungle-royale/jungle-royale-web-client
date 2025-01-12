@@ -21,7 +21,7 @@ const RoomReady = () => {
         if (response) {
           // 방 입장이 가능하면 게임 URL로 리다이렉트
           window.history.replaceState(null, "", "/room"); // 뒤로가기를 눌렀을 때 방 리스트로 이동
-          const gameUrl = `http://game.eternalsnowman.com/room?roomId=${response.roomId}&clientId=${response.clientId}`;
+          const gameUrl = `${import.meta.env.VITE_MAIN_URL}/room?roomId=${response.roomId}&clientId=${response.clientId}&userName=${response.userName}`;
           window.location.href = gameUrl; // 브라우저에서 외부 URL로 이동
         } else {
           alert(response.message || "방 입장이 불가능합니다.");

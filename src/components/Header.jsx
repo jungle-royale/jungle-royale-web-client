@@ -4,7 +4,7 @@ import useSafeNavigation from "../hooks/useSafeNavigation";
 
 const Header = () => {
   const { isLogin, userRole } = useLoginContext();
-  const { handleLogin, handleLogout } = useAuthHandlers();
+  const { handleLogout } = useAuthHandlers();
   const { navigateSafely } = useSafeNavigation();
 
   return (
@@ -68,12 +68,13 @@ const Header = () => {
               )}
             </>
           ) : (
-            <button
-              onClick={handleLogin}
+            <a
+              href="/login"
+              onClick={(e) => navigateSafely(e, "/login")}
               className="text-sm font-medium text-gray-700 hover:text-blue-600"
             >
               로그인
-            </button>
+            </a>
           )}
         </div>
       </nav>

@@ -1,4 +1,5 @@
 import forms from '@tailwindcss/forms';
+import tailwindScrollbarHide from 'tailwind-scrollbar-hide';
 // import typography from '@tailwindcss/typography';
 // import aspectRatio from '@tailwindcss/aspect-ratio';
 
@@ -21,5 +22,7 @@ export default {
   },
   plugins: [
     forms, // 플러그인 추가
+    tailwindScrollbarHide, // 플러그인 설치 후 적용
+
   ],
 };

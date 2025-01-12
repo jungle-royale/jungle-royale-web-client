@@ -37,9 +37,13 @@ const RoomCard = ({
 
   return (
     <div
-      className={`p-6 bg-gradient-to-r from-cyan-200 via-blue-300 to-indigo-400 rounded-[1rem] shadow-xl border-[3px] border-solid border-white transform hover:scale-105 hover:shadow-2xl transition duration-300 ${
+      className={`p-6 bg-cover bg-center shadow-xl transform hover:scale-105 hover:shadow-2xl transition duration-300 ${
         isJoinable ? "cursor-pointer" : "opacity-60 cursor-not-allowed"
       } ${className}`}
+      style={{
+        backgroundImage: `url('/assets/roomcard.png')`, // 업로드한 이미지 경로
+        borderRadius: "16px",
+      }}
       onClick={isJoinable ? onJoin : undefined}
     >
       {/* 상태 표시 */}
@@ -58,7 +62,7 @@ const RoomCard = ({
 
       {/* 플레이어 정보 */}
       <p className="mt-2 text-sm font-game text-gray-200 text-center drop-shadow-md">
-        {minPlayers} / {maxPlayers} 인원
+        {minPlayers}인방
       </p>
     </div>
   );
