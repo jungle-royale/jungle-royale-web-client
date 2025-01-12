@@ -4,24 +4,25 @@ import { useLoginContext } from "../../contexts/LoginContext.jsx";
 import { useClickLock } from "../../contexts/ClickLockContext.jsx";
 import Snowfall from "../../utils/SnowFall.jsx";
 
-const ActionButton = ({ handleClick, label }) => {
+const ActionButton = ({ handleClick, imageSrc, altText }) => {
   return (
-    <button
-      className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition"
+    <img
+      src={imageSrc}
+      alt={altText}
+      className="cursor-pointer w-40 h-auto transition-transform transform hover:scale-105"
       onClick={handleClick}
-    >
-      {label}
-    </button>
+    />
   );
 };
 
 const Home = () => {
   const { isLogin } = useLoginContext();
-  const { isLocked, unlock } = useClickLock();
+  const { isLocked, lock, unlock } = useClickLock();
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
     if (isLocked) return;
+    lock();
     if (isLogin) {
       navigate("/room");
       unlock();
@@ -40,17 +41,19 @@ const Home = () => {
     >
       <Snowfall />
       <div className="flex flex-col items-center justify-center h-full bg-black bg-opacity-50 text-center">
-        <div className="mb-8">
+        <div className="mb-8 max-w-[400px] w-[30%] min-w-[150px]">
           <img
-            src="/assets/intro_logo_2.png"
+            src="/assets/headercon.png"
             alt="Game Logo"
-            className="object-contain"
+            className="object-contain w-full h-auto"
           />
         </div>
+
         <div className="flex space-x-4">
           <ActionButton
             handleClick={handleButtonClick}
-            label={isLogin ? "GAME START" : "LOGIN"}
+            imageSrc={isLogin ? "/assets/game_button.png" : "/assets/login_button.png"}
+            altText={isLogin ? "Game Start Button" : "Login Button"}
           />
         </div>
       </div>
@@ -60,7 +63,8 @@ const Home = () => {
 
 ActionButton.propTypes = {
   handleClick: PropTypes.func.isRequired,
-  label: PropTypes.string.isRequired,
+  imageSrc: PropTypes.string.isRequired,
+  altText: PropTypes.string.isRequired,
 };
 
 export default Home;

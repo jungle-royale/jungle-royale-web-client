@@ -32,6 +32,17 @@ main::-webkit-scrollbar {
   display: none; /* 스크롤바 숨김 */
 }
 
+/* 스크롤바 숨기기 */
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none; /* 크롬, 사파리, 엣지 */
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none; /* IE와 엣지 */
+  scrollbar-width: none; /* 파이어폭스 */
+}
+
+
 @media (max-width: 600px) {
   .app {
     padding: 0 10px;

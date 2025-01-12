@@ -1,4 +1,6 @@
 import forms from '@tailwindcss/forms';
+import tailwindScrollbarHide from 'tailwind-scrollbar-hide';
+
 // import typography from '@tailwindcss/typography';
 // import aspectRatio from '@tailwindcss/aspect-ratio';
 
@@ -12,6 +14,7 @@ export default {
     extend: {
       fontFamily: {
         game: ['"VT323"', 'monospace'], // 픽셀 스타일 폰트
+        bagel: ['"Bagel Fat One"', 'cursive'], // 새로 추가한 폰트
       },
       colors: {
         gradientStart: "#1e3a8a", // 어두운 파란색
@@ -21,5 +24,7 @@ export default {
   },
   plugins: [
     forms, // 플러그인 추가
+    tailwindScrollbarHide, // 플러그인 설치 후 적용
+
   ],
 };

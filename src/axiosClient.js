@@ -63,7 +63,7 @@ apiClient.interceptors.response.use(
       } catch (refreshError) {
         log.error("토큰 갱신 실패:", refreshError.message);
         localStorage.clear(); // 로컬 스토리지 초기화
-        alert("재로그인이 필요합니다.");
+        // alert("재로그인이 필요합니다.");
         window.location.href = "/login"; // 로그인 페이지로 리다이렉트
         return Promise.reject(refreshError); // 최종 실패 반환
       }

@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { fetchRooms, returnRoom } from "../../api";
 import useSafeNavigation from "../../hooks/useSafeNavigation";
-// import SendAuthCode from "../../utils/SendAuthCode.jsx";
 import Modal from "../../components/Modal";
 import RoomCard from "../../components/RoomCard";
 import QRcode from "../../utils/QRcode";
 import isEqual from "lodash/isEqual";
-import LogoutIcon from "../../components/LogoutIcon";
+// import LogoutIcon from "../../components/LogoutIcon";
 import log from "loglevel";
 
 const RoomList = () => {
@@ -18,10 +17,9 @@ const RoomList = () => {
   const [roomIdForNavigation, setRoomIdForNavigation] = useState("");
   const { navigateSafely } = useSafeNavigation();
   const [isLoaded, setIsLoaded] = useState(false);
-  const [jwtToken, setJwtToken] = useState(null); // JWT 상태 추가
+  const [jwtToken, setJwtToken] = useState(null);
 
   useEffect(() => {
-    // 애니메이션 활성화
     setTimeout(() => {
       setIsLoaded(true);
     }, 10);
@@ -35,11 +33,11 @@ const RoomList = () => {
 
       if (!token) {
         log.info("JWT 토큰이 없습니다. API 호출을 건너뜁니다.");
-        return; // 토큰이 없으면 API 호출하지 않음
+        return;
       }
 
       if (!jwtToken) {
-        setJwtToken(token); // JWT 상태 업데이트
+        setJwtToken(token);
       }
 
       let previousRooms = [];
@@ -70,10 +68,7 @@ const RoomList = () => {
         }
       };
 
-      // 초기 데이터 로드
       loadRooms();
-
-      // 10초마다 데이터 갱신
       intervalId = setInterval(() => {
         loadRooms();
       }, 10000);
@@ -81,29 +76,28 @@ const RoomList = () => {
 
     checkJwtAndFetchRooms();
 
-    // 5초마다 JWT 상태 확인
     const jwtCheckInterval = setInterval(() => {
       const token = localStorage.getItem("jwt_token");
       if (token && token !== jwtToken) {
-        setJwtToken(token); // 새로운 JWT 설정
-        checkJwtAndFetchRooms(); // API 호출 시작
+        setJwtToken(token);
+        checkJwtAndFetchRooms();
       }
     }, 5000);
 
     return () => {
       clearInterval(intervalId);
-      clearInterval(jwtCheckInterval); // 컴포넌트 언마운트 시 정리
+      clearInterval(jwtCheckInterval);
     };
   }, [jwtToken]);
 
   const handleReturn = async () => {
     const response = await returnRoom();
-    const gameUrl = `http://game.eternalsnowman.com/room?roomId=${response.roomId}&clientId=${response.clientId}`;
+    const gameUrl = `${import.meta.env.VITE_MAIN_URL}/room?roomId=${response.roomId}&clientId=${response.clientId}`;
     window.location.href = gameUrl;
   };
 
   const handleJoinRoom = (room) => {
-    const staticUrl = `${import.meta.env.VITE_KAKAO_REDIRECT_URL}/room/ready?roomId=${room.id}`;
+    const staticUrl = `${import.meta.env.VITE_MAIN_URL}/room/ready?roomId=${room.id}`;
     setQRData(staticUrl);
     setRoomIdForNavigation(room.id);
     setQRCodeOpen(true);
@@ -112,18 +106,16 @@ const RoomList = () => {
   return (
     <div
       className={`relative flex flex-col pt-16 items-center min-h-screen bg-container bg-center`}
-      style={{ backgroundImage: "url('/assets/snowflake_pattern.png')" }}
+      style={{ backgroundColor: "#A0D8EF" }}
     >
-      <div className="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-10 z-0"></div>
 
-      {/* <SendAuthCode /> */}
-
-      <div className="relative z-10 w-full max-w-5xl p-6">
-        <div className="absolute -top-6 right-4">
+      <div className="z-10 w-full max-w-5xl p-6">
+        {/* <div className="absolute -top-6 right-4">
           <LogoutIcon />
-        </div>
+        </div> */}
 
-        <div className="flex flex-col sm:flex-row items-start sm:items-center mb-6 p-6 bg-white bg-opacity-90 rounded-lg shadow-lg h-auto">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center mb-6 p-6 bg-[#107D9C] bg-opacity-30 border border-gray-300 rounded-lg shadow-lg h-auto">
           <img
             src="/assets/icon.png"
             alt="프로필 이미지"
@@ -136,41 +128,60 @@ const RoomList = () => {
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full sm:w-auto">
             {userStatus === "WAITING" ? (
               <button
-                className="px-6 py-3 text-lg font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 transition w-full sm:w-auto"
+                className="relative w-64 h-20 bg-transparent border-none outline-none cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
                 onClick={(e) => navigateSafely(e, "/room/create")}
+                style={{
+                  backgroundImage: `url('/assets/new_game_button.png')`,
+                  backgroundSize: "contain",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                }}
               >
-                새로하기
+                {/* 버튼 내용은 보이지 않게 처리 */}
+                <span className="sr-only">새로하기</span>
               </button>
             ) : (
               <button
-                className="px-6 py-3 text-lg font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition w-full sm:w-auto"
+                className="relative w-64 h-20 bg-transparent border-none outline-none cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
                 onClick={handleReturn}
+                style={{
+                  backgroundImage: `url('/assets/continue_button.png')`,
+                  backgroundSize: "contain",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                }}
               >
-                이어하기
+                {/* 버튼 내용은 보이지 않게 처리 */}
+                <span className="sr-only">이어하기</span>
               </button>
             )}
           </div>
+
         </div>
 
         <div className="grid place-items-center w-full max-w-5xl">
-          <div
-            className={`w-full bg-white bg-opacity-90 border border-gray-300 shadow-lg rounded-lg p-6 transform transition-transform duration-700 ${
-              isLoaded ? "translate-y-0" : "translate-y-full"
-            }`}
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {rooms.map((room) => (
-                <RoomCard
-                  key={room.id}
-                  roomName={room.title}
-                  minPlayers={room.minPlayers}
-                  maxPlayers={room.maxPlayers}
-                  isPlaying={room.status}
-                  onJoin={() => handleJoinRoom(room)}
-                />
-              ))}
-            </div>
+        <div
+          className={`w-full bg-[#107D9C] bg-opacity-90 border border-gray-300 shadow-lg rounded-lg p-6 transform transition-transform duration-700 ${
+            isLoaded ? "translate-y-0" : "translate-y-full"
+          } overflow-y-auto scrollbar-hidden`} // 추가된 클래스
+          style={{
+            height: "calc(100vh - 250px)", // 최대 높이 화면의 70%
+          }}
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {rooms.map((room) => (
+              <RoomCard
+                key={room.id}
+                roomName={room.title}
+                minPlayers={room.minPlayers}
+                maxPlayers={room.maxPlayers}
+                isPlaying={room.status}
+                onJoin={() => handleJoinRoom(room)}
+              />
+            ))}
           </div>
+        </div>
+
         </div>
       </div>
 
