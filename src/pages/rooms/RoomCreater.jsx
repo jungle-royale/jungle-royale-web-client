@@ -81,7 +81,7 @@ const RoomCreater = () => {
       log.info("방 생성 성공:", response);
       const { roomId, clientId, username } = response.data;
       window.history.pushState({ from: "RoomCreater" }, "", "/room");
-      window.location.href = `${import.meta.env.VITE_KAKAO_REDIRECT_URL}/room?roomId=${roomId}&clientId=${clientId}username=${username}`;
+      window.location.href = `${import.meta.env.VITE_MAIN_URL}/room?roomId=${roomId}&clientId=${clientId}username=${username}`;
     } catch (error) {
       log.error("방 생성 중 오류 발생:", error.response?.data || error.message);
       // alert("방 생성 중 문제가 발생했습니다. 다시 시도해주세요.");
