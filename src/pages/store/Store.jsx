@@ -29,7 +29,7 @@ const Store = () => {
         )
       );
     } catch (error) {
-      alert("구매 중 오류가 발생했습니다.");
+      // alert("구매 중 오류가 발생했습니다.");
       log.error(error);
     } finally {
       setIsLoading(false); // 로딩 상태 비활성화

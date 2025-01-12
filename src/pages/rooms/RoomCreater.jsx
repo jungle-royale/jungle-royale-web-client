@@ -5,7 +5,7 @@ import log from 'loglevel';
 
 const RoomCreater = () => {
   const [roomName, setRoomName] = useState('');
-  const [maxPlayers, setMaxPlayers] = useState('');
+  const [maxPlayers] = useState('');
   const [minPlayers, setMinPlayers] = useState('');
   const [maxGameTime, setMaxGameTime] = useState('');
   const [errors, setErrors] = useState({});
@@ -32,8 +32,8 @@ const RoomCreater = () => {
       }
     }
     if (name === "roomName") {
-      if (value.length > 25) {
-        error = "방 이름은 최대 25자까지 가능합니다.";
+      if (value.length > 15) {
+        error = "방 이름은 최대 15자까지 가능합니다.";
       }
     }
     return error;
@@ -52,7 +52,6 @@ const RoomCreater = () => {
 
     if (name === "roomName") setRoomName(value);
     if (name === "minPlayers") setMinPlayers(value.replace(/\D/g, '')); // 숫자만 허용
-    if (name === "maxPlayers") setMaxPlayers(value.replace(/\D/g, '')); // 숫자만 허용
     if (name === "maxGameTime") setMaxGameTime(value.replace(/\D/g, '')); // 숫자만 허용
   };
 
@@ -85,7 +84,7 @@ const RoomCreater = () => {
       window.location.href = `${import.meta.env.VITE_KAKAO_REDIRECT_URL}/room?roomId=${roomId}&clientId=${clientId}username=${username}`;
     } catch (error) {
       log.error("방 생성 중 오류 발생:", error.response?.data || error.message);
-      alert("방 생성 중 문제가 발생했습니다. 다시 시도해주세요.");
+      // alert("방 생성 중 문제가 발생했습니다. 다시 시도해주세요.");
     } finally {
       unlock();
     }

@@ -13,11 +13,11 @@ const MyPage = () => {
   const handleSaveNickname = async () => {
     try {
       await myPageEdit(nickname); // Update nickname
-      alert("닉네임이 성공적으로 변경되었습니다."); // Success alert
+      // alert("닉네임이 성공적으로 변경되었습니다."); // Success alert
       const response = await fetchMyPage();
       setNickname(response.data.username || ""); // Update nickname
     } catch (error) {
-      alert("닉네임 변경 중 오류가 발생했습니다.");
+      // alert("닉네임 변경 중 오류가 발생했습니다.");
       log.error(error);
     }
   };

@@ -24,7 +24,7 @@ const RoomReady = () => {
           const gameUrl = `${import.meta.env.VITE_MAIN_URL}/room?roomId=${response.roomId}&clientId=${response.clientId}&username=${response.username}`;
           window.location.href = gameUrl; // 브라우저에서 외부 URL로 이동
         } else {
-          alert(response.message || "방 입장이 불가능합니다.");
+          // alert(response.message || "방 입장이 불가능합니다.");
           setError(response.message || "방 입장이 불가능합니다.");
           if (isLogin && jwtToken) {
             window.location.href = "/room"; // 방 목록 페이지로 이동
@@ -33,7 +33,7 @@ const RoomReady = () => {
           }
         }
       } catch (error) {
-        alert(error.response?.data?.message || "방 입장 여부를 확인할 수 없습니다. 다시 시도해주세요.");
+        // alert(error.response?.data?.message || "방 입장 여부를 확인할 수 없습니다. 다시 시도해주세요.");
         setError(error.response?.data?.message || "방 입장 여부를 확인할 수 없습니다. 다시 시도해주세요.");
         if (isLogin && jwtToken) {
           window.location.href = "/room"; // 방 목록 페이지로 이동
@@ -73,11 +73,8 @@ const RoomReady = () => {
     );
   }
 
-  // 성공적으로 처리되면 대기 화면 유지 (일반적으로 여기까지는 도달하지 않음)
   return (
     <div className="room-ready-main">
-      <h1>대기 페이지</h1>
-      <p>게임으로 이동 중입니다...</p>
     </div>
   );
 };
