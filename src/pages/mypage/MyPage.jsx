@@ -7,22 +7,39 @@ const MyPage = () => {
   const [nickname, setNickname] = useState("");
   const [message, setMessage] = useState(""); // State for success/error message
   const [messageColor, setMessageColor] = useState(""); // State for message color
+  const [errorMessage, setErrorMessage] = useState(""); // State for nickname length error
 
   const handleNicknameChange = (e) => {
-    setNickname(e.target.value);
-    setMessage(""); // Clear message when editing
+    const value = e.target.value;
+
+    // 실시간으로 10자 제한 체크
+    if (value.length > 10) {
+      setErrorMessage("닉네임은 10자 이내로 입력해주세요.");
+    } else {
+      setErrorMessage(""); // 에러 메시지 초기화
+    }
+
+    setNickname(value);
+    setMessage(""); // Clear success/error message when editing
   };
 
   const handleSaveNickname = async () => {
+    // 닉네임 길이 초과 시 저장 방지
+    if (nickname.length > 10) {
+      setErrorMessage("닉네임은 10자 이내로 입력해주세요.");
+      return;
+    }
+
     try {
       await myPageEdit(nickname); // Update nickname
       const response = await fetchMyPage();
+      log.info(response);
       setNickname(response.data.username || ""); // Update nickname
       setMessage("변경 완료!"); // Success message
       setMessageColor("text-blue-500"); // Blue color for success
     } catch (error) {
       log.error(error);
-      setMessage("다시 시도해주세요."); // Error message
+      setMessage("이미 사용 중인 닉네임입니다."); // Error message
       setMessageColor("text-red-500"); // Red color for error
     }
   };
@@ -50,7 +67,7 @@ const MyPage = () => {
       {/* 어두운 오버레이 */}
       <div className="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
 
-      <div className="bg-white bg-opacity-90 shadow-lg rounded-lg p-6 w-full max-w-md z-10">
+      <div className="bg-white bg-opacity-85 shadow-lg rounded-lg p-6 w-full max-w-md z-10">
         <h2 className="text-xl font-semibold text-gray-800 mb-4">닉네임 정보</h2>
         <Input
           label="닉네임"
@@ -58,8 +75,12 @@ const MyPage = () => {
           value={nickname}
           onChange={handleNicknameChange}
           placeholder="닉네임 입력"
-          className="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
+        {/* 실시간 경고 메시지 */}
+        {errorMessage && (
+          <p className="text-sm text-red-500 mb-4">{errorMessage}</p>
+        )}
         <button
           onClick={handleSaveNickname}
           className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
