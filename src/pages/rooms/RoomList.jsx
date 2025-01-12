@@ -128,20 +128,35 @@ const RoomList = () => {
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full sm:w-auto">
             {userStatus === "WAITING" ? (
               <button
-                className="px-6 py-3 text-lg font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 transition w-full sm:w-auto"
+                className="relative w-64 h-20 bg-transparent border-none outline-none cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
                 onClick={(e) => navigateSafely(e, "/room/create")}
+                style={{
+                  backgroundImage: `url('/assets/new_game_button.png')`,
+                  backgroundSize: "contain",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                }}
               >
-                새로하기
+                {/* 버튼 내용은 보이지 않게 처리 */}
+                <span className="sr-only">새로하기</span>
               </button>
             ) : (
               <button
-                className="px-6 py-3 text-lg font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition w-full sm:w-auto"
+                className="relative w-64 h-20 bg-transparent border-none outline-none cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
                 onClick={handleReturn}
+                style={{
+                  backgroundImage: `url('/assets/continue_button.png')`,
+                  backgroundSize: "contain",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                }}
               >
-                이어하기
+                {/* 버튼 내용은 보이지 않게 처리 */}
+                <span className="sr-only">이어하기</span>
               </button>
             )}
           </div>
+
         </div>
 
         <div className="grid place-items-center w-full max-w-5xl">

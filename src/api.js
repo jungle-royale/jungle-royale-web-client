@@ -48,39 +48,39 @@ export const createRoom = async (roomDetails) => {
 };
 
 //방 list 생성 api(list + player 객체)
-// export const fetchRooms = async () => {
-//   return apiClient.get("/api/rooms/list");
-// };
-// 방 목록 가져오기 (임시 데이터 사용)
 export const fetchRooms = async () => {
-  const totalRooms = 150; // 총 방 개수
-  const dummyRooms = Array.from({ length: totalRooms }, (_, index) => ({
-    id: index + 1,
-    title: `임시 방 ${index + 1}`,
-    minPlayers: 2, // 최소 플레이어 수
-    maxPlayers: 10, // 최대 플레이어 수
-    currentPlayers: Math.floor(Math.random() * 10), // 현재 플레이어 수 (0 ~ 9)
-    status: index % 2 === 0 ? "playing" : "WAITING", // 방 상태 (게임 중 or 대기 중)
-    createdAt: new Date().toISOString(), // 생성 시간
-  }));
-
-  const updatedRooms = dummyRooms.map((room) => ({
-    ...room,
-    status: room.currentPlayers < room.minPlayers ? "waiting" : room.status,
-  }));
-
-  const dummyUserInfo = {
-    username: "테스트유저", // 사용자 이름
-    userStatus: "WAITING",
-  };
-
-  return {
-    data: {
-      gameRooms: updatedRooms,
-      userInfo: dummyUserInfo,
-    },
-  };
+  return apiClient.get("/api/rooms/list");
 };
+// 방 목록 가져오기 (임시 데이터 사용)
+// export const fetchRooms = async () => {
+//   const totalRooms = 150; // 총 방 개수
+//   const dummyRooms = Array.from({ length: totalRooms }, (_, index) => ({
+//     id: index + 1,
+//     title: `임시 방 ${index + 1}`,
+//     minPlayers: 2, // 최소 플레이어 수
+//     maxPlayers: 10, // 최대 플레이어 수
+//     currentPlayers: Math.floor(Math.random() * 10), // 현재 플레이어 수 (0 ~ 9)
+//     status: index % 2 === 0 ? "playing" : "WAITING", // 방 상태 (게임 중 or 대기 중)
+//     createdAt: new Date().toISOString(), // 생성 시간
+//   }));
+
+//   const updatedRooms = dummyRooms.map((room) => ({
+//     ...room,
+//     status: room.currentPlayers < room.minPlayers ? "waiting" : room.status,
+//   }));
+
+//   const dummyUserInfo = {
+//     username: "테스트유저", // 사용자 이름
+//     userStatus: "WAITING",
+//   };
+
+//   return {
+//     data: {
+//       gameRooms: updatedRooms,
+//       userInfo: dummyUserInfo,
+//     },
+//   };
+// };
 
 
 

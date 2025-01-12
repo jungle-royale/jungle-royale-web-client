@@ -31,6 +31,11 @@ const RoomCreater = () => {
         error = "게임 소요 시간은 1에서 10 사이의 값이어야 합니다.";
       }
     }
+    if (name === "roomName") {
+      if (value.length > 25) {
+        error = "방 이름은 최대 25자까지 가능합니다.";
+      }
+    }
     return error;
   };
 
@@ -45,9 +50,10 @@ const RoomCreater = () => {
 
     setErrors(newErrors);
 
-    if (name === "minPlayers") setMinPlayers(value);
-    if (name === "maxPlayers") setMaxPlayers(value);
-    if (name === "maxGameTime") setMaxGameTime(value);
+    if (name === "roomName") setRoomName(value);
+    if (name === "minPlayers") setMinPlayers(value.replace(/\D/g, '')); // 숫자만 허용
+    if (name === "maxPlayers") setMaxPlayers(value.replace(/\D/g, '')); // 숫자만 허용
+    if (name === "maxGameTime") setMaxGameTime(value.replace(/\D/g, '')); // 숫자만 허용
   };
 
   const handleCreateRoom = async () => {
@@ -55,6 +61,7 @@ const RoomCreater = () => {
     newErrors.minPlayers = validateField("minPlayers", minPlayers);
     newErrors.maxPlayers = validateField("maxPlayers", maxPlayers);
     newErrors.maxGameTime = validateField("maxGameTime", maxGameTime);
+    newErrors.roomName = validateField("roomName", roomName);
 
     if (Object.values(newErrors).some((error) => error)) {
       setErrors(newErrors);
@@ -85,81 +92,95 @@ const RoomCreater = () => {
   };
 
   return (
-<div
-  className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center relative pt-20 pb-20"
-  style={{
-    backgroundImage: `url(/assets/snowy_background.png)`,
-  }}
->
-  {/* 어두운 오버레이 */}
-  <div className="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
-
-  {/* 네모 박스를 고정 크기로 설정 */}
-  <div
-    className="shadow-lg rounded-lg px-8 py-16 z-10 relative"
-    style={{
-      backgroundImage: `url(/assets/room_create_page.png)`,
-      backgroundSize: "auto", // 이미지 크기를 고정 (반응형 비활성화)
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center",
-      width: "500px", // 고정된 너비
-      height: "500px", // 고정된 높이
-    }}
-  >
-    <div className="flex flex-col space-y-2">
-      <div>
-        <label className="block text-gray-700 font-medium mb-2">방 이름</label>
-        <input
-          type="text"
-          value={roomName}
-          onChange={(e) => setRoomName(e.target.value)}
-          placeholder="방 이름을 입력하세요(미입력 시 랜덤)"
-          className="w-full px-6 py-2 border rounded-md focus:ring-2 focus:ring-blue-400 outline-none text-lg"
-        />
-      </div>
-      <div>
-        <label className="block text-gray-700 font-medium mb-2">최소 인원</label>
-        <input
-          type="number"
-          value={minPlayers}
-          onChange={(e) => handleChange("minPlayers", e.target.value)}
-          placeholder="2 ~ 100명"
-          className={`w-full px-6 py-2 border rounded-md outline-none text-lg ${
-            errors.minPlayers ? "border-red-500" : "focus:ring-2 focus:ring-blue-400"
-          }`}
-        />
-        {errors.minPlayers && <p className="text-red-500 text-sm mt-1">{errors.minPlayers}</p>}
-      </div>
-      <div>
-        <label className="block text-gray-700 font-medium mb-2">게임 소요 시간 (분)</label>
-        <input
-          type="number"
-          value={maxGameTime}
-          onChange={(e) => handleChange("maxGameTime", e.target.value)}
-          placeholder="1 ~ 10분"
-          className={`w-full px-6 py-2 border rounded-md outline-none text-lg ${
-            errors.maxGameTime ? "border-red-500" : "focus:ring-2 focus:ring-blue-400"
-          }`}
-        />
-        {errors.maxGameTime && <p className="text-red-500 text-sm mt-1">{errors.maxGameTime}</p>}
-      </div>
-    </div>
-  </div>
-    <button
-      className="w-full bg-blue-500 text-white py-4 text-lg rounded-lg hover:bg-blue-600 transition disabled:opacity-50"
-      onClick={() => {
-        if (!isLocked) {
-          lock();
-          handleCreateRoom();
-        }
+    <div
+      className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center relative pt-20 pb-20"
+      style={{
+        backgroundImage: `url(/assets/snowy_background.png)`,
       }}
-      disabled={isLocked}
     >
-      {isLocked ? "방 생성 중..." : "방 생성"}
-    </button>
-</div>
+      {/* 어두운 오버레이 */}
+      <div className="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
 
+      {/* 네모 박스 반응형 넓이 설정 */}
+      <div
+        className="shadow-lg rounded-lg px-6 py-12 z-10 relative w-full max-w-xl md:max-w-2xl"
+        style={{
+          backgroundImage: `url(/assets/room_create_page.png)`,
+          backgroundSize: "auto",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="flex flex-col space-y-4">
+          {/* 방 이름 */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">방 이름</label>
+            <input
+              type="text"
+              value={roomName}
+              onChange={(e) => handleChange("roomName", e.target.value)}
+              placeholder="방 이름을 입력하세요(미입력 시 랜덤)"
+              className={`w-full px-4 py-2 border rounded-md outline-none text-lg ${
+                errors.roomName ? "border-red-500 focus:ring-red-400" : "focus:ring-2 focus:ring-blue-400"
+              }`}
+            />
+            {errors.roomName && <p className="text-red-500 text-sm mt-1">{errors.roomName}</p>}
+          </div>
 
+          {/* 최소 인원 */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">최소 인원</label>
+            <input
+              type="text" // 숫자만 허용
+              value={minPlayers}
+              onChange={(e) => handleChange("minPlayers", e.target.value)}
+              placeholder="2 ~ 100명"
+              className={`w-full px-4 py-2 border rounded-md outline-none text-lg ${
+                errors.minPlayers ? "border-red-500" : "focus:ring-2 focus:ring-blue-400"
+              }`}
+            />
+            {errors.minPlayers && <p className="text-red-500 text-sm mt-1">{errors.minPlayers}</p>}
+          </div>
+
+          {/* 게임 소요 시간 */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">게임 소요 시간 (분)</label>
+            <input
+              type="text" // 숫자만 허용
+              value={maxGameTime}
+              onChange={(e) => handleChange("maxGameTime", e.target.value)}
+              placeholder="1 ~ 10분"
+              className={`w-full px-4 py-2 border rounded-md outline-none text-lg ${
+                errors.maxGameTime ? "border-red-500" : "focus:ring-2 focus:ring-blue-400"
+              }`}
+            />
+            {errors.maxGameTime && <p className="text-red-500 text-sm mt-1">{errors.maxGameTime}</p>}
+          </div>
+        </div>
+      </div>
+
+      {/* 버튼과 박스 사이에 여백 추가 */}
+      <button
+        className="relative w-80 h-24 bg-transparent border-none outline-none cursor-pointer mt-6 
+                  transition-transform duration-300 ease-in-out transform hover:scale-110"
+        onClick={() => {
+          if (!isLocked) {
+            lock();
+            handleCreateRoom();
+          }
+        }}
+        disabled={isLocked}
+        style={{
+          backgroundImage: `url(${isLocked ? "/assets/loading_button.png" : "/assets/game_button.png"})`,
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+        }}
+      >
+        {/* 버튼 내용은 보이지 않게 */}
+        <span className="sr-only">{isLocked ? "방 생성 중..." : "방 생성"}</span>
+      </button>
+    </div>
   );
 };
 

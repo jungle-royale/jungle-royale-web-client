@@ -39,7 +39,7 @@ function App() {
         <LoginProvider>
           <RoomsProvider>
             <Header />
-            <main>
+            <main className="font-bagel">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />

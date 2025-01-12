@@ -41,7 +41,7 @@ const RoomCard = ({
         isJoinable ? "cursor-pointer" : "opacity-60 cursor-not-allowed"
       } ${className}`}
       style={{
-        backgroundImage: `url('/assets/roomcard.png')`, // 업로드한 이미지 경로
+        backgroundImage: `url('/assets/roomcard.png')`,
         borderRadius: "16px",
       }}
       onClick={isJoinable ? onJoin : undefined}
@@ -56,12 +56,12 @@ const RoomCard = ({
       ></div>
 
       {/* 방 이름 */}
-      <h2 className="text-lg font-bold font-game text-gray-100 text-center drop-shadow-lg">
+      <h2 className="text-xl font-bold font-bagel text-blue-900 text-center drop-shadow-lg">
         {roomName}
       </h2>
 
       {/* 플레이어 정보 */}
-      <p className="mt-2 text-sm font-game text-gray-200 text-center drop-shadow-md">
+      <p className="mt-2 text-base font-bagel text-gray-700 text-center drop-shadow-md">
         {minPlayers}인방
       </p>
     </div>
