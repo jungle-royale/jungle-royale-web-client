@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react";
-import Input from "../../components/Input.jsx"; 
-import log from 'loglevel';
+import Input from "../../components/Input.jsx";
+import log from "loglevel";
 import { fetchMyPage, myPageEdit } from "../../api.js";
 
 const MyPage = () => {
   const [nickname, setNickname] = useState("");
+  const [message, setMessage] = useState(""); // State for success/error message
+  const [messageColor, setMessageColor] = useState(""); // State for message color
 
   const handleNicknameChange = (e) => {
     setNickname(e.target.value);
+    setMessage(""); // Clear message when editing
   };
 
   const handleSaveNickname = async () => {
     try {
       await myPageEdit(nickname); // Update nickname
-      // alert("닉네임이 성공적으로 변경되었습니다."); // Success alert
       const response = await fetchMyPage();
       setNickname(response.data.username || ""); // Update nickname
+      setMessage("변경 완료!"); // Success message
+      setMessageColor("text-blue-500"); // Blue color for success
     } catch (error) {
-      // alert("닉네임 변경 중 오류가 발생했습니다.");
       log.error(error);
+      setMessage("다시 시도해주세요."); // Error message
+      setMessageColor("text-red-500"); // Red color for error
     }
   };
 
@@ -61,6 +66,10 @@ const MyPage = () => {
         >
           닉네임 저장
         </button>
+        {/* Success/Error Message */}
+        {message && (
+          <p className={`mt-2 text-sm ${messageColor}`}>{message}</p>
+        )}
       </div>
     </div>
   );
