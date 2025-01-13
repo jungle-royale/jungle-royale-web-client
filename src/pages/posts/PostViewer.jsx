@@ -47,7 +47,7 @@ const PostViewer = () => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       try {
         await deletePost(id);
-        navigateSafely(e, "/");
+        navigateSafely(e, "/posts");
       } catch (error) {
         log.error("게시물 삭제 중 오류 발생:", error.message);
         alert("게시물 삭제에 실패했습니다. 다시 시도해주세요.");

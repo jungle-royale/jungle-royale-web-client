@@ -2,13 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getPost, updatePost } from "../../api";
 import { useClickLock } from "../../contexts/ClickLockContext";
-import "./PostEditor.css";
 import log from "loglevel";
 
 const PostEditor = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  // const [post, setPost] = useState({ title: "", content: "", image: null });
   const [post, setPost] = useState({ title: "", content: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { isLocked, lock, unlock } = useClickLock();
@@ -20,7 +18,6 @@ const PostEditor = () => {
         setPost({
           title: response.data.title,
           content: response.data.content,
-          image: null,
         });
       } catch (error) {
         log.error("게시물 로드 오류:", error.message);
@@ -35,11 +32,6 @@ const PostEditor = () => {
     setPost((prev) => ({ ...prev, [name]: value }));
   };
 
-  // const handleImageChange = (event) => {
-  //   if (isLocked) return;
-  //   setPost((prev) => ({ ...prev, image: event.target.files[0] }));
-  // };
-
   const handleSubmit = async () => {
     if (isLocked) return;
     if (!post.title || !post.content) {
@@ -53,9 +45,6 @@ const PostEditor = () => {
     const formData = new FormData();
     formData.append("title", post.title);
     formData.append("content", post.content);
-    if (post.image) {
-      formData.append("image", post.image);
-    }
 
     try {
       await updatePost(id, formData);
@@ -70,42 +59,47 @@ const PostEditor = () => {
   };
 
   return (
-    <div className="postedit-container">
-      <h1 className="postedit-header">게시물 수정</h1>
-      <label className="postedit-input-label" htmlFor="title">제목</label>
-      <input
-        id="title"
-        type="text"
-        name="title"
-        value={post.title}
-        onChange={handleChange}
-        className="postedit-input"
-        placeholder="제목을 입력하세요"
-      />
-      <label className="postedit-input-label" htmlFor="content">본문</label>
-      <textarea
-        id="content"
-        name="content"
-        value={post.content}
-        onChange={handleChange}
-        className="postedit-input"
-        placeholder="본문 내용을 입력하세요"
-      />
-      {/* <div>
-        <label className="postedit-input-label">사진</label>
+    <div className="flex flex-col items-center min-h-screen pt-16">
+      <div className="w-11/12 max-w-3xl p-8 rounded-lg shadow-lg bg-white bg-opacity-80 backdrop-blur-md backdrop-brightness-125 mt-6">
+        <h1 className="text-2xl font-bold text-blue-700 mb-6 text-center">
+          게시물 수정
+        </h1>
+
+        <label htmlFor="title" className="block text-lg font-medium text-gray-800 mb-2">
+          제목
+        </label>
         <input
-          type="file"
-          onChange={handleImageChange}
-          className="postedit-input-file"
+          id="title"
+          type="text"
+          name="title"
+          value={post.title}
+          onChange={handleChange}
+          className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none mb-6"
+          placeholder="제목을 입력하세요"
         />
-      </div> */}
-      <button
-        onClick={handleSubmit}
-        disabled={isSubmitting}
-        className="postedit-button"
-      >
-        {isSubmitting ? "수정 중..." : "저장"}
-      </button>
+
+        <label htmlFor="content" className="block text-lg font-medium text-gray-800 mb-2">
+          본문
+        </label>
+        <textarea
+          id="content"
+          name="content"
+          value={post.content}
+          onChange={handleChange}
+          className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none mb-6 h-60"
+          placeholder="본문 내용을 입력하세요"
+        />
+
+        <button
+          onClick={handleSubmit}
+          disabled={isSubmitting}
+          className={`w-full py-3 text-lg font-bold text-white rounded-lg shadow-md ${
+            isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+          }`}
+        >
+          {isSubmitting ? "수정 중..." : "저장"}
+        </button>
+      </div>
     </div>
   );
 };
