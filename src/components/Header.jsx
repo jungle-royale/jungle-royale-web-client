@@ -11,7 +11,7 @@ const Header = () => {
     <header className="fixed top-0 left-0 w-full h-16 bg-white bg-opacity-75 shadow-md z-50 flex items-center px-4">
       <div className="flex items-center">
         <a href="/" onClick={(e) => navigateSafely(e, "/")} className="flex items-center">
-          <img src="/assets/headercon.png" alt="Eternal Snowman" className="h-10" />
+          <img src="/assets/headercon.png" alt="Eternal Snowman" className="h-20" />
         </a>
       </div>
       <nav className="flex items-center ml-auto space-x-4">
