@@ -98,7 +98,7 @@ const RoomList = () => {
   };
 
   const handleJoinRoom = (room) => {
-    const staticUrl = `${import.meta.env.VITE_MAIN_URL}/room/ready?roomId=${room.id}`;
+    const staticUrl = `http://eternalsnowman.com/room/ready?roomId=${room.id}`;
     setQRData(staticUrl);
     setRoomIdForNavigation(room.id);
     setQRCodeOpen(true);
