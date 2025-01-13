@@ -12,14 +12,25 @@
 .snowflake {
   position: absolute;
   top: -10px;
-  left: 50%; /* 수평 기준으로 가운데 정렬 */
-  transform: translateX(-50%); /* 중심축 보정 */
-  width: 10px;
-  height: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: white;
   border-radius: 50%;
   opacity: 0.8;
   animation: snow linear infinite;
+}
+
+.snowflake.snow {
+  background-color: white;
+  border-radius: 50%;
+}
+
+.snowflake.star {
+  width: 15px;
+  height: 15px;
+  background-image: url('/assets/star.png');
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .snow-container {
@@ -28,5 +39,5 @@
   height: 100%;
   pointer-events: none;
   overflow: hidden;
-  z-index: 9999; /* 눈 효과가 다른 요소 위에 위치 */
+  z-index: 9999;
 }
