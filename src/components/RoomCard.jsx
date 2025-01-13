@@ -56,12 +56,12 @@ const RoomCard = ({
       ></div>
 
       {/* 방 이름 */}
-      <h2 className="text-xl font-bold font-bagel text-blue-900 text-center drop-shadow-lg">
+      <h2 className="text-xl font-bold font-yonepick text-blue-900 text-center drop-shadow-lg">
         {roomName}
       </h2>
 
       {/* 플레이어 정보 */}
-      <p className="mt-2 text-base font-bagel text-gray-700 text-center drop-shadow-md">
+      <p className="mt-2 text-base font-yonepick text-gray-700 text-center drop-shadow-md">
         {minPlayers}인방
       </p>
     </div>

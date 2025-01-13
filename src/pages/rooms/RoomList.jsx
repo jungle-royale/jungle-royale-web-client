@@ -3,6 +3,7 @@ import { fetchRooms, returnRoom } from "../../api";
 import useSafeNavigation from "../../hooks/useSafeNavigation";
 import Modal from "../../components/Modal";
 import RoomCard from "../../components/RoomCard";
+// import StompChat from "../../components/StompChat";
 import QRcode from "../../utils/QRcode";
 import isEqual from "lodash/isEqual";
 // import LogoutIcon from "../../components/LogoutIcon";
@@ -105,30 +106,28 @@ const RoomList = () => {
 
   return (
     <div
-      className={`relative flex flex-col pt-16 items-center min-h-screen bg-container bg-center`}
-      style={{ backgroundColor: "#A0D8EF" }}
+    className="relative flex flex-col pt-16 items-center min-h-screen bg-cover bg-center"
+    style={{
+      // backgroundImage: "url('/assets/ocean.gif')",
+    }}
     >
-      <div className="absolute inset-0 bg-black bg-opacity-10 z-0"></div>
+      {/* <div className="absolute inset-0 bg-black bg-opacity-50 z-0"></div> */}
 
       <div className="z-10 w-full max-w-5xl p-6">
-        {/* <div className="absolute -top-6 right-4">
-          <LogoutIcon />
-        </div> */}
-
-        <div className="flex flex-col sm:flex-row items-start sm:items-center mb-6 p-6 bg-[#107D9C] bg-opacity-30 border border-gray-300 rounded-lg shadow-lg h-auto">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center mb-6 p-4 bg-[#107D9C] bg-opacity-80 border border-gray-300 rounded-lg shadow-lg h-auto">
           <img
             src="/assets/icon.png"
             alt="프로필 이미지"
             className="w-20 h-20 rounded-full mr-6"
           />
           <div className="flex-1 mb-4 sm:mb-0">
-            <p className="text-3xl font-bold text-blue-900">{userName}님</p>
-            <p className="text-lg text-gray-700">현재 랭킹: 123위</p>
+            <p className="text-3xl font-bold text-blue-200">{userName}</p>
+            {/* <p className="text-lg text-gray-700">현재 랭킹: 123위</p> */}
           </div>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full sm:w-auto">
             {userStatus === "WAITING" ? (
               <button
-                className="relative w-64 h-20 bg-transparent border-none outline-none cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
+                className="w-64 h-20 bg-transparent border-none outline-none cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
                 onClick={(e) => navigateSafely(e, "/room/create")}
                 style={{
                   backgroundImage: `url('/assets/new_game_button.png')`,
@@ -156,33 +155,34 @@ const RoomList = () => {
               </button>
             )}
           </div>
-
         </div>
-
         <div className="grid place-items-center w-full max-w-5xl">
-        <div
-          className={`w-full bg-[#107D9C] bg-opacity-90 border border-gray-300 shadow-lg rounded-lg p-6 transform transition-transform duration-700 ${
-            isLoaded ? "translate-y-0" : "translate-y-full"
-          } overflow-y-auto scrollbar-hidden`} // 추가된 클래스
-          style={{
-            height: "calc(100vh - 250px)", // 최대 높이 화면의 70%
-          }}
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {rooms.map((room) => (
-              <RoomCard
-                key={room.id}
-                roomName={room.title}
-                minPlayers={room.minPlayers}
-                maxPlayers={room.maxPlayers}
-                isPlaying={room.status}
-                onJoin={() => handleJoinRoom(room)}
-              />
-            ))}
+          <div
+            className={`w-full bg-[#107D9C] bg-opacity-90 border border-gray-300 shadow-lg rounded-lg p-6 transform transition-transform duration-700 ${
+              isLoaded ? "translate-y-0" : "translate-y-full"
+            } overflow-y-auto scrollbar-hidden`} // 추가된 클래스
+            style={{
+              height: "calc(100vh - 250px)",
+            }}
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {rooms.map((room) => (
+                <RoomCard
+                  key={room.id}
+                  roomName={room.title}
+                  minPlayers={room.minPlayers}
+                  maxPlayers={room.maxPlayers}
+                  isPlaying={room.status}
+                  onJoin={() => handleJoinRoom(room)}
+                />
+              ))}
+            </div>
           </div>
         </div>
-
-        </div>
+        {/* 채팅창 추가 */}
+        {/* <div className="mt-4 w-full bg-white border rounded-lg shadow-lg">
+          <StompChat nickname={userName} />
+        </div> */}
       </div>
 
       <Modal isOpen={isQRCodeOpen} onClose={() => setQRCodeOpen(false)}>
