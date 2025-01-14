@@ -19,7 +19,7 @@ import PostViewer from "./pages/posts/PostViewer";
 import PostCreator from "./pages/posts/PostCreator";
 import PostEditor from "./pages/posts/PostEditor";
 import RoomCreater from "./pages/rooms/RoomCreater";
-
+import { useEffect } from "react";
 
 // Initialize loglevel
 if (import.meta.env.VITE_NODE_ENV === 'production') {
@@ -31,6 +31,22 @@ if (import.meta.env.VITE_NODE_ENV === 'production') {
 log.info("Application started");
 
 function App() {
+  useEffect(() => {
+    const preventDragHandler = (event) => {
+      event.preventDefault();
+    };
+    const preventContextMenuHandler = (event) => {
+      event.preventDefault();
+    }
+
+    window.addEventListener("dragstart", preventDragHandler);
+    window.addEventListener("contextmenu", preventContextMenuHandler);
+
+    return () => {
+      window.removeEventListener("dragstart", preventDragHandler);
+      window.removeEventListener("contextmenu", preventContextMenuHandler);
+    }
+  }, []);
 
   return (
     <>
