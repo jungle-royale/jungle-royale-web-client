@@ -3,7 +3,7 @@ import { fetchRooms, returnRoom } from "../../api";
 import useSafeNavigation from "../../hooks/useSafeNavigation";
 import Modal from "../../components/Modal";
 import RoomCard from "../../components/RoomCard";
-import StompChat from "../../components/StompChat";
+import StompChat from "../../components/chat/StompChat";
 import QRcode from "../../utils/QRcode";
 import isEqual from "lodash/isEqual";
 // import LogoutIcon from "../../components/LogoutIcon";
@@ -106,10 +106,10 @@ const RoomList = () => {
 
   return (
     <div
-    className="relative flex flex-col pt-16 items-center min-h-screen bg-cover bg-center"
+    className="flex flex-col pt-16 items-center min-h-[100dvh] bg-cover bg-center"
     >
       <div className="z-10 w-full max-w-5xl p-6">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center mb-6 p-4 bg-[#107D9C] bg-opacity-80 border border-gray-300 rounded-lg shadow-lg h-auto">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center mb-3 p-4 bg-[#107D9C] bg-opacity-80 border border-gray-300 rounded-lg shadow-lg h-auto">
           <img
             src="/assets/icon.png"
             alt="프로필 이미지"
@@ -137,7 +137,7 @@ const RoomList = () => {
               </button>
             ) : (
               <button
-                className="relative w-64 h-20 bg-transparent border-none outline-none cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
+                className="w-64 h-20 bg-transparent border-none outline-none cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
                 onClick={handleReturn}
                 style={{
                   backgroundImage: `url('/assets/continue_button.png')`,
@@ -183,7 +183,7 @@ const RoomList = () => {
           </div>
         </div>
         {/* 채팅창 추가 */}
-        <div className="mt-4 w-full bg-white border rounded-lg shadow-lg">
+        <div className="mt-3 w-full bg-white border rounded-lg shadow-lg">
           <StompChat nickname={userName} />
         </div>
       </div>
