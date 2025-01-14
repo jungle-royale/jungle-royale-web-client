@@ -40,8 +40,8 @@ const Home = () => {
       }}
     >
       <Snowfall />
-      <div className="flex flex-col items-center justify-center h-full bg-black bg-opacity-50 text-center">
-        <div className="mb-8 max-w-[400px] w-[30%] min-w-[150px]">
+      <div className="flex flex-col items-center justify-center pt-16 h-full bg-black bg-opacity-50 text-center">
+        <div className="pb-8 max-w-[400px] w-[30%] min-w-[150px]">
           <img
             src="/assets/home_logo.png"
             alt="Game Logo"
