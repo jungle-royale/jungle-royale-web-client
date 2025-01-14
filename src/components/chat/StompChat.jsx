@@ -2,16 +2,21 @@ import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import log from 'loglevel';
 
+// const MAX_SCORE = 5;
+// const SCORE_DECREASE_INTERVAL = 3000;
+// const SCORE_AMOUNT = 1;
+
+
 const StompChat = ({ nickname }) => {
   const SERVER_URL = import.meta.env.VITE_WS_SERVER;
 
   const [wsClient, setWsClient] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(''); 
   const [newMessagesCount, setNewMessagesCount] = useState(0);
   const messagesEndRef = useRef(null);
   const chatMessagesRef = useRef(null);
-  const [isUserAtBottom, setIsUserAtBottom] = useState(true);
+  const isUserAtBottomRef = useRef(true); 
 
   useEffect(() => {
     const client = new WebSocket(SERVER_URL);
@@ -29,7 +34,7 @@ const StompChat = ({ nickname }) => {
         return [...prev, { content, sender, id }];
       });
 
-      if (!isUserAtBottom) {
+      if (!isUserAtBottomRef.current) {
         setNewMessagesCount((prevCount) => prevCount + 1);
       }
     };
@@ -49,7 +54,7 @@ const StompChat = ({ nickname }) => {
   }, []);
 
   useLayoutEffect(() => {
-    if (isUserAtBottom) {
+    if (isUserAtBottomRef.current) {
       scrollToBottom();
     }
   }, [messages]);
@@ -64,15 +69,15 @@ const StompChat = ({ nickname }) => {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
     setNewMessagesCount(0);
-    setIsUserAtBottom(true);
+    isUserAtBottomRef.current = true; // Ref 업데이트
   };
 
   const handleScroll = () => {
     if (isAtBottom()) {
-      setIsUserAtBottom(true);
-      setNewMessagesCount(0);
+      isUserAtBottomRef.current = true; // Ref 업데이트
+      setNewMessagesCount(0); // 리렌더링 최소화
     } else {
-      setIsUserAtBottom(false);
+      isUserAtBottomRef.current = false; // Ref 업데이트
     }
   };
 
@@ -87,14 +92,19 @@ const StompChat = ({ nickname }) => {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      sendMessage();
+      if(e.nativeEvent.isComposing){
+        return;
+      }
+      if (message.trim()) {
+        sendMessage();
+      }
     }
   };
 
   return (
     <div className="flex flex-col h-full max-h-[500px] w-full bg-gray-100 border rounded-lg shadow-md">
       <div
-        className="flex-1 overflow-y-auto p-4 space-y-2 bg-white border-b" 
+        className="flex-1 overflow-y-auto p-4 space-y-2 bg-white border-b"
         ref={chatMessagesRef}
         onScroll={handleScroll}
       >
@@ -112,7 +122,7 @@ const StompChat = ({ nickname }) => {
         ))}
         <div ref={messagesEndRef} />
       </div>
-      {!isUserAtBottom && newMessagesCount > 0 && (
+      {!isUserAtBottomRef.current && newMessagesCount > 0 && (
         <div
           className="absolute bottom-20 left-1/2 transform -translate-x-1/2 bg-yellow-500 text-white text-sm py-1 px-3 rounded-full cursor-pointer shadow-md"
           onClick={scrollToBottom}

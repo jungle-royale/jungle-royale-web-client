@@ -62,74 +62,77 @@ const Post = () => {
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center pt-20 pb-10"
+      className="min-h-[100dvh] bg-cover bg-center"
       style={{ backgroundImage: `url(/assets/snowy_background.png)` }}
     >
       {/* 어두운 오버레이 */}
       <div className="absolute inset-0 bg-black bg-opacity-30 z-0"></div>
 
-      <div className="relative max-w-5xl mx-auto p-6 bg-white bg-opacity-90 rounded-lg shadow-lg z-10">
-        <div className="mb-6 text-center">
-          <h1 className="text-3xl font-bold text-gray-800">게시판</h1>
-          <h3 className="text-lg text-gray-600">소중한 의견을 남겨주세요!</h3>
-          {isLogin && (
-            <button
-              onClick={(e) => navigateSafely(e, "/post-creator")}
-              className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
-            >
-              글쓰기
-            </button>
-          )}
-        </div>
-        {posts.length > 0 ? (
-          <ul className="divide-y divide-gray-200">
-            <li className="flex justify-between px-4 py-2 font-bold bg-gray-200">
-              <div className="w-1/12 text-center">번호</div>
-              <div className="w-11/12">제목</div>
-            </li>
-            {posts.map((post, index) => {
-              const postNumber = (currentPage - 1) * postsPerPage + index + 1;
-              return (
-                <li
-                  key={post.id}
-                  className="flex justify-between px-4 py-2 hover:bg-gray-100 transition"
-                >
-                  <div className="w-1/12 text-center">{postNumber}</div>
-                  <div className="w-11/12">
-                    <div
-                      onClick={(e) => navigateSafely(e, `/posts/${post.id}`)}
-                      className="text-blue-500 hover:underline cursor-pointer"
-                    >
-                      {post.title}
-                    </div>
-                    <div className="text-sm text-gray-500">
-                      {post.username} | {formatDate(post.createdAt)}
-                    </div>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <p className="text-center text-gray-500">게시물이 없습니다.</p>
-        )}
-        <div className="flex justify-center mt-6">
-          {totalPages > 1 &&
-            [...Array(totalPages)].map((_, index) => (
+      <div className="min-h-[100dvh] pt-20">
+        <div className="relative max-w-5xl mx-auto p-6 bg-white bg-opacity-90 rounded-lg shadow-lg z-10">
+          <div className="mb-6 text-center">
+            <h1 className="text-3xl font-bold text-gray-800">게시판</h1>
+            <h3 className="text-lg text-gray-600">소중한 의견을 남겨주세요!</h3>
+            {isLogin && (
               <button
-                key={index}
-                className={`mx-1 px-3 py-1 rounded-full ${
-                  currentPage === index + 1
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200 text-gray-700"
-                } hover:bg-blue-400 hover:text-white transition`}
-                onClick={() => handlePageChange(index + 1)}
+                onClick={(e) => navigateSafely(e, "/post-creator")}
+                className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
               >
-                {index + 1}
+                글쓰기
               </button>
-            ))}
+            )}
+          </div>
+          {posts.length > 0 ? (
+            <ul className="divide-y divide-gray-200">
+              <li className="flex justify-between px-4 py-2 font-bold bg-gray-200">
+                <div className="w-2/12 min-w-[40px] text-center">번호</div>
+                <div className="w-10/12 min-w-[220px]">제목</div>
+              </li>
+              {posts.map((post, index) => {
+                const postNumber = (currentPage - 1) * postsPerPage + index + 1;
+                return (
+                  <li
+                    key={post.id}
+                    className="flex justify-between px-4 py-2 hover:bg-gray-100 transition"
+                  >
+                    <div className="w-2/12 min-w-[40px] text-center">{postNumber}</div>
+                    <div className="w-10/12 min-w-[220px]">
+                      <div
+                        onClick={(e) => navigateSafely(e, `/posts/${post.id}`)}
+                        className="text-blue-500 hover:underline cursor-pointer"
+                      >
+                        {post.title}
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        {post.username} | {formatDate(post.createdAt)}
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <p className="text-center text-gray-500">게시물이 없습니다.</p>
+          )}
+          <div className="flex justify-center mt-6">
+            {totalPages > 1 &&
+              [...Array(totalPages)].map((_, index) => (
+                <button
+                  key={index}
+                  className={`mx-1 px-3 py-1 rounded-full ${
+                    currentPage === index + 1
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-200 text-gray-700"
+                  } hover:bg-blue-400 hover:text-white transition`}
+                  onClick={() => handlePageChange(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              ))}
+          </div>
         </div>
       </div>
+
     </div>
   );
 };
