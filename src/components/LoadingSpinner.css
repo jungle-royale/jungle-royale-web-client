@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh; /* 화면 전체를 덮음 */
-  background-color: rgba(255, 255, 255, 0.8); /* 살짝 투명한 배경 */
+  background-color: rgb(255, 255, 255, 0);
 }
 
 .spinner {
