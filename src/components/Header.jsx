@@ -3,7 +3,7 @@ import useAuthHandlers from "../hooks/useAuthHandlers";
 import useSafeNavigation from "../hooks/useSafeNavigation";
 
 const Header = () => {
-  const { isLogin, userRole } = useLoginContext();
+  const { isLogin } = useLoginContext();
   const { handleLogout } = useAuthHandlers();
   const { navigateSafely } = useSafeNavigation();
 
@@ -57,15 +57,13 @@ const Header = () => {
               >
                 로그아웃
               </button>
-              {userRole === "MEMBER" && (
-                <a
-                  href="/mypage"
-                  onClick={(e) => navigateSafely(e, "/mypage")}
-                  className="text-sm font-medium text-gray-700 hover:text-blue-600"
-                >
-                  마이페이지
-                </a>
-              )}
+              <a
+                href="/mypage"
+                onClick={(e) => navigateSafely(e, "/mypage")}
+                className="text-sm font-medium text-gray-700 hover:text-blue-600"
+              >
+                마이페이지
+              </a>
             </>
           ) : (
             <a

@@ -8,6 +8,8 @@ const MyPage = () => {
   const [message, setMessage] = useState(""); // State for success/error message
   const [messageColor, setMessageColor] = useState(""); // State for message color
   const [errorMessage, setErrorMessage] = useState(""); // State for nickname length error
+  const [gift, setGift] = useState(null); // 서버에서 받은 선물 데이터
+  // const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
 
   const handleNicknameChange = (e) => {
     const value = e.target.value;
@@ -18,7 +20,6 @@ const MyPage = () => {
     } else {
       setErrorMessage(""); // 에러 메시지 초기화
     }
-
     setNickname(value);
     setMessage(""); // Clear success/error message when editing
   };
@@ -44,11 +45,16 @@ const MyPage = () => {
     }
   };
 
+  // const handleOpenModal = () => setIsModalOpen(true);
+  // const handleCloseModal = () => setIsModalOpen(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetchMyPage();
+        log.info("First Response:", response);
         setNickname(response.data.username || "");
+        setGift(response.data.gift || null); // gift 데이터 설정
       } catch (error) {
         log.error("마이페이지 데이터를 불러오는 중 오류 발생:", error);
       }
@@ -91,7 +97,53 @@ const MyPage = () => {
         {message && (
           <p className={`mt-2 text-sm ${messageColor}`}>{message}</p>
         )}
+        <div>
+          {/* 선물 URL */}
+          {gift && (
+            <div className="mt-4 bg-white">
+              <p className="text-lg text-gray-700">
+                선물 URL:{" "}
+                <a
+                  href={gift}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 underline hover:text-blue-700"
+                  style={{ pointerEvents: "auto" }} // 클릭 가능하도록 명시적으로 설정
+                >
+                  {gift}
+                </a>
+              </p>
+            </div>
+          )}
+        </div>
       </div>
+      {/* {gift && (
+          <button
+            onClick={handleOpenModal}
+            className="mt-4 w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition"
+          >
+            선물함 열기
+          </button>
+        )} */}
+      {/* {isModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          onClick={handleCloseModal}
+        >
+          <div
+            className="bg-white rounded-lg p-4 max-w-md w-full relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="absolute top-2 right-2 text-xl text-gray-500 hover:text-gray-800"
+              onClick={handleCloseModal}
+            >
+              &times;
+            </button>
+            {gift ? <img src={gift} alt="선물 이미지" className="w-full" /> : null}
+          </div>
+        </div>
+      )} */}
     </div>
   );
 };

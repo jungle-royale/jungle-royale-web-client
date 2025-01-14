@@ -5,7 +5,6 @@ import log from 'loglevel';
 
 const RoomCreater = () => {
   const [roomName, setRoomName] = useState('');
-  const [maxPlayers] = useState('');
   const [minPlayers, setMinPlayers] = useState('');
   const [maxGameTime, setMaxGameTime] = useState('');
   const [errors, setErrors] = useState({});
@@ -21,6 +20,11 @@ const RoomCreater = () => {
 
   const validateField = (name, value) => {
     let error = "";
+    if (name === "roomName") {
+      if (value.length > 15) {
+        error = "방 이름은 최대 15자까지 가능합니다.";
+      }
+    }
     if (name === "minPlayers") {
       if (!value || parseInt(value, 10) < 2 || parseInt(value, 10) > 100) {
         error = "최소 인원은 2에서 100 사이의 값이어야 합니다.";
@@ -29,11 +33,6 @@ const RoomCreater = () => {
     if (name === "maxGameTime") {
       if (!value || parseInt(value, 10) < 1 || parseInt(value, 10) > 10) {
         error = "게임 소요 시간은 1에서 10 사이의 값이어야 합니다.";
-      }
-    }
-    if (name === "roomName") {
-      if (value.length > 15) {
-        error = "방 이름은 최대 15자까지 가능합니다.";
       }
     }
     return error;
@@ -58,7 +57,6 @@ const RoomCreater = () => {
   const handleCreateRoom = async () => {
     const newErrors = {};
     newErrors.minPlayers = validateField("minPlayers", minPlayers);
-    newErrors.maxPlayers = validateField("maxPlayers", maxPlayers);
     newErrors.maxGameTime = validateField("maxGameTime", maxGameTime);
     newErrors.roomName = validateField("roomName", roomName);
 
