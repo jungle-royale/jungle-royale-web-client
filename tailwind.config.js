@@ -28,6 +28,13 @@ export default {
   plugins: [
     forms, // 플러그인 추가
     tailwindScrollbarHide, // 플러그인 설치 후 적용
-
+    function ({ addUtilities }) {
+      addUtilities({
+        '.drag-none': {
+          '-webkit-user-drag': 'none',
+          'user-drag': 'none',
+        },
+      });
+    },
   ],
 };

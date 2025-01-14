@@ -34,7 +34,7 @@ const Home = () => {
 
   return (
     <div
-      className="bg-cover bg-center bg-fixed min-h-[100dvh]"
+      className="bg-cover bg-center bg-fixed min-h-[100dvh] drag-none select-none"
       style={{
         backgroundImage: `url(/assets/background.png)`,
       }}
