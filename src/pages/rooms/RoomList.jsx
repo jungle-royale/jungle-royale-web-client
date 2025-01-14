@@ -8,6 +8,7 @@ import QRcode from "../../utils/QRcode";
 import isEqual from "lodash/isEqual";
 // import LogoutIcon from "../../components/LogoutIcon";
 import log from "loglevel";
+import LoadingSpinner from "../../components/LoadingSpinner"; // 스피너 컴포넌트 import
 
 const RoomList = () => {
   const [rooms, setRooms] = useState([]);
@@ -17,7 +18,8 @@ const RoomList = () => {
   const [qrData, setQRData] = useState("");
   const [roomIdForNavigation, setRoomIdForNavigation] = useState("");
   const { navigateSafely } = useSafeNavigation();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false); // 로딩 상태
+  const [isDataLoading, setIsDataLoading] = useState(true); // 데이터 로딩 상태
   const [jwtToken, setJwtToken] = useState(null);
 
   useEffect(() => {
@@ -34,6 +36,7 @@ const RoomList = () => {
 
       if (!token) {
         log.info("JWT 토큰이 없습니다. API 호출을 건너뜁니다.");
+        setIsDataLoading(false); // 로딩 종료
         return;
       }
 
@@ -64,8 +67,10 @@ const RoomList = () => {
           }
           setUserName(newUserName);
           setUserStatus(newUserStatus);
+          setIsDataLoading(false); // 데이터 로드 완료
         } catch (error) {
           log.error("방 목록을 불러오는 중 오류 발생:", error);
+          setIsDataLoading(false); // 오류 발생 시 로딩 종료
         }
       };
 
@@ -104,9 +109,18 @@ const RoomList = () => {
     setQRCodeOpen(true);
   };
 
+  if (!isLoaded || isDataLoading) {
+    // 로딩 상태라면 스피너를 표시
+    return (
+      <div className="flex items-center justify-center min-h-[100dvh] bg-black bg-opacity-50">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
   return (
     <div
-    className="flex flex-col pt-16 items-center min-h-[100dvh] bg-cover bg-center"
+      className="flex flex-col pt-16 items-center min-h-[100dvh] bg-cover bg-center"
     >
       <div className="z-10 w-full max-w-5xl p-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center mb-3 p-4 bg-[#107D9C] bg-opacity-80 border border-gray-300 rounded-lg shadow-lg h-auto">
@@ -117,11 +131,9 @@ const RoomList = () => {
           />
           <div className="flex-1 mb-4 sm:mb-0">
             <p className="text-3xl font-bold text-blue-200">{userName}</p>
-            {/* <p className="text-lg text-gray-700">현재 랭킹: 123위</p> */}
           </div>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full sm:w-auto">
             {userStatus === "WAITING" ? (
-              
               <button
                 className="w-64 h-20 bg-transparent border-none outline-none cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
                 onClick={(e) => navigateSafely(e, "/room/create")}
@@ -132,7 +144,6 @@ const RoomList = () => {
                   backgroundPosition: "center",
                 }}
               >
-                {/* 버튼 내용은 보이지 않게 처리 */}
                 <span className="sr-only">새로하기</span>
               </button>
             ) : (
@@ -146,7 +157,6 @@ const RoomList = () => {
                   backgroundPosition: "center",
                 }}
               >
-                {/* 버튼 내용은 보이지 않게 처리 */}
                 <span className="sr-only">이어하기</span>
               </button>
             )}
@@ -156,17 +166,17 @@ const RoomList = () => {
           <div
             className={`w-full bg-[#107D9C] bg-opacity-90 border border-gray-300 shadow-lg rounded-lg p-6 transform transition-transform duration-700 ${
               isLoaded ? "translate-y-0" : "translate-y-full"
-            } overflow-y-auto scrollbar-hidden`} // 추가된 클래스
+            } overflow-y-auto scrollbar-hidden`}
             style={{
               height: "calc(100vh - 400px)",
             }}
           >
             {rooms.length === 0 ? (
               <div className="text-center text-white text-lg font-medium">
-                생성된 방이 없습니다.<br/>
+                생성된 방이 없습니다.<br />
                 방을 생성해주세요.
               </div>
-              ) : (
+            ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {rooms.map((room) => (
                   <RoomCard
@@ -182,7 +192,6 @@ const RoomList = () => {
             )}
           </div>
         </div>
-        {/* 채팅창 추가 */}
         <div className="mt-3 w-full bg-white border rounded-lg shadow-lg">
           <StompChat nickname={userName} />
         </div>
