@@ -39,6 +39,12 @@ apiClient.interceptors.request.use(
     // config.skipAuth가 true인 경우 Authorization 헤더 추가하지 않음
     if (!config.skipAuth) {
       const token = localStorage.getItem("jwt_token");
+      
+      // ReturnRoom 요청에 대한 로그 추가
+      if (config.isReturnRoom) {
+        log.info("Return api 요청 시 token 확인", token);
+      }
+
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }

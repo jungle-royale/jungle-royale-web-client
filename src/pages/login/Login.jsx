@@ -38,7 +38,11 @@ const Login = () => {
               />
               {/* 비회원 로그인 텍스트 */}
               <div className="text-gray-600 text-base">
-                <span className="hidden sm:inline">회원이 아니신가요? </span>
+                <span
+                  className="hidden sm:inline"
+                >
+                  회원이 아니신가요?
+                </span>
                 <span
                   className="text-blue-500 cursor-pointer hover:underline"
                   onClick={() => {

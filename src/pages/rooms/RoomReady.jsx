@@ -64,7 +64,7 @@ const RoomReady = () => {
   if (loading) {
     return (
       <div className="room-ready-main">
-        <h1>대기 페이지</h1>
+        <h1>대기 중</h1>
         <p>{roomId}번 방 입장 여부를 확인 중입니다...</p>
       </div>
     );
