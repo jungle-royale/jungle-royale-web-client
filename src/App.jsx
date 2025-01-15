@@ -20,6 +20,7 @@ import PostViewer from "./pages/posts/PostViewer";
 import PostCreator from "./pages/posts/PostCreator";
 import PostEditor from "./pages/posts/PostEditor";
 import RoomCreater from "./pages/rooms/RoomCreater";
+  import PreloadImages from './components/PreloadImages';
 
 // Initialize loglevel
 if (import.meta.env.VITE_NODE_ENV === 'production') {
@@ -30,11 +31,19 @@ if (import.meta.env.VITE_NODE_ENV === 'production') {
 
 log.info("Application started");
 
+
+// const App = () => (
+//   <PreloadImages>
+//     <YourMainComponent />
+//   </PreloadImages>
+// );
+
 function App() {
+
   useGlobalEventHandler();
 
   return (
-    <>
+    <PreloadImages>
       <ScrollToTop />
       <ClickLockProvider>
         <LoginProvider>
@@ -59,7 +68,7 @@ function App() {
           </RoomsProvider>
         </LoginProvider>
       </ClickLockProvider>
-    </>
+    </PreloadImages>
   );
   
   
