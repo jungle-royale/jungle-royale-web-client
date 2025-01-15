@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import {jwtDecode} from "jwt-decode"
 import log from 'loglevel';
 
-
-
 const useJwtField  = (token, field) => {
   const [value, setValue] = useState(null);
 

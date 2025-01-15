@@ -10,7 +10,7 @@ const useGlobalEventHandler = () => {
     }
     // const preventSelectionHandler = (event) => {
     //   event.preventDefault();
-    // }
+    // } // 입력칸 오류로 인해 제거 예정
   
     window.addEventListener("dragstart", preventDragHandler); //드래그 방지
     // window.addEventListener("mousedown", preventSelectionHandler);  //드래그 방지
