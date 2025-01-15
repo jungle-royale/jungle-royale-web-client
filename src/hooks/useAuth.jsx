@@ -31,11 +31,12 @@ export const useAuth = () => {
     try {
       // API 호출
       const data = await loginGuest(authCode);
+      log.info("비회원 로그인 data", data);
 
       // Context 업데이트
       setIsLogin(true);
       setJwtToken(data.jwtToken);
-      setUserRole("guest");
+      setUserRole(data.role);
 
       // 로컬 스토리지 업데이트
       localStorage.setItem("isLogin", "true");

@@ -82,7 +82,7 @@ const RoomList = () => {
       loadRooms();
       intervalId = setInterval(() => {
         loadRooms();
-      }, 10000);
+      }, 10000000000); //데이터 로드 시간
     };
 
     checkJwtAndFetchRooms();
@@ -115,6 +115,7 @@ const RoomList = () => {
     }
 
     const staticUrl = `${import.meta.env.VITE_BASE_URL}/room/ready?roomId=${room.id}`;
+    log.info("QR url 출력", staticUrl);
     setQRData(staticUrl);
     setRoomIdForNavigation(room.id);
     setQRCodeOpen(true);
