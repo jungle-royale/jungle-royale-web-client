@@ -2,13 +2,15 @@ import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLoginContext } from "../../contexts/LoginContext";
 import { joinRoomAvailability } from "../../api"; // 방 입장 가능 여부 API
+import { useAuth } from "../../hooks/useAuth";
+import log from "loglevel";
 import "./RoomReady.css"
 
 const RoomReady = () => {
   const [searchParams] = useSearchParams();
   const roomId = searchParams.get("roomId");
   const { isLogin, jwtToken } = useLoginContext(); // 로그인 상태 확인
-  // const navigate = useNavigate();
+  const { loginGuestContext } = useAuth();
   const [loading, setLoading] = useState(true); // 로딩 상태
   const [error, setError] = useState(null); // 에러 메시지 상태
 
@@ -16,8 +18,14 @@ const RoomReady = () => {
   useEffect(() => {
     const checkRoomAvailability = async () => {
       try {
+        if(!jwtToken){
+          log.info("JWT토큰 없음. 비회원 로그인 시도");
+          await loginGuestContext();
+        }
+
         // 방 입장 가능 여부 확인
         const response = await joinRoomAvailability(roomId);
+        log.info("ReadyRoom 진입", response);
         if (response) {
           // 방 입장이 가능하면 게임 URL로 리다이렉트
           window.history.replaceState(null, "", "/room"); // 뒤로가기를 눌렀을 때 방 리스트로 이동
@@ -56,7 +64,7 @@ const RoomReady = () => {
   if (loading) {
     return (
       <div className="room-ready-main">
-        <h1>대기 페이지</h1>
+        <h1>대기 중</h1>
         <p>{roomId}번 방 입장 여부를 확인 중입니다...</p>
       </div>
     );

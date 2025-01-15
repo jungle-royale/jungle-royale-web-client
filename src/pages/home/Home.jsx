@@ -36,7 +36,7 @@ const Home = () => {
     <div
       className="bg-cover bg-center bg-fixed min-h-[100dvh] drag-none select-none"
       style={{
-        backgroundImage: `url(/assets/background.png)`,
+        backgroundImage: `url(/assets/background.webp)`,
       }}
     >
       <Snowfall />

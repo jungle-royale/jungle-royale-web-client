@@ -3,7 +3,7 @@ import { fetchRooms, returnRoom } from "../../api";
 import useSafeNavigation from "../../hooks/useSafeNavigation";
 import Modal from "../../components/Modal";
 import RoomCard from "../../components/RoomCard";
-import StompChat from "../../components/chat/StompChat";
+// import StompChat from "../../components/chat/StompChat";
 import QRcode from "../../utils/QRcode";
 import isEqual from "lodash/isEqual";
 // import LogoutIcon from "../../components/LogoutIcon";
@@ -82,7 +82,7 @@ const RoomList = () => {
       loadRooms();
       intervalId = setInterval(() => {
         loadRooms();
-      }, 10000);
+      }, 10000000000); //데이터 로드 시간
     };
 
     checkJwtAndFetchRooms();
@@ -115,6 +115,7 @@ const RoomList = () => {
     }
 
     const staticUrl = `${import.meta.env.VITE_BASE_URL}/room/ready?roomId=${room.id}`;
+    log.info("QR url 출력", staticUrl);
     setQRData(staticUrl);
     setRoomIdForNavigation(room.id);
     setQRCodeOpen(true);
@@ -179,7 +180,7 @@ const RoomList = () => {
               isLoaded ? "translate-y-0" : "translate-y-full"
             } overflow-y-auto scrollbar-hidden`}
             style={{
-              height: "calc(100vh - 400px)",
+              height: "calc(100vh - 300px)",
             }}
           >
             {rooms.length === 0 ? (
@@ -203,9 +204,9 @@ const RoomList = () => {
             )}
           </div>
         </div>
-        <div className="mt-3 w-full bg-white border rounded-lg shadow-lg">
+        {/* <div className="mt-3 w-full bg-white border rounded-lg shadow-lg">
           <StompChat nickname={userName} />
-        </div>
+        </div> */}
       </div>
 
       <Modal isOpen={isQRCodeOpen} onClose={() => setQRCodeOpen(false)}>

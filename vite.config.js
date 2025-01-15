@@ -1,12 +1,19 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
+// import preload from 'vite-plugin-preload';
+
 
 export default defineConfig(({ mode }) => {
   // 환경 변수 로드
   const env = loadEnv(mode, './');
 
   return {
-    plugins: [react()],
+    plugins: [
+      react(),
+      // preload({
+      //   include: ["**/*.png", "**/*.jpg", "**/*.jpeg", "**/*.webp"],
+      // }),
+    ],
     css: {
       postcss: './postcss.config.cjs', // PostCSS 설정 파일 경로
     },

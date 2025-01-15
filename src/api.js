@@ -90,7 +90,10 @@ export const joinRoomAvailability = async (roomId) => {
 
 //방 돌아가기 api
 export const returnRoom = async () => {
-  const response = await apiClient.post(`/api/game/return`, {});
+  log.info("Return api 콘솔 출력")
+  const response = await apiClient.post(`/api/game/return`, {}, {
+    isReturnRoom: true, // 커스텀 플래그 추가
+  });
   return response.data; 
 };
 
