@@ -14,8 +14,13 @@ const RoomList = () => {
   const [rooms, setRooms] = useState([]);
   const [userName, setUserName] = useState("");
   const [userStatus, setUserStatus] = useState("");
+  //QRmodal
   const [isQRCodeOpen, setQRCodeOpen] = useState(false);
   const [qrData, setQRData] = useState("");
+  //진입 실패 modal
+  const [isWarningModalOpen, setWarningModalOpen] = useState(false);
+  const [warningMessage, setWarningMessage] = useState("");
+
   const [roomIdForNavigation, setRoomIdForNavigation] = useState("");
   const { navigateSafely } = useSafeNavigation();
   const [isLoaded, setIsLoaded] = useState(false); // 로딩 상태
@@ -103,6 +108,12 @@ const RoomList = () => {
   };
 
   const handleJoinRoom = (room) => {
+    if (userStatus !== "WAITING") {
+      setWarningMessage("게임 진행 중에는 다른 방에 들어갈 수 없습니다.");
+      setWarningModalOpen(true);
+      return;
+    }
+
     const staticUrl = `${import.meta.env.VITE_BASE_URL}/room/ready?roomId=${room.id}`;
     setQRData(staticUrl);
     setRoomIdForNavigation(room.id);
@@ -223,6 +234,18 @@ const RoomList = () => {
           </div>
         </div>
       </Modal>
+      <Modal isOpen={isWarningModalOpen} onClose={() => setWarningModalOpen(false)}>
+        <div className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
+          <p className="text-lg font-medium text-red-600 mb-4">{warningMessage}</p>
+          <button
+            className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition"
+            onClick={() => setWarningModalOpen(false)}
+          >
+            닫기
+          </button>
+        </div>
+      </Modal>
+
     </div>
   );
 };

@@ -4,7 +4,7 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 // import typography from '@tailwindcss/typography';
 // import aspectRatio from '@tailwindcss/aspect-ratio';
 
-/** @type {import('tailwindcss').Config} */
+/* @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
