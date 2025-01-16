@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchRank } from "../../api";
 import tierImages from "../../utils/TierImages";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import Skeleton from "../../components/Skeleton";
 import log from "loglevel";
 
 const Ranking = () => {
@@ -26,10 +26,37 @@ const Ranking = () => {
   return (
     <div className="container pt-16 mx-auto px-4 py-6">
       <h1 className="text-2xl text-white font-bold text-center mb-6">Top 50 Rankings</h1>
-      {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <LoadingSpinner />
+      {loading ? ( 
+        <div className="space-y-4">
+          <table className="table-auto w-full border-collapse border border-gray-200">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="px-4 py-2 border border-gray-200">Rank</th>
+                <th className="px-4 py-2 border border-gray-200">Name</th>
+                <th className="px-4 py-2 border border-gray-200">Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.from({ length: 10 }).map((_, index) => (
+                <tr key={index} className={`text-center ${index % 2 === 0 ? "bg-white bg-opacity-80" : "bg-gray-50 bg-opacity-80"}`}>
+                  <td className="px-4 py-2 border border-gray-200">
+                    <Skeleton width="40px" height="20px" />
+                  </td>
+                  <td className="px-4 py-2 border border-gray-200">
+                    <div className="flex items-center justify-center">
+                      <Skeleton width="100px" height="20px" />
+                      <Skeleton width="24px" height="24px" circle={true} />
+                    </div>
+                  </td>
+                  <td className="px-4 py-2 border border-gray-200">
+                    <Skeleton width="60px" height="20px" />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
+
       ) : (
         <div className="overflow-x-auto ">
           <table className="table-auto w-full border-collapse border border-gray-200">
