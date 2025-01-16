@@ -82,6 +82,7 @@ const PostViewer = () => {
         ) : (
           <p className="text-gray-800 text-lg font-semibold">게시물을 불러오는 중입니다...</p>
         )}
+        <button className="text-blue-500" onClick={(e) => navigateSafely(e, "/posts")}>뒤로가기</button>
       </div>
     </div>
   );
