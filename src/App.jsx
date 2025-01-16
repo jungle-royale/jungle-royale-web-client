@@ -13,13 +13,14 @@ import LoginError from "./pages/Failure"
 import KakaoAuthPage from "./pages/login/KakaoAuthPage"
 import RoomList from "./pages/rooms/RoomList";
 import RoomReady from "./pages/rooms/RoomReady";
+import RoomCreater from "./pages/rooms/RoomCreater";
 import MyPage from "./pages/mypage/MyPage"
+import Ranking from "./pages/rank/Ranking"
 import ScrollToTop from "./utils/ScrollToTop";
 import Post from "./pages/posts/Post";
 import PostViewer from "./pages/posts/PostViewer";
 import PostCreator from "./pages/posts/PostCreator";
 import PostEditor from "./pages/posts/PostEditor";
-import RoomCreater from "./pages/rooms/RoomCreater";
   import PreloadImages from './components/PreloadImages';
 
 // Initialize loglevel
@@ -30,13 +31,6 @@ if (import.meta.env.VITE_NODE_ENV === 'production') {
 }
 
 log.info("Application started");
-
-
-// const App = () => (
-//   <PreloadImages>
-//     <YourMainComponent />
-//   </PreloadImages>
-// );
 
 function App() {
 
@@ -59,6 +53,7 @@ function App() {
                 <Route path="room/create" element={<RoomCreater />} />
                 <Route path="/room/ready" element={<RoomReady />} />
                 <Route path="/mypage" element={<MyPage />}/>
+                <Route path="/ranking" element={<Ranking />}/>
                 <Route path="/posts" element={<Post />} />
                 <Route path="/posts/:id" element={<PostViewer />} /> {/* 동적 경로 */}
                 <Route path="/post-creator" element={<PostCreator />}/>
