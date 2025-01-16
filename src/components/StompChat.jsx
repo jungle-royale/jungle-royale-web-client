@@ -2,18 +2,21 @@ import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import log from 'loglevel';
 
-// const MAX_SCORE = 5;
-// const SCORE_DECREASE_INTERVAL = 3000;
-// const SCORE_AMOUNT = 1;
 
 
 const StompChat = ({ nickname }) => {
   const SERVER_URL = import.meta.env.VITE_WS_SERVER;
+  // const MAX_SCORE = 5;
+  // const SCORE_DECREASE_INTERVAL = 3000;
+  // const SCORE_AMOUNT = 1;
+  // const BLOCK_DURATION = 10000; // 점수 초과 시 차단 시간 (밀리초)
 
   const [wsClient, setWsClient] = useState(null);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState(''); 
   const [newMessagesCount, setNewMessagesCount] = useState(0);
+  // const [userScore, setUserScore] = useState(0); // 사용자 점수
+  // const [isBlocked, setIsBlocked] = useState(false); // 차단 여부
   const messagesEndRef = useRef(null);
   const chatMessagesRef = useRef(null);
   const isUserAtBottomRef = useRef(true); 
@@ -53,6 +56,23 @@ const StompChat = ({ nickname }) => {
     };
   }, []);
 
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     setUserScore((prevScore) => Math.max(prevScore - 1, 0)); // 점수 감소
+  //   }, SCORE_DECREASE_INTERVAL);
+
+  //   return () => clearInterval(intervalId);
+  // }, []);
+
+  // useEffect(() => {
+  //   if (userScore >= MAX_SCORE) {
+  //     setIsBlocked(true); // 차단 활성화
+  //     setTimeout(() => {
+  //       setIsBlocked(false); // 차단 해제
+  //     }, BLOCK_DURATION);
+  //   }
+  // }, [userScore]);
+
   useLayoutEffect(() => {
     if (isUserAtBottomRef.current) {
       scrollToBottom();
@@ -82,6 +102,11 @@ const StompChat = ({ nickname }) => {
   };
 
   const sendMessage = () => {
+    // if (isBlocked) {
+    //   alert('도배 방지로 인해 메시지를 잠시 보낼 수 없습니다. 잠시 후 다시 시도해주세요.');
+    //   return;
+    // }
+
     if (wsClient && message.trim()) {
       const newMessage = { content: message, sender: nickname, id: Date.now() };
       wsClient.send(JSON.stringify(newMessage));

@@ -3,7 +3,7 @@ import { fetchRooms, returnRoom } from "../../api";
 import useSafeNavigation from "../../hooks/useSafeNavigation";
 import Modal from "../../components/Modal";
 import RoomCard from "../../components/RoomCard";
-import StompChat from "../../components/chat/StompChat";
+// import StompChat from "../../components/StompChat";
 import QRcode from "../../utils/QRcode";
 import isEqual from "lodash/isEqual";
 // import LogoutIcon from "../../components/LogoutIcon";
@@ -62,7 +62,6 @@ const RoomList = () => {
           const newUserScore = response.data.userInfo.score;
           const newUserRank = response.data.userInfo.rank;
 
-
           if (!isEqual(previousRooms, newRooms)) {
             setRooms((prevRooms) => {
               const updatedRooms = newRooms.map((newRoom) => {
@@ -110,7 +109,8 @@ const RoomList = () => {
 
   const handleReturn = async () => {
     const response = await returnRoom();
-    const gameUrl = `${import.meta.env.VITE_MAIN_URL}/room?roomId=${response.roomId}&clientId=${response.clientId}`;
+    log.info(response);
+    const gameUrl = `${import.meta.env.VITE_MAIN_URL}/room?roomId=${response.roomId}&clientId=${response.clientId}&username=${response.username}`;
     window.location.href = gameUrl;
   };
 
@@ -214,9 +214,9 @@ const RoomList = () => {
             )}
           </div>
         </div>
-        <div className="mt-3 w-full bg-white border rounded-lg shadow-lg">
+        {/* <div className="mt-3 w-full bg-white border rounded-lg shadow-lg">
           <StompChat nickname={userName} />
-        </div>
+        </div> */}
       </div>
 
       <Modal isOpen={isQRCodeOpen} onClose={() => setQRCodeOpen(false)}>
