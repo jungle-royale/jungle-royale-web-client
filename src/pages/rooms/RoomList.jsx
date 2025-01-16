@@ -5,19 +5,11 @@ import Modal from "../../components/Modal";
 import RoomCard from "../../components/RoomCard";
 // import StompChat from "../../components/StompChat";
 import QRcode from "../../utils/QRcode";
+import tierImages from "../../utils/TierImages";
 import isEqual from "lodash/isEqual";
 // import LogoutIcon from "../../components/LogoutIcon";
 import log from "loglevel";
 import LoadingSpinner from "../../components/LoadingSpinner"; // 스피너 컴포넌트 import
-
-// 티어별 이미지 매핑 객체
-const tierImages = {
-  브론즈: "/assets/bronze.png",
-  실버: "/assets/silver.png",
-  골드: "/assets/gold.png",
-  다이아: "/assets/dia.png",
-  루비: "/assets/ruby.png",
-};
 
 const RoomList = () => {
   const [rooms, setRooms] = useState([]); // 방 목록

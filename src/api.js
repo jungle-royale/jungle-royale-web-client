@@ -193,6 +193,17 @@ export const updatePost = async (postId, updatedData) => {
   }
 };
 
+//랭킹 불러오기 api
+export const fetchRank = async () => {
+  try {
+    const response = await apiClient.get("/api/users/ranking/top50");
+    return response.data;
+  } catch (error) {
+    log.error("API 호출 중 오류 발생:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
 //상점 전체 정보 불러오기 api
 export const fetchStoreData = async () => {
   try {

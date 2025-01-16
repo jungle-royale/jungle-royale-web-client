@@ -41,13 +41,13 @@ const Header = () => {
             상점
           </a>
         )} */}
-        {/* <a
+        <a
           href="/ranking"
           onClick={(e) => navigateSafely(e, "/ranking")}
           className="text-sm font-medium text-gray-700 hover:text-blue-600"
         >
           랭킹
-        </a> */}
+        </a>
         <div className="flex space-x-4">
           {isLogin ? (
             <>

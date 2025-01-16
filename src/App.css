@@ -57,6 +57,28 @@ main::-webkit-scrollbar {
   }
 }
 
+/*글씨 반짝임 효과-랭킹*/
+@keyframes sparkle {
+  0%, 100% {
+    text-shadow: 
+      0 0 5px #ffdf00, 
+      0 0 10px #ffdf00, 
+      0 0 15px #ffd700;
+  }
+  50% {
+    text-shadow: 
+      0 0 5px #ffffff, 
+      0 0 10px #ffffff, 
+      0 0 15px #ffffff;
+  }
+}
+
+.rank-highlight {
+  animation: sparkle 1.5s infinite alternate;
+  color: black; /* 글씨 색상을 검은색으로 유지 */
+}
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
