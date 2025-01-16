@@ -103,7 +103,9 @@ const Post = () => {
                       >
                         {post.title}
                       </div>
-                      <div className="text-sm text-gray-500">
+                      <div
+                        onClick={(e) => navigateSafely(e, `/posts/${post.id}`)}
+                        className="text-sm text-gray-500 hover:underline cursor-pointer">
                         {post.username} | {formatDate(post.createdAt)}
                       </div>
                     </div>
