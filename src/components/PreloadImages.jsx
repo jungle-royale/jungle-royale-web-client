@@ -24,6 +24,11 @@ const PreloadImages = ({ children }) => {
       '/assets/room_create_page.png',
       '/assets/roomcard.png',
       '/assets/snowy_background.png',
+      '/assets/bronze.png',
+      '/assets/dia.png',
+      '/assets/gold.png',
+      '/assets/ruby.png',
+      '/assets/silver.png',
     ];
     let loadedCount = 0;
 
