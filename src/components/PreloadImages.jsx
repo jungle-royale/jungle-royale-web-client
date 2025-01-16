@@ -46,7 +46,6 @@ const PreloadImages = ({ children }) => {
       </div>
     )
   }
-
   return <>{children}</>;
 };
 

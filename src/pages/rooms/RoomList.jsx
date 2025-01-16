@@ -3,7 +3,7 @@ import { fetchRooms, returnRoom } from "../../api";
 import useSafeNavigation from "../../hooks/useSafeNavigation";
 import Modal from "../../components/Modal";
 import RoomCard from "../../components/RoomCard";
-// import StompChat from "../../components/chat/StompChat";
+import StompChat from "../../components/chat/StompChat";
 import QRcode from "../../utils/QRcode";
 import isEqual from "lodash/isEqual";
 // import LogoutIcon from "../../components/LogoutIcon";
@@ -14,6 +14,8 @@ const RoomList = () => {
   const [rooms, setRooms] = useState([]);
   const [userName, setUserName] = useState("");
   const [userStatus, setUserStatus] = useState("");
+  const [userScore, setUserScore] = useState("");
+  const [userRank, setUserRank] = useState("");
   //QRmodal
   const [isQRCodeOpen, setQRCodeOpen] = useState(false);
   const [qrData, setQRData] = useState("");
@@ -57,6 +59,9 @@ const RoomList = () => {
           const newRooms = response.data.gameRooms;
           const newUserName = response.data.userInfo.username;
           const newUserStatus = response.data.userInfo.userStatus;
+          const newUserScore = response.data.userInfo.score;
+          const newUserRank = response.data.userInfo.rank;
+
 
           if (!isEqual(previousRooms, newRooms)) {
             setRooms((prevRooms) => {
@@ -72,6 +77,8 @@ const RoomList = () => {
           }
           setUserName(newUserName);
           setUserStatus(newUserStatus);
+          setUserScore(newUserScore);
+          setUserRank(newUserRank);
           setIsDataLoading(false); // 데이터 로드 완료
         } catch (error) {
           log.error("방 목록을 불러오는 중 오류 발생:", error);
@@ -82,7 +89,7 @@ const RoomList = () => {
       loadRooms();
       intervalId = setInterval(() => {
         loadRooms();
-      }, 10000000000); //데이터 로드 시간
+      }, 10000); //데이터 로드 시간
     };
 
     checkJwtAndFetchRooms();
@@ -143,6 +150,9 @@ const RoomList = () => {
           />
           <div className="flex-1 mb-4 sm:mb-0">
             <p className="text-3xl font-bold text-blue-200">{userName}</p>
+            <p className="text-lg text-white">현재 점수: {userScore}점</p>
+            <p className="text-lg text-white">현재 랭킹: {userRank}위</p>
+
           </div>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full sm:w-auto">
             {userStatus === "WAITING" ? (
@@ -204,9 +214,9 @@ const RoomList = () => {
             )}
           </div>
         </div>
-        {/* <div className="mt-3 w-full bg-white border rounded-lg shadow-lg">
+        <div className="mt-3 w-full bg-white border rounded-lg shadow-lg">
           <StompChat nickname={userName} />
-        </div> */}
+        </div>
       </div>
 
       <Modal isOpen={isQRCodeOpen} onClose={() => setQRCodeOpen(false)}>

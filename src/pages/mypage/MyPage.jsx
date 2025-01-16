@@ -65,7 +65,7 @@ const MyPage = () => {
 
   return (
     <div
-      className="min-h-[100dvh] flex flex-col items-center justify-center bg-cover bg-center relative pt-20 pb-20"
+      className="min-h-[100dvh] flex flex-col items-center justify-center bg-cover bg-center relative pt-20 pb-20 px-10"
       style={{
         backgroundImage: `url(/assets/snowy_background.png)`,
       }}
