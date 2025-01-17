@@ -8,11 +8,29 @@ import log from "loglevel";
 const PostCreator = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [errors, setErrors] = useState({});
   // const [image, setImage] = useState(null);
   // const [imagePreview, setImagePreview] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { isLocked, lock, unlock } = useClickLock();
   const navigate = useNavigate();
+
+  const validateFields = (fieldName, value) => {
+    const newErrors = { ...errors };
+    if (fieldName === "title" && value.trim() === "") {
+      newErrors.title = "제목을 입력해주세요.";
+    } else {
+      delete newErrors.title;
+    }
+
+    if (fieldName === "content" && value.trim() === "") {
+      newErrors.content = "본문 내용을 입력해주세요.";
+    } else {
+      delete newErrors.content;
+    }
+
+    setErrors(newErrors);
+  };
 
   // const handleImageChange = (event) => {
   //   if (isLocked) return;
@@ -27,10 +45,23 @@ const PostCreator = () => {
   //   }
   // };
 
+  const handleTitleChange = (e) => {
+    const value = e.target.value;
+    setTitle(value);
+    validateFields("title", value);
+  };
+
+  const handleContentChange = (e) => {
+    const value = e.target.value;
+    setContent(value);
+    validateFields("content", value);
+  };
+
   const handleSubmit = async () => {
     if (isLocked) return;
-    if (!title || !content) {
-      alert("제목과 본문을 입력해주세요.");
+    if (!title.trim() || !content.trim()) {
+      validateFields("title", title);
+      validateFields("content", content);
       return;
     }
     lock();
@@ -46,11 +77,9 @@ const PostCreator = () => {
     try {
       const data = await createPost(formData);
       log.info("게시 성공:", data);
-      alert("게시물이 성공적으로 등록되었습니다.");
       navigate("/posts");
     } catch (error) {
       log.error("게시 실패:", error.response?.data || error.message);
-      alert("게시 중 오류가 발생했습니다.");
     } finally {
       setIsSubmitting(false);
       unlock();
@@ -72,10 +101,14 @@ const PostCreator = () => {
           id="title"
           type="text"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={handleTitleChange}
           placeholder="제목을 입력하세요"
-          className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none mb-6"
+          className={`w-full p-4 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none mb-2 ${
+            errors.title ? "border-red-500 focus:ring-red-500" : "border-gray-300"
+          }`}
         />
+        {errors.title && <p className="text-red-500 text-sm mb-4">{errors.title}</p>}
+
 
         <label htmlFor="content" className="block text-lg font-medium text-gray-800 mb-2">
           본문
@@ -83,10 +116,14 @@ const PostCreator = () => {
         <textarea
           id="content"
           value={content}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={handleContentChange}
           placeholder="본문 내용을 입력하세요"
-          className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none mb-6 h-60"
+          className={`w-full p-4 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none mb-2 h-60 ${
+            errors.content ? "border-red-500 focus:ring-red-500" : "border-gray-300"
+          }`}
         />
+        {errors.content && <p className="text-red-500 text-sm mb-4">{errors.content}</p>}
+
 
         {/* <div>
           <label className="postcrt-input-label">사진</label>
