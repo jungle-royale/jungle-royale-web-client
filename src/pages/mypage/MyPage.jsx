@@ -9,24 +9,29 @@ const MyPage = () => {
   const [messageColor, setMessageColor] = useState(""); // State for message color
   const [errorMessage, setErrorMessage] = useState(""); // State for nickname length error
   const [gift, setGift] = useState(null); // 서버에서 받은 선물 데이터
-  // const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
+
+  const validateNickname = (value) => {
+    if (value.trim() === "") {
+      return "닉네임을 한 글자 이상 입력해주세요.";
+    }
+    if (value.length > 10) {
+      return "닉네임은 10자 이내로 입력해주세요.";
+    }
+    return "";
+  };
 
   const handleNicknameChange = (e) => {
     const value = e.target.value;
-    // 실시간으로 10자 제한 체크
-    if (value.length > 10) {
-      setErrorMessage("닉네임은 10자 이내로 입력해주세요.");
-    } else {
-      setErrorMessage(""); // 에러 메시지 초기화
-    }
+    const error = validateNickname(value);
+    setErrorMessage(error);
     setNickname(value);
     setMessage(""); // Clear success/error message when editing
   };
 
   const handleSaveNickname = async () => {
-    // 닉네임 길이 초과 시 저장 방지
-    if (nickname.length > 10) {
-      setErrorMessage("닉네임은 10자 이내로 입력해주세요.");
+    const error = validateNickname(nickname);
+    if (error) {
+      setErrorMessage(error);
       return;
     }
 
@@ -43,9 +48,6 @@ const MyPage = () => {
       setMessageColor("text-red-500"); // Red color for error
     }
   };
-
-  // const handleOpenModal = () => setIsModalOpen(true);
-  // const handleCloseModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     const fetchData = async () => {
