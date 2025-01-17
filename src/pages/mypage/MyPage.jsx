@@ -13,7 +13,6 @@ const MyPage = () => {
 
   const handleNicknameChange = (e) => {
     const value = e.target.value;
-
     // 실시간으로 10자 제한 체크
     if (value.length > 10) {
       setErrorMessage("닉네임은 10자 이내로 입력해주세요.");
@@ -117,33 +116,6 @@ const MyPage = () => {
           )}
         </div>
       </div>
-      {/* {gift && (
-          <button
-            onClick={handleOpenModal}
-            className="mt-4 w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition"
-          >
-            선물함 열기
-          </button>
-        )} */}
-      {/* {isModalOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-          onClick={handleCloseModal}
-        >
-          <div
-            className="bg-white rounded-lg p-4 max-w-md w-full relative"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              className="absolute top-2 right-2 text-xl text-gray-500 hover:text-gray-800"
-              onClick={handleCloseModal}
-            >
-              &times;
-            </button>
-            {gift ? <img src={gift} alt="선물 이미지" className="w-full" /> : null}
-          </div>
-        </div>
-      )} */}
     </div>
   );
 };
