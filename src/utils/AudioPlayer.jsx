@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import "./AudioPlayer.css";
+import log from "loglevel";
 
 const AudioPlayer = ({ src, loop = true }) => {
   const audioRef = useRef(null);
