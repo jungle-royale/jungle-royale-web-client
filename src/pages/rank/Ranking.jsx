@@ -37,7 +37,7 @@ const Ranking = () => {
               </tr>
             </thead>
             <tbody>
-              {Array.from({ length: 10 }).map((_, index) => (
+              {Array.from({ length: 15 }).map((_, index) => (
                 <tr key={index} className={`text-center ${index % 2 === 0 ? "bg-white bg-opacity-80" : "bg-gray-50 bg-opacity-80"}`}>
                   <td className="px-4 py-2 border border-gray-200">
                     <Skeleton width="40px" height="20px" />

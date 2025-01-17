@@ -12,6 +12,9 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        'h-sm': {'raw': '(max-height: 600px)'},
+      },
       fontFamily: {
         game: ['"VT323"', 'monospace'], // 픽셀 스타일 폰트
         bagel: ['"Bagel Fat One"', 'cursive'], // 새로 추가한 폰트

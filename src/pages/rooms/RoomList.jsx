@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { fetchRooms, returnRoom } from "../../api";
 import useSafeNavigation from "../../hooks/useSafeNavigation";
+import { useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal";
 import RoomCard from "../../components/RoomCard";
 // import StompChat from "../../components/StompChat";
@@ -24,9 +25,12 @@ const RoomList = () => {
   const [warningMessage, setWarningMessage] = useState(""); // 경고 메시지
   const [roomIdForNavigation, setRoomIdForNavigation] = useState(""); // 네비게이션용 방 ID
   const { navigateSafely } = useSafeNavigation(); // 안전한 네비게이션 훅
+  const navigate = useNavigate();
   const [isLoaded, setIsLoaded] = useState(false); // 애니메이션 로딩 상태
   const [isDataLoading, setIsDataLoading] = useState(true); // 데이터 로딩 상태
   const [jwtToken, setJwtToken] = useState(null); // JWT 토큰
+  const warningShown = useRef(false); // 경고창 표시 상태 추적
+
 
   // 데이터 로딩 완료 후 애니메이션 활성화
   useEffect(() => {
@@ -36,6 +40,25 @@ const RoomList = () => {
       }, 10);
     }
   }, [isDataLoading]);
+
+  //로그인 여부 확인
+  useEffect(() => {
+    const token = localStorage.getItem("jwt_token");
+
+    if(!token && !warningShown.current){
+      log.info("로그인되지 않은 상태입니다.");
+      setWarningMessage("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
+      setWarningModalOpen(true);
+      warningShown.current = true;
+
+      // 3초 후 로그인 페이지로 이동
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+    } else {
+      setJwtToken(token);
+    }
+  });
 
   // 방 목록과 사용자 정보를 주기적으로 로드
   useEffect(() => {
@@ -94,7 +117,7 @@ const RoomList = () => {
       loadRooms();
       intervalId = setInterval(() => {
         loadRooms(); // 주기적으로 방 목록 로드
-      }, 1000000);
+      }, 5000);
     };
 
     checkJwtAndFetchRooms();
@@ -234,7 +257,7 @@ const RoomList = () => {
       {/* QR 코드 모달 */}
       <Modal isOpen={isQRCodeOpen} onClose={() => setQRCodeOpen(false)}>
         <div className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
-          <div className="mb-4">
+          <div className="mb-4 hidden h-sm:hidden">
             <QRcode qrdata={qrData} />
           </div>
           <div className="flex space-x-4">
