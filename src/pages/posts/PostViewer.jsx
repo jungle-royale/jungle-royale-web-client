@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useSafeNavigation from "../../hooks/useSafeNavigation.jsx";
 import { deletePost, getPost } from "../../api.js";
-import "./PostViewer.css";
 import useJwtField from "../../hooks/useJwtField.jsx";
 import log from "loglevel";
 
